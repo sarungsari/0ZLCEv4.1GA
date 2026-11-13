@@ -1,0 +1,72 @@
+{
+  "name": "ZLCE Mobile Workbench v4.1.0 GA",
+  "short_name": "ZLCEv4.1Mob",
+  "description": "Zero-Loss Context Engineering Studio & Relay Workbench untuk Tablet Android",
+  "lang": "id",
+  "dir": "ltr",
+  "categories": ["development", "productivity", "utilities"],
+  "prefer_related_applications": false,
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#020617",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "ZLCEv4.1Mob Tablet & Desktop View"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "ZLCEv4.1Mob Mobile View"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard Proyek",
+      "short_name": "Dashboard",
+      "url": "/?tab=dashboard",
+      "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Session State",
+      "short_name": "Session",
+      "url": "/?tab=session",
+      "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Tutorial & Panduan",
+      "short_name": "Panduan",
+      "url": "/?tab=tutorial",
+      "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}

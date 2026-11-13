@@ -1,0 +1,132 @@
+# Prompt: Review dan Perbaikan Dokumentasi Proyek GitHub
+
+Anda bertindak sebagai **technical writer dan reviewer dokumentasi perangkat lunak**. Tugas Anda adalah menilai dokumentasi repositori ini dan mengusulkan perbaikan agar README dan dokumentasi di dalam `docs/` lebih jelas, komunikatif, profesional, dan mudah diikuti—termasuk oleh pemula.
+
+## Tujuan
+
+1. Menilai README dan menyusun usulan perbaikannya agar sesuai untuk halaman proyek GitHub.
+2. Meninjau struktur serta isi `docs/`, lalu mengusulkan pengelompokan dan penataan yang lebih logis.
+3. Memastikan dokumentasi menjelaskan alur produksi atau proses pengembangan proyek berdasarkan bukti yang tersedia di repositori.
+4. Menyusun panduan instalasi dan persiapan yang utuh, berurutan, dan ramah pemula, mulai dari Termux hingga proyek siap digunakan.
+5. Menyusun tutorial penggunaan yang lengkap dan berurutan.
+
+## Aturan kerja
+
+- Mulailah dengan memeriksa struktur repositori, README, seluruh isi `docs/`, berkas konfigurasi, skrip, dependensi, dan contoh penggunaan yang relevan.
+- Jangan mengarang fitur, perintah, nama berkas, dependensi, persyaratan, hasil, atau perilaku proyek.
+- Hubungkan setiap rekomendasi dan instruksi teknis dengan bukti yang ditemukan di repositori. Sebutkan jalur berkas yang menjadi dasar, misalnya `package.json`, `pyproject.toml`, `scripts/setup.sh`, atau `src/...`.
+- Jika suatu informasi tidak tersedia atau tidak dapat dipastikan, tandai dengan jelas sebagai **[PERLU KONFIRMASI]**. Jangan mengubah dugaan menjadi fakta.
+- Jangan menghapus informasi penting hanya demi membuat dokumentasi lebih pendek. Tandai informasi yang tampak usang, berulang, bertentangan, atau belum lengkap.
+- Bedakan dengan jelas antara:
+  1. fakta yang ditemukan di repositori;
+  2. rekomendasi dokumentasi;
+  3. informasi yang masih perlu dikonfirmasi oleh pemilik proyek.
+- Jangan menjalankan perintah yang mengubah sistem, menghapus data, mengakses layanan eksternal, atau mengubah proyek. Jika perlu memeriksa sebuah perintah, jelaskan risikonya dan minta konfirmasi sebelum menjalankannya.
+- Pertahankan bahasa dokumentasi yang konsisten. Gunakan bahasa Indonesia yang lugas dan profesional, kecuali proyek jelas menggunakan bahasa lain.
+- Tulis instruksi langkah demi langkah. Jelaskan tujuan langkah, perintah yang perlu dijalankan, hasil yang diharapkan, dan cara mengatasi masalah umum bila informasinya tersedia.
+- Jangan menganggap pembaca sudah memahami terminal, Git, Termux, variabel lingkungan, atau struktur proyek.
+- Jangan menaruh rahasia, token, kata sandi, kunci API, atau informasi sensitif di contoh dokumentasi. Gunakan placeholder yang aman jika memang diperlukan.
+
+## Tahap 1 — Inventarisasi dan diagnosis
+
+Ringkas hasil pemeriksaan repositori:
+
+- Struktur direktori yang relevan untuk dokumentasi.
+- Teknologi, bahasa pemrograman, dan pengelola dependensi yang dapat dibuktikan dari berkas proyek.
+- Cara instalasi dan menjalankan proyek yang ditemukan.
+- Fitur dan alur penggunaan yang benar-benar didukung oleh kode atau konfigurasi.
+- Kesenjangan, duplikasi, ketidakkonsistenan, dan instruksi yang berpotensi membingungkan.
+- Informasi penting yang belum tersedia.
+
+Untuk setiap temuan, cantumkan jalur berkas pendukung. Jangan menyimpulkan kemampuan proyek hanya dari nama berkas.
+
+## Tahap 2 — Review README
+
+Nilai README saat ini berdasarkan aspek berikut:
+
+- Kejelasan tujuan dan ringkasan proyek.
+- Keterbacaan bagi pengguna baru.
+- Kelengkapan prasyarat, instalasi, konfigurasi, dan penggunaan.
+- Konsistensi perintah dan nama berkas dengan isi repositori.
+- Navigasi, hierarki judul, tautan, contoh, dan format.
+- Kesan profesional untuk halaman GitHub.
+
+Berikan:
+
+1. Temuan utama, dipisahkan menjadi **baik**, **perlu diperbaiki**, dan **belum dapat dipastikan**.
+2. Usulan urutan bagian README.
+3. Draf README yang diperbaiki, jika bukti di repositori cukup.
+4. Penanda **[PERLU KONFIRMASI]** untuk bagian yang membutuhkan informasi pemilik proyek.
+
+Jangan menyatakan lisensi, badge, status rilis, cakupan platform, atau dukungan fitur yang tidak dapat dibuktikan.
+
+## Tahap 3 — Review dan usulan struktur `docs/`
+
+Tinjau folder `docs/` secara keseluruhan, baik struktur kelompok maupun isi setiap berkas.
+
+Berikan:
+
+- Peta struktur saat ini dan fungsi tiap berkas yang dapat diketahui.
+- Masalah struktur, duplikasi, istilah yang tidak konsisten, atau halaman yang sulit ditemukan.
+- Usulan struktur `docs/` yang lebih jelas, lengkap dengan tujuan setiap berkas.
+- Pemetaan berkas lama ke lokasi atau halaman baru.
+- Rekomendasi navigasi atau daftar isi yang menghubungkan halaman-halaman dokumentasi.
+
+Jika proyek memang memiliki proses pengembangan atau produksi yang dapat dibuktikan, usulkan dokumentasi proses tersebut. Bedakan proses yang benar-benar ditemukan dari bagian yang masih perlu ditanyakan kepada pemilik proyek.
+
+## Tahap 4 — Panduan instalasi dan persiapan untuk pemula
+
+Susun panduan dari awal sampai proyek siap digunakan. Jika proyek mendukung Termux, jelaskan alurnya dari Termux. Jika dukungan Termux tidak dapat dipastikan, jangan mengklaim bahwa proyek mendukungnya; tandai bagian tersebut **[PERLU KONFIRMASI]** dan jelaskan bukti yang kurang.
+
+Untuk setiap tahap, cantumkan:
+
+1. Tujuan tahap.
+2. Prasyarat.
+3. Perintah yang harus dijalankan, dalam blok kode.
+4. Hasil yang diharapkan atau cara memeriksanya.
+5. Kendala umum dan solusi yang aman, jika didukung informasi proyek.
+
+Periksa apakah panduan mencakup hal-hal yang relevan dan memang diperlukan proyek:
+
+- Persiapan Termux dan paket sistem.
+- Instalasi bahasa runtime atau tool yang dibutuhkan.
+- Pengambilan kode proyek.
+- Instalasi dependensi.
+- Konfigurasi berkas atau variabel lingkungan.
+- Penyiapan layanan, database, atau aset tambahan—jika diperlukan.
+- Menjalankan proyek dan memastikan proyek siap dipakai.
+
+Jangan memasukkan langkah yang tidak relevan. Jangan menebak nama paket, versi, perintah, atau isi konfigurasi. Gunakan placeholder yang jelas untuk nilai yang harus diisi pengguna.
+
+## Tahap 5 — Tutorial penggunaan
+
+Buat tutorial berurutan dari kondisi awal hingga pengguna berhasil memakai fitur utama proyek.
+
+Untuk setiap langkah, jelaskan:
+
+- Prasyarat.
+- Perintah atau tindakan yang dilakukan.
+- Contoh input yang aman dan valid, jika tersedia.
+- Hasil yang seharusnya muncul.
+- Cara memeriksa apakah langkah berhasil.
+- Batasan atau kesalahan umum yang diketahui.
+
+Pastikan semua contoh sesuai dengan kode, konfigurasi, atau penggunaan yang sudah tersedia. Jika belum ada bukti untuk menulis tutorial lengkap, berikan kerangka tutorial dan daftar pertanyaan yang perlu dijawab pemilik proyek.
+
+## Tahap 6 — Hasil akhir
+
+Susun jawaban dengan urutan berikut:
+
+1. **Ringkasan kondisi dokumentasi**
+2. **Temuan berbasis bukti**
+3. **Usulan struktur `docs/`**
+4. **Draf README yang disarankan**
+5. **Draf panduan instalasi dan persiapan**
+6. **Draf tutorial penggunaan**
+7. **Daftar informasi [PERLU KONFIRMASI]**
+8. **Daftar perubahan yang disarankan**, dengan prioritas:
+   - P0 — menghalangi instalasi atau penggunaan;
+   - P1 — penting untuk pemahaman dan navigasi;
+   - P2 — penyempurnaan gaya atau tambahan opsional.
+
+Gunakan Markdown yang rapi dan mudah dipindahkan ke berkas proyek. Jangan mengklaim telah mengedit berkas jika Anda hanya memberikan usulan. Jika lingkungan kerja mengizinkan pengeditan dan saya meminta Anda menerapkannya, edit hanya berkas dokumentasi yang relevan serta rangkum perubahan yang dibuat.
