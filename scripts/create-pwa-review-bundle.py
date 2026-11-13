@@ -247,8 +247,7 @@ PWA_REVIEW_FILES = [
     "SESSION_STATE.md",
     "TASKS.md",
     "CHANGELOG.md",
-    "README.md",
-    "archive/components/README.md"
+    "README.md"
 ]
 
 IMPORT_RE = re.compile(r"""(?:from|import)\s*\(?\s*['"](\.{1,2}/[^'"]+)['"]""")

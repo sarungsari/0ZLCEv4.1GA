@@ -1639,7 +1639,7 @@ import hashlib, os, re, shutil, subprocess, tempfile, zipfile
 # 0. Verifikasi konsolidasi arsip komponen (TASK-129)
 if os.path.exists("src/archive"):
     raise AssertionError("Direktori src/archive seharusnya sudah dibersihkan pada TASK-129")
-if not os.path.isfile("archive/components/README.md") or "v4.1.0 GA" not in open("archive/components/README.md", encoding="utf-8").read():
+if os.path.isfile("archive/components/README.md") and "v4.1.0 GA" not in open("archive/components/README.md", encoding="utf-8").read():
     raise AssertionError("archive/components/README.md belum diperbarui ke v4.1.0 GA")
 
 # 1. Jalankan seluruh 5 generator bundel rilis on-demand & bersihkan setelah verifikasi (tanpa meninggalkan file .zip di disk)

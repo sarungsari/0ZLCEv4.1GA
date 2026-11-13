@@ -210,35 +210,35 @@ export const ProjectSwitcher: React.FC<ProjectSwitcherProps> = ({ className = ''
       {/* Tombol Pemicu di Header (Target Sentuh Ergonomis Tablet >= 44px) */}
       <button
         onClick={() => setIsOpen(prev => !prev)}
-        className="touch-target-44 min-h-[44px] flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-xs transition active:scale-95 shadow-sm"
+        className="touch-target-44 min-h-[44px] min-w-0 max-w-full flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-xs transition active:scale-95 shadow-sm"
         title={`Proyek Aktif: ${activeProject.name} (${activeProject.termuxPath}) • Klik untuk berganti proyek`}
         aria-expanded={isOpen}
       >
         <div className="w-6 h-6 rounded-lg bg-cyan-950/80 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shrink-0">
           <FolderKanban className="w-3.5 h-3.5" />
         </div>
-        <div className="flex flex-col text-left">
-          <div className="flex items-center gap-1.5">
-            <span className="font-semibold text-slate-100 max-w-[120px] sm:max-w-[150px] truncate">
+        <div className="flex flex-col text-left min-w-0">
+          <div className="flex items-center gap-1.5 min-w-0">
+            <span className="font-semibold text-slate-100 max-w-[130px] sm:max-w-[170px] truncate">
               {activeProject.name}
             </span>
-            <span className="text-xs px-1 py-0.5 rounded font-mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+            <span className="text-xs px-1 py-0.5 rounded font-mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 shrink-0">
               {activeProject.mode}
             </span>
           </div>
-          <div className="flex items-center gap-1 text-xs text-slate-400 font-mono">
-            <GitBranch className="w-2.5 h-2.5 text-slate-500" />
+          <div className="flex items-center gap-1 text-xs text-slate-400 font-mono min-w-0">
+            <GitBranch className="w-2.5 h-2.5 text-slate-500 shrink-0" />
             <span className="truncate max-w-[90px]">{activeProject.branch}</span>
-            <span className="text-slate-600">·</span>
-            <span className="text-amber-300">{getWorkflowShortTag(activeProject.workflow)}</span>
+            <span className="text-slate-600 shrink-0">·</span>
+            <span className="text-amber-300 shrink-0">{getWorkflowShortTag(activeProject.workflow)}</span>
           </div>
         </div>
-        <ChevronDown className={`w-3.5 h-3.5 text-slate-400 ml-0.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-3.5 h-3.5 text-slate-400 ml-0.5 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {/* Dropdown Menu Proyek */}
       {isOpen && (
-        <div className="absolute left-0 sm:left-auto sm:right-0 mt-2 w-80 sm:w-96 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+        <div className="absolute left-0 mt-2 w-80 sm:w-96 max-w-[calc(100vw-1rem)] rounded-xl bg-slate-900 border border-slate-700 shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
           {/* Header Panel */}
           <div className="p-3 bg-slate-850 border-b border-slate-800 flex items-center justify-between">
             <div className="flex items-center gap-2">

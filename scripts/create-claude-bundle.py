@@ -30,9 +30,6 @@ FILES_TO_BUNDLE = [
     "CONTRIBUTING.md",
     "LICENSE",
 
-    # 2. Arsip Komponen Internal
-    "archive/components/README.md",
-
     # 3. Dokumentasi Lengkap & Panduan Mobile (3 Pilar)
     "docs/README.md",
     "docs/USAGE.md",

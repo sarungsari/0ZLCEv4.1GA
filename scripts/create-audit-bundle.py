@@ -30,7 +30,6 @@ FILES_TO_BUNDLE = [
     "LICENSE",
     "HANDOVER_PROMPT.md",
     "LANDING_PROMPT.md",
-    "archive/components/README.md",
 
     # 2. Dokumen Panduan Tablet & Operasional
     "docs/README.md",

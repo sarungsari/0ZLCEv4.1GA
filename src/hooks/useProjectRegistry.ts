@@ -18,19 +18,6 @@ export const DEFAULT_PROJECTS: ProjectMeta[] = [
     workflow: 'MODIFY',
     stack: 'React 19 + TypeScript + Vite + Tailwind CSS + Termux',
     description: 'Repositori kanonik ZLCE Mobile Workbench v4.1.0 GA (Terkunci & Siap Pakai)'
-  },
-  {
-    id: 'todo-api-service',
-    name: 'Todo API Microservice',
-    termuxPath: '~/projects/todo-api',
-    repoUrl: 'https://github.com/ekokeplek-glitch/todo-api.git',
-    branch: 'task/TASK-002',
-    activeMemberId: 'oned',
-    lastAccessed: new Date(Date.now() - 3600000).toISOString(),
-    mode: 'LITE',
-    workflow: 'CONTINUE',
-    stack: 'Go / Node.js REST API',
-    description: 'Contoh workspace Mode LITE untuk proyek lanjutan RESTful API microservice'
   }
 ];
 
@@ -86,27 +73,39 @@ export function seedProjectSessionStorage(project: ProjectMeta, customMarkdown?:
 export function useProjectRegistry() {
   const [projects, setProjects] = useState<ProjectMeta[]>(() => {
     try {
+      // Bersihkan sisa key isolated storage proyek demo lama jika pernah tersimpan
+      const legacyKeys = getProjectStorageKeys('todo-api-service');
+      localStorage.removeItem(legacyKeys.rawMarkdownKey);
+      localStorage.removeItem(legacyKeys.stateDataKey);
+      localStorage.removeItem(legacyKeys.lastSavedKey);
+      localStorage.removeItem(legacyKeys.historyKey);
+
       const saved = localStorage.getItem(REGISTRY_STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          // Migrasi otomatis URL repositori lama jika tersimpan di localStorage browser
-          return parsed.map((p: ProjectMeta) => {
-            if (
-              p.id === HOST_WORKBENCH_PROJECT_ID ||
-              p.repoUrl?.includes('ZLCE3.22-studio') ||
-              p.repoUrl?.includes('T1ZLCE-Mobench-v4.0.0GA')
-            ) {
-              return {
-                ...p,
-                name: 'ZLCE Mobile Workbench v4.1.0 GA',
-                termuxPath: '~/projects/ZLCE4.1',
-                repoUrl: 'https://github.com/ekokeplek-glitch/ZLCE4.1.git',
-                workflow: p.workflow || 'MODIFY'
-              };
-            }
-            return p;
-          });
+          // Migrasi otomatis URL repositori lama & hapus proyek contoh 'todo-api-service'
+          const cleaned = parsed
+            .filter((p: ProjectMeta) => p.id !== 'todo-api-service')
+            .map((p: ProjectMeta) => {
+              if (
+                p.id === HOST_WORKBENCH_PROJECT_ID ||
+                p.repoUrl?.includes('ZLCE3.22-studio') ||
+                p.repoUrl?.includes('T1ZLCE-Mobench-v4.0.0GA')
+              ) {
+                return {
+                  ...p,
+                  name: 'ZLCE Mobile Workbench v4.1.0 GA',
+                  termuxPath: '~/projects/ZLCE4.1',
+                  repoUrl: 'https://github.com/ekokeplek-glitch/ZLCE4.1.git',
+                  workflow: p.workflow || 'MODIFY'
+                };
+              }
+              return p;
+            });
+          if (cleaned.length > 0) {
+            return cleaned;
+          }
         }
       }
     } catch {
@@ -118,7 +117,7 @@ export function useProjectRegistry() {
   const [activeProjectId, setActiveProjectIdState] = useState<string>(() => {
     try {
       const saved = localStorage.getItem(ACTIVE_PROJECT_ID_KEY);
-      if (saved) return saved;
+      if (saved && saved !== 'todo-api-service') return saved;
     } catch {
       // fallback
     }

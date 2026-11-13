@@ -97,18 +97,18 @@ export const ActiveMemberSelector: React.FC<ActiveMemberSelectorProps> = ({
       {/* Tombol Pemicu di Header (Target Sentuh Ergonomis Tablet >= 44px) */}
       <button
         onClick={() => setIsOpen(prev => !prev)}
-        className="touch-target-44 flex items-center min-h-[44px] gap-2 px-3 py-1.5 rounded-lg bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-xs transition active:scale-95 shadow-sm"
+        className="touch-target-44 flex items-center min-h-[44px] gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-xs transition active:scale-95 shadow-sm"
         title={`Pemegang Tablet Saat Ini: ${activeMember.name} (${activeMember.role}) • Klik untuk ganti driver`}
         aria-expanded={isOpen}
         aria-haspopup="dialog"
       >
-        <div className={`w-6 h-6 rounded-full bg-gradient-to-tr ${activeMember.avatarColor} flex items-center justify-center text-[11px] font-bold text-white shadow-sm ring-1 ring-white/20`}>
+        <div className={`w-6 h-6 rounded-full bg-gradient-to-tr ${activeMember.avatarColor} flex items-center justify-center text-[11px] font-bold text-white shadow-sm ring-1 ring-white/20 shrink-0`}>
           {activeMember.name.slice(0, 1)}
         </div>
-        <div className="flex flex-col text-left">
+        <div className="flex flex-col text-left min-w-0">
           <div className="flex items-center gap-1.5">
-            <span className="font-semibold text-slate-100">{activeMember.name}</span>
-            <span className="text-xs px-1.5 py-0.5 rounded font-mono bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+            <span className="font-semibold text-slate-100 truncate max-w-[90px] sm:max-w-[120px]">{activeMember.name}</span>
+            <span className="text-xs px-1.5 py-0.5 rounded font-mono bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shrink-0">
               Driver
             </span>
           </div>
@@ -116,13 +116,13 @@ export const ActiveMemberSelector: React.FC<ActiveMemberSelectorProps> = ({
             {activeMember.role.split('(')[0]}
           </span>
         </div>
-        <ChevronDown className={`w-3.5 h-3.5 text-slate-400 ml-0.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-3.5 h-3.5 text-slate-400 ml-0.5 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {/* Dropdown / Modal Panel Pemilihan 8 Anggota Tim */}
       {isOpen && (
         <div 
-          className="absolute right-0 mt-2 w-80 sm:w-96 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-150"
+          className="absolute left-0 mt-2 w-80 sm:w-96 max-w-[calc(100vw-1rem)] rounded-xl bg-slate-900 border border-slate-700 shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-150"
           role="dialog"
           aria-label="Pilih Driver Tablet Bersama"
         >

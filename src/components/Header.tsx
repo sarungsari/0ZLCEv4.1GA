@@ -144,49 +144,35 @@ const HeaderComponent: React.FC<HeaderProps> = ({
   return (
     <header ref={headerRef} className="border-b border-slate-800/80 bg-slate-900/98 sticky top-0 z-50 shadow-md w-full">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
-        {/* Top Operational Bar: Strict Single Row on Any Screen Width */}
-        <div className="flex items-center justify-between h-14 sm:h-16 gap-2 w-full">
-          {/* Logo & Platform Identity */}
-          <div className="flex items-center space-x-2 sm:space-x-3 shrink-0 min-w-0">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-cyan-600 to-indigo-600 flex items-center justify-center shadow-lg ring-1 ring-white/10 shrink-0">
+        {/* Top Operational Bar: Responsive (single row on desktop/landscape, clean wrap on portrait tablet/mobile) */}
+        <div className="flex flex-wrap items-center justify-between min-h-14 py-1.5 sm:py-2 gap-2 w-full">
+          {/* App Icon & Left-Aligned Project Switcher Dropdown */}
+          <div className="flex items-center gap-2 min-w-0 max-w-full">
+            <div
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-cyan-600 to-indigo-600 flex items-center justify-center shadow-lg ring-1 ring-white/10 shrink-0"
+              title="ZLCE Mobile Workbench v4.1.0 GA"
+            >
               <Cpu className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
-            <div className="min-w-0">
-              <div className="flex items-center space-x-1.5">
-                <span className="font-extrabold text-sm sm:text-base lg:text-lg text-white tracking-tight truncate">
-                  ZLCEv4.1Mob
-                </span>
-                <span className="text-xs font-mono text-cyan-400 font-semibold shrink-0">
-                  v4.1.0 GA
-                </span>
-                <span className="hidden lg:inline text-xs text-slate-600">·</span>
-                <span className="hidden lg:inline-flex items-center gap-1 text-xs font-mono text-emerald-400 shrink-0">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                  SM-T225
-                </span>
-              </div>
-              <p className="text-xs text-slate-400 hidden md:block truncate max-w-xs lg:max-w-md">
-                ZLCE Mobile Workbench v4.1.0 GA · Tim Estafet 8 Anggota
-              </p>
-            </div>
+
+            {/* Project Switcher */}
+            <ProjectSwitcher className="min-w-0 max-w-full" />
           </div>
 
-          {/* Controls: Responsive and Prioritized to prevent wrapping */}
-          <div className="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
-            {/* Project Switcher */}
-            <ProjectSwitcher />
+          {/* Controls: Responsive wrapping prevents collision with ProjectSwitcher on portrait tablets */}
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 min-w-0 max-w-full">
 
             {/* Active Tablet Driver Selector */}
-            <ActiveMemberSelector onNavigateToLogs={() => setActiveTab('session-timeline')} />
+            <ActiveMemberSelector onNavigateToLogs={() => setActiveTab('session-timeline')} className="shrink-0" />
 
             {/* Tombol Serah Terima Tablet Bersama (TASK-022) */}
             <button
               onClick={() => setIsHandoverModalOpen(true)}
-              className="touch-target-44 min-h-[44px] flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-950/70 hover:bg-indigo-900/80 text-indigo-300 border border-indigo-700/60 transition shrink-0 active:scale-95 shadow-sm"
+              className="touch-target-44 min-h-[44px] min-w-[44px] flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-950/70 hover:bg-indigo-900/80 text-indigo-300 border border-indigo-700/60 transition shrink-0 active:scale-95 shadow-sm"
               title="Wizard Serah Terima Tablet & Clean-Auth (TASK-022)"
             >
               <Tablet className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-400" />
-              <span className="hidden sm:inline">Oper Tablet</span>
+              <span className="hidden lg:inline">Oper Tablet</span>
             </button>
 
             {/* Live Token Usage Indicator (Desktop only) */}

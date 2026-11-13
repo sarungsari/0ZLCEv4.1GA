@@ -59,8 +59,8 @@ export const FeedbackReviewTab: React.FC<FeedbackReviewTabProps> = ({
   const [lastGeneratedAt, setLastGeneratedAt] = useState<string | null>(null);
 
   // Step 1 State: Prompt Generator & Bundle
-  const [selectedAi, setSelectedAi] = useState<ExternalAiModel>('claude-3.5-sonnet');
-  const [selectedFocus, setSelectedFocus] = useState<AuditFocusArea>('docs-audit-readme');
+  const [selectedAi, setSelectedAi] = useState<ExternalAiModel>('claude-5.5-sonnet');
+  const [selectedFocus, setSelectedFocus] = useState<AuditFocusArea>('full-system');
   const [customNotes, setCustomNotes] = useState<string>('');
   const [copiedPrompt, setCopiedPrompt] = useState<boolean>(false);
   const [isBundleFilesOpen, setIsBundleFilesOpen] = useState<boolean>(false);
@@ -167,7 +167,7 @@ export const FeedbackReviewTab: React.FC<FeedbackReviewTabProps> = ({
 
   // Sample Review Loader for Step 3
   const handleLoadSampleReview = () => {
-    const sample = `# LAPORAN AUDIT & REVIEW TEKNIS: [CLAUDE 3.5 SONNET]
+    const sample = `# LAPORAN AUDIT & REVIEW TEKNIS: [CLAUDE 5.5 SONNET]
 Tanggal Audit: 2026-11-05 18:00 WIB
 Skor Kesiapan Produksi: 96 / 100
 
@@ -199,7 +199,7 @@ Sistem ZLCE Mobile Workbench v4.1.0 GA (ZLCEv4.1Mob) menunjukkan arsitektur yang
 === END CLAUDE AUDIT RESPONSE ===`;
 
     setRawReviewInput(sample);
-    setUploadedFileName('contoh-audit-claude-3.5.md');
+    setUploadedFileName('contoh-audit-claude-5.5.md');
     setUploadedFileSize('1.8 KB');
     const parsed = parseReviewFeedbackToProposedTasks(sample);
     setParsedFeedback(parsed);
@@ -345,7 +345,7 @@ Sistem ZLCE Mobile Workbench v4.1.0 GA (ZLCEv4.1Mob) menunjukkan arsitektur yang
                 FASE 9 • AUDIT, TEST &amp; REVIEW
               </span>
               <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-                Claude · ChatGPT · DeepSeek
+                Claude 5.5 · Gemini 4 Hydrogen (Free) · ChatGPT · DeepSeek
               </span>
               <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
                 Zero-Secret Ready
@@ -488,12 +488,12 @@ Sistem ZLCE Mobile Workbench v4.1.0 GA (ZLCEv4.1Mob) menunjukkan arsitektur yang
                   <Cpu className="w-3.5 h-3.5 text-cyan-400" />
                   <span>Pilih Model AI Sasaran Peninjau:</span>
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-2 gap-2">
                   {[
-                    { id: 'claude-3.5-sonnet', label: 'Claude 3.5 Sonnet' },
+                    { id: 'claude-5.5-sonnet', label: 'Claude 5.5 Sonnet' },
+                    { id: 'gemini-4-hydrogen-free', label: 'Gemini 4 Hydrogen (Free)' },
                     { id: 'chatgpt-4o', label: 'ChatGPT (GPT-4o)' },
-                    { id: 'deepseek-v3', label: 'DeepSeek-V3' },
-                    { id: 'gemini-1.5-pro', label: 'Gemini 1.5 Pro' }
+                    { id: 'deepseek-v3', label: 'DeepSeek-V3' }
                   ].map(m => (
                     <button
                       key={m.id}
@@ -522,13 +522,13 @@ Sistem ZLCE Mobile Workbench v4.1.0 GA (ZLCEv4.1Mob) menunjukkan arsitektur yang
                   onChange={(e) => setSelectedFocus(e.target.value as AuditFocusArea)}
                   className="touch-target-44 min-h-[44px] w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-indigo-500 font-semibold text-cyan-300"
                 >
-                  <option value="pwa-frontend-ux">★ Review Frontend PWA: User-Friendly, Komunikatif, Efisien &amp; Powerful (ChatGPT &amp; Claude)</option>
-                  <option value="docs-audit-readme">Audit Dokumentasi (file.md): Review README, docs/, Termux &amp; ZLCE v4</option>
-                  <option value="full-system">Audit Sistem Menyeluruh &amp; Kesiapan Produksi</option>
-                  <option value="architecture-zero-secret">Keamanan Zero-Secret &amp; Token Cleanup</option>
-                  <option value="mobile-lmk-ergonomics">Ergonomi Layar Sentuh &amp; Ketahanan LMK RAM 3GB</option>
-                  <option value="multi-ai-relay-workflow">Alur Estafet Multi-AI &amp; Context Engineering</option>
-                  <option value="code-quality-testing">Kualitas Kode TypeScript &amp; 32 Test Checks</option>
+                  <option value="full-system">Audit Arsitektur, Keamanan &amp; Kesiapan Produksi Menyeluruh</option>
+                  <option value="frontend-ui-ux">Review Frontend, UI/UX, Aksesibilitas &amp; Responsivitas</option>
+                  <option value="security-privacy">Audit Keamanan Aplikasi, Autentikasi &amp; Zero-Secret</option>
+                  <option value="code-quality-testing">Review Kualitas Kode, Arsitektur &amp; Cakupan Pengujian</option>
+                  <option value="performance-reliability">Audit Performa, Memori &amp; Ketahanan Gangguan/Offline</option>
+                  <option value="api-data-integration">Audit Model Data, State Management &amp; Integrasi API</option>
+                  <option value="docs-onboarding">Audit Dokumentasi, README &amp; Panduan Penggunaan</option>
                 </select>
               </div>
             </div>
@@ -683,7 +683,7 @@ Sistem ZLCE Mobile Workbench v4.1.0 GA (ZLCEv4.1Mob) menunjukkan arsitektur yang
             </div>
 
             <p className="text-xs text-slate-400 leading-relaxed">
-              Jika AI peninjau (Claude / ChatGPT / DeepSeek) mengajukan pertanyaan klarifikasi arsitektur atau meminta cuplikan berkas tertentu, masukkan pertanyaan tersebut di sini. Sistem akan membedah basis kebenaran proyek dan merumuskan jawaban teknis presisi siap salin.
+              Jika AI peninjau (Claude 5.5 / Gemini 4 Hydrogen / ChatGPT / DeepSeek) mengajukan pertanyaan klarifikasi arsitektur atau meminta cuplikan berkas tertentu, masukkan pertanyaan tersebut di sini. Sistem akan membedah basis kebenaran proyek dan merumuskan jawaban teknis presisi siap salin.
             </p>
 
             {/* Quick Presets */}
@@ -719,7 +719,7 @@ Sistem ZLCE Mobile Workbench v4.1.0 GA (ZLCEv4.1Mob) menunjukkan arsitektur yang
               <textarea
                 value={questionInput}
                 onChange={(e) => setQuestionInput(e.target.value)}
-                placeholder="Tempelkan pertanyaan klarifikasi dari Claude/ChatGPT/DeepSeek di sini..."
+                placeholder="Tempelkan pertanyaan klarifikasi dari Claude 5.5 / Gemini 4 Hydrogen / ChatGPT / DeepSeek di sini..."
                 rows={3}
                 className="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500 font-mono"
               />
@@ -830,7 +830,7 @@ Sistem ZLCE Mobile Workbench v4.1.0 GA (ZLCEv4.1Mob) menunjukkan arsitektur yang
                   <span className="text-xs text-slate-400"> atau seret &amp; letakkan (drag &amp; drop) berkas ke sini</span>
                 </div>
                 <div className="text-[11px] font-mono text-slate-500">
-                  Mendukung .md, .markdown, .txt, .json (Laporan audit ChatGPT, Claude, DeepSeek)
+                  Mendukung .md, .markdown, .txt, .json (Laporan audit Claude 5.5, Gemini 4 Hydrogen, ChatGPT, DeepSeek)
                 </div>
               </div>
 
@@ -876,7 +876,7 @@ Sistem ZLCE Mobile Workbench v4.1.0 GA (ZLCEv4.1Mob) menunjukkan arsitektur yang
                   onClick={handleLoadSampleReview}
                   className="touch-target-44 min-h-[44px] px-2 flex items-center text-[11px] text-cyan-400 hover:text-cyan-300 underline font-mono"
                 >
-                  Muat Contoh Review Mock Claude (Skor 96)
+                  Muat Contoh Review Mock Claude 5.5 (Skor 96)
                 </button>
               </div>
               <textarea

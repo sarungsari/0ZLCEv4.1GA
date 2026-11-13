@@ -10,16 +10,27 @@
 
 import { ParsedSessionState } from '../types/zlce';
 
-export type ExternalAiModel = 'claude-3.5-sonnet' | 'chatgpt-4o' | 'deepseek-v3' | 'gemini-1.5-pro';
+export type ExternalAiModel =
+  | 'claude-5.5-sonnet'
+  | 'gemini-4-hydrogen-free'
+  | 'chatgpt-4o'
+  | 'deepseek-v3'
+  | 'claude-3.5-sonnet'
+  | 'gemini-1.5-pro';
 
-export type AuditFocusArea = 
+export type AuditFocusArea =
+  | 'full-system'
+  | 'frontend-ui-ux'
+  | 'security-privacy'
+  | 'code-quality-testing'
+  | 'performance-reliability'
+  | 'api-data-integration'
+  | 'docs-onboarding'
   | 'pwa-frontend-ux'
   | 'docs-audit-readme'
-  | 'full-system'
   | 'architecture-zero-secret'
   | 'mobile-lmk-ergonomics'
-  | 'multi-ai-relay-workflow'
-  | 'code-quality-testing';
+  | 'multi-ai-relay-workflow';
 
 export interface AuditPromptConfig {
   targetAi: ExternalAiModel;
@@ -60,71 +71,123 @@ export interface ParsedReviewFeedback {
  * Stop token spesifik per model AI penerima audit
  */
 const MODEL_STOP_TOKENS: Record<ExternalAiModel, string> = {
-  'claude-3.5-sonnet': '=== END CLAUDE AUDIT RESPONSE ===',
+  'claude-5.5-sonnet': '=== END CLAUDE AUDIT RESPONSE ===',
+  'gemini-4-hydrogen-free': '=== END GEMINI AUDIT RESPONSE ===',
   'chatgpt-4o': '=== END CHATGPT AUDIT RESPONSE ===',
   'deepseek-v3': '=== END DEEPSEEK AUDIT RESPONSE ===',
+  'claude-3.5-sonnet': '=== END CLAUDE AUDIT RESPONSE ===',
   'gemini-1.5-pro': '=== END GEMINI AUDIT RESPONSE ==='
 };
 
+const MODEL_DISPLAY_NAMES: Record<ExternalAiModel, string> = {
+  'claude-5.5-sonnet': 'CLAUDE 5.5 SONNET',
+  'gemini-4-hydrogen-free': 'GEMINI 4 HYDROGEN (FREE)',
+  'chatgpt-4o': 'CHATGPT (GPT-4O)',
+  'deepseek-v3': 'DEEPSEEK-V3',
+  'claude-3.5-sonnet': 'CLAUDE 5.5 SONNET',
+  'gemini-1.5-pro': 'GEMINI 4 HYDROGEN (FREE)'
+};
+
 const FOCUS_AREA_DETAILS: Record<AuditFocusArea, { title: string; promptDirectives: string }> = {
+  'full-system': {
+    title: 'Audit Arsitektur, Keamanan & Kesiapan Produksi Menyeluruh',
+    promptDirectives: `Fokus Audit Menyeluruh:
+1. Validasi desain arsitektur sistem, modularitas komponen, dan pemisahan tanggung jawab (separation of concerns).
+2. Kepatuhan keamanan & Zero-Secret Policy (tidak ada kredensial, API key, atau rahasia yang terekspos di repositori maupun client storage).
+3. Reliabilitas runtime, penanganan error (error handling), edge case, dan ketahanan pemulihan sesi/data.
+4. Efisiensi performa, konsumsi memori, ukuran bundel build, serta kelengkapan konfigurasi produksi.
+5. Cakupan dan keandalan automated testing (unit, integrasi, dan validasi end-to-end).`
+  },
+  'frontend-ui-ux': {
+    title: 'Review Frontend, UI/UX, Aksesibilitas & Responsivitas',
+    promptDirectives: `Fokus Audit Frontend & UI/UX:
+1. Tata letak responsif lintas viewport (mobile, tablet, dan desktop) tanpa tumpang tindih maupun horizontal overflow.
+2. Aksesibilitas & ergonomi interaksi (target sentuh memadai, kontras warna, navigasi keyboard/ARIA, dan penanganan viewport keyboard virtual).
+3. Kejelasan alur pengguna (user flow), copywriting antarmuka yang komunikatif, serta umpan balik status (loading, empty state, error, toast/konfirmasi).
+4. Efisiensi rendering komponen, pencegahan re-render berlebihan, dan pemuatan aset/code-splitting.
+5. Konsistensi sistem desain, tipografi, dan kebersihan styling.`
+  },
+  'security-privacy': {
+    title: 'Audit Keamanan Aplikasi, Autentikasi & Zero-Secret Policy',
+    promptDirectives: `Fokus Audit Keamanan & Privasi:
+1. Verifikasi Zero-Secret Policy: nol token, password, API key, atau private key pada kode sumber, config publik, maupun storage persisten.
+2. Validasi input, sanitasi parameter, serta perlindungan terhadap celah injeksi (XSS, shell/SQL injection, CSRF, path traversal).
+3. Ketepatan batas autentikasi, otorisasi, manajemen sesi, dan pembersihan cache kredensial.
+4. Keamanan header HTTP, CORS, dependensi pihak ketiga, dan eksposur endpoint internal.`
+  },
+  'code-quality-testing': {
+    title: 'Review Kualitas Kode, Maintainability & Cakupan Pengujian',
+    promptDirectives: `Fokus Audit Kualitas Kode & Testing:
+1. Kualitas struktur kode, keterbacaan, konsistensi penamaan, dan penghindaran duplikasi logika.
+2. Keamanan tipe (strict typing), kontrak antarmuka/schema, serta penghindaran anti-pattern yang rawan bug.
+3. Penanganan error eksplisit, validasi boundary condition, dan pencegahan race condition.
+4. Kelengkapan, determinisme, dan independensi test suite (unit test, integration test, serta E2E verification).`
+  },
+  'performance-reliability': {
+    title: 'Audit Performa, Manajemen Memori & Ketahanan Gangguan/Offline',
+    promptDirectives: `Fokus Audit Performa & Reliabilitas:
+1. Profil penggunaan memori, potensi memory leak (event listener/timer yang tidak dibersihkan), dan efisiensi struktur data.
+2. Optimasi waktu muat awal, bundle splitting, lazy loading, dan efisiensi asset statis.
+3. Strategi caching, ketahanan terhadap koneksi lambat/offline, dan mekanisme retry/fallback yang aman.
+4. Ketahanan pemulihan draft/state (auto-save, transactional persistence) saat tab/aplikasi tertutup mendadak.`
+  },
+  'api-data-integration': {
+    title: 'Audit Model Data, State Management & Integrasi API',
+    promptDirectives: `Fokus Audit Data, State & API:
+1. Konsistensi skema data, validasi payload masuk/keluar, dan pemeliharaan Single Source of Truth.
+2. Sinkronisasi state antar komponen/tab tanpa state staleness atau desinkronisasi cache.
+3. Keamanan transaksi data, isolasi data antar proyek/pengguna, dan penanganan kegagalan jaringan/API.
+4. Kompatibilitas mundur (backward compatibility) format penyimpanan lokal maupun kontrak API.`
+  },
+  'docs-onboarding': {
+    title: 'Audit Dokumentasi, README & Panduan Developer/Pengguna',
+    promptDirectives: `Fokus Audit Dokumentasi & Onboarding:
+1. Keakuratan dan kelengkapan README.md (deskripsi proyek, prasyarat, langkah instalasi, konfigurasi environment, dan perintah run/build/test).
+2. Kesesuaian antara dokumentasi arsitektur/API dengan implementasi aktual di kode sumber.
+3. Kejelasan panduan penggunaan langkah demi langkah agar mudah diikuti pengembang maupun pengguna baru.
+4. Penandaan bagian yang usang, duplikat, atau memerlukan klarifikasi lebih lanjut.`
+  },
   'pwa-frontend-ux': {
-    title: 'Review Frontend PWA: User-Friendly, Komunikatif, Mudah Dipakai, Efisien & Powerful (ChatGPT & Claude)',
+    title: 'Review Frontend PWA: User-Friendly, Komunikatif, Efisien & Powerful (ChatGPT & Claude 5.5)',
     promptDirectives: `Fokus Review Frontend PWA:
 1. User-Friendly: Ergonomi layar 8.7" (1340x800) tablet SM-T225 & mobile, target sentuh minimal 44px/48px, kontras visual theme, visualViewport virtual keyboard awareness.
-2. Komunikatif: Kejelasan instruksi panduan, umpan balik toast/modal, pesan error edukatif, bahasa manusiawi untuk 8 anggota tim estafet.
+2. Komunikatif: Kejelasan instruksi panduan, umpan balik toast/modal, pesan error edukatif, bahasa manusiawi untuk tim estafet.
 3. Mudah Dipakai (Ease of Use): Operasi 1-ketukan (1-tap copy, 1-tap download .md), minim friksi, transparent auto-draft restore dengan debounce 400ms.
 4. Efisien: Disiplin RAM 3GB Android LMK (Loss-Bounded Persistence RPO <= 400ms), zero lag re-renders, caching offline Service Worker instan.
-5. Powerful: Kelengkapan 6 tab kanonik terpadu ZLCE Mobile Workbench (Dashboard, SESSION_STATE & WAL, AI Workbench, Terminal & Git, Diagnostik & Kualitas, Dokumentasi & Panduan).`
+5. Powerful: Kelengkapan fitur workbench yang terstruktur, responsif, dan tangguh.`
   },
   'docs-audit-readme': {
-    title: 'Audit Dokumentasi (file.md): Review & Perbaikan README, Susunan docs/, Tutorial Android Termux & Pemakaian ZLCE v4',
-    promptDirectives: `Fokus Mandat Audit (Berdasarkan Framework file.md):
-1. Review & Perbaikan README.md: Periksa kelengkapan, prasyarat, kesesuaian jalur berkas repositori v4.1.0 GA, navigasi, dan susun draf README perbaikan.
-2. Review & Verifikasi docs/: Hubungkan docs/README.md, docs/USAGE.md, 8 dokumen docs/mobile/*, dan 14 cetak biru docs/mobile/blueprint/*.
-3. Panduan Instalasi & Persiapan Android dari Termux sampai Siap Pakai: Rinci langkah dari Termux F-Droid, pkg update, git/python/nodejs-lts, storage permission, hingga bash scripts/zlce-prod-start.sh & instalasi PWA di Samsung Galaxy Tab A7 Lite.
-4. Tutorial Pemakaian ZLCE Mobile v4: Panduan alur estafet 8 langkah tim, penegakan 1 task IN_PROGRESS, pembuatan context pack, penangkapan hasil (provenance metadata), dan clean-auth.
-5. Klasifikasi Rekomendasi Terstruktur: Susun temuan prioritas P0 (menghalangi), P1 (navigasi/pemahaman), P2 (gaya/opsional) dan beri penanda [PERLU KONFIRMASI].`
-  },
-  'full-system': {
-    title: 'Audit Sistem Menyeluruh & Uji Keandalan Komprehensif',
-    promptDirectives: `Fokus Audit:
-1. Validasi Cetak Biru Arsitektur v4.1.0 GA (docs/mobile/blueprint/01 s.d. 14).
-2. Kepatuhan Zero-Secret Policy (0 token, 0 password, 0 key di storage/repo).
-3. Ketahanan Android Low Memory Killer (LMK) & operasi offline 100%.
-4. Efektivitas alur kerja estafet 8 anggota tim pada 1 tablet Samsung Tab A7 Lite.
-5. Kualitas test suite (32 checks di scripts/run-tests.py).`
+    title: 'Audit Dokumentasi: Review & Perbaikan README, Struktur docs/, Instalasi & Panduan Penggunaan',
+    promptDirectives: `Fokus Mandat Audit Dokumentasi:
+1. Review & Perbaikan README.md: Periksa kelengkapan, prasyarat, kesesuaian jalur berkas repositori, navigasi, dan susun draf README perbaikan.
+2. Review & Verifikasi docs/: Evaluasi struktur direktori dokumentasi, indeks navigasi, dan panduan penggunaan.
+3. Panduan Instalasi & Persiapan dari Nol: Rinci langkah setup environment hingga aplikasi berjalan dan teruji.
+4. Tutorial Pemakaian Operasional: Panduan alur kerja tim, pengelolaan task, context pack, dan praktik keamanan Zero-Secret.
+5. Klasifikasi Rekomendasi Terstruktur: Susun temuan prioritas P0, P1, P2 dan beri penanda [PERLU KONFIRMASI].`
   },
   'architecture-zero-secret': {
     title: 'Audit Keamanan Zero-Secret & Integritas Arsitektur',
     promptDirectives: `Fokus Audit:
-1. Inspeksi regex zero-leak (ghp_*, token, private keys, cloud keys) di scripts/security-audit.sh.
-2. Mekanisme pembersihan RAM Termux via scripts/zlce/clean-auth.sh (git credential-cache exit).
-3. Penegakan identitas commit per-user (-c user.name="...") tanpa konfigurasi global.
-4. Ketiadaan celah injeksi shell pada command parameter binder.`
+1. Inspeksi regex zero-leak (ghp_*, token, private keys, cloud keys) dan kebersihan client storage.
+2. Mekanisme pembersihan kredensial sementara dan isolasi sesi kerja.
+3. Penegakan identitas commit per-user tanpa menyimpan kredensial permanen.
+4. Ketiadaan celah injeksi shell/XSS pada pemrosesan input & perintah.`
   },
   'mobile-lmk-ergonomics': {
-    title: 'Uji Ergonomi Layar Sentuh & Ketahanan Memori RAM 3GB',
+    title: 'Uji Ergonomi Layar Sentuh & Ketahanan Memori RAM Terbatas',
     promptDirectives: `Fokus Audit:
-1. Target sentuh >= 44x44px pada layar 8.7" (1340x800) WXGA+ Samsung SM-T225.
-2. Penanganan keyboard virtual Android via visualViewport API (--keyboard-height).
-3. Keandalan auto-draft LocalStorage dengan debounce 400ms dan synchronous flush.
-4. Kebijakan Zero-Daemon di Termux untuk menjaga sisa RAM 3GB.`
+1. Target sentuh >= 44x44px dan keterbacaan tipografi pada perangkat mobile/tablet.
+2. Penanganan keyboard virtual via visualViewport API.
+3. Keandalan auto-draft penyimpanan lokal dan synchronous flush saat berpindah aplikasi.
+4. Kebijakan hemat memori pada perangkat berspesifikasi rendah.`
   },
   'multi-ai-relay-workflow': {
     title: 'Review Alur Estafet Multi-AI & Context Engineering',
     promptDirectives: `Fokus Audit:
-1. Format pertukaran konteks portabel (Schema-before-Data) tanpa riwayat chat.
-2. Adaptasi anggaran kuota token (Gemini 1M, Claude 30K, GPT 128K, Compact 8K).
-3. Deteksi konflik keputusan lintas model (ADR-09 Obsidian, backend framework).
-4. Penegakan Invarian I4 (Strict Provenance Tracking pada kode & WAL).`
-  },
-  'code-quality-testing': {
-    title: 'Review Kualitas Kode, Typescript, & Cakupan Test Suite',
-    promptDirectives: `Fokus Audit:
-1. Kualitas pengetikan TypeScript (no any liar, types modular).
-2. Deterministik test runner: 14 skenario e2e, uji LMK, uji offline.
-3. Kepatuhan parser kontrol ZLCE Core (sessionStateValidator.ts vs zlce-check.py).
-4. Penanganan kegagalan & Protokol Recovery Kasus A–D.`
+1. Format pertukaran konteks portabel (Schema-before-Data) tanpa ketergantungan riwayat chat.
+2. Adaptasi anggaran kuota token lintas model (Gemini, Claude 5.5, ChatGPT, DeepSeek).
+3. Deteksi konflik keputusan lintas model terhadap arsitektur proyek.
+4. Penegakan pelacakan provenance dan validasi kualitas output.`
   }
 };
 
@@ -136,11 +199,15 @@ export function generateExternalAuditPrompt(
   sessionState: ParsedSessionState,
   rawMarkdown: string
 ): string {
-  const modelName = config.targetAi.toUpperCase().replace(/-/g, ' ');
-  const stopToken = MODEL_STOP_TOKENS[config.targetAi];
-  const focus = FOCUS_AREA_DETAILS[config.focusArea];
-  const activeTask = sessionState.status.activeTask || 'TASK-043';
-  const lastDone = sessionState.status.lastDoneTask || 'TASK-043';
+  const modelName = MODEL_DISPLAY_NAMES[config.targetAi] || config.targetAi.toUpperCase().replace(/-/g, ' ');
+  const stopToken = MODEL_STOP_TOKENS[config.targetAi] || '=== END AUDIT RESPONSE ===';
+  const focus = FOCUS_AREA_DETAILS[config.focusArea] || FOCUS_AREA_DETAILS['full-system'];
+  const projectName = sessionState.context.projectName || 'Proyek Perangkat Lunak';
+  const projectStack = sessionState.context.stack || 'Web / Full-Stack';
+  const projectMode = sessionState.context.mode || 'FULL';
+  const gitBranch = sessionState.status.gitBranch || 'main';
+  const activeTask = sessionState.status.activeTask || '-';
+  const lastDone = sessionState.status.lastDoneTask || '-';
 
   // Format khusus untuk Review Frontend PWA (User-Friendly, Komunikatif, Efisien & Powerful)
   if (config.focusArea === 'pwa-frontend-ux') {
@@ -275,20 +342,19 @@ ${config.customNotes ? `\n* Catatan Pengembang: ${config.customNotes}\n` : ''}
 Unduh berkas bundel \`zlce-claude-chatgpt-bundle.zip\` atau \`zlce-audit-review-bundle.zip\` untuk memeriksa berkas secara langsung.`;
   }
 
-  return `# MANDAT AUDIT, TESTING & REVIEW ARSITEKTUR ZLCEv4.1Mob v4.1.0 GA
+  return `# MANDAT AUDIT, TESTING & REVIEW TEKNIS: ${projectName}
 # Target Model: [${modelName}]
 # Profil Peninjau: Senior Principal Software Engineer & Security Architect
-# Berkas Bundel Proyek: release-bundles/zlce-audit-review-bundle.zip (bundel audit self-contained + arsitektur LMK)
 # Tanggal Mandat: ${new Date().toISOString().replace('T', ' ').substring(0, 19)} WIB
 
 ---
 
 ## 1. KONTEKS PROYEK & TUJUAN AUDIT
 Anda ditugaskan melakukan audit teknis independen, pengujian kritis, dan review arsitektur atas sistem:
-* **Nama Proyek:** ZLCE Mobile Workbench v4.1.0 GA (ZLCEv4.1Mob)
-* **Lingkungan Target:** 1 Unit Tablet Samsung Galaxy Tab A7 Lite (SM-T225, RAM 3GB, Layar 8.7" 1340x800)
-* **Model Kerja:** 8 Anggota Tim Estafet Bergiliran (Zero-Secret Policy, 1 Task IN_PROGRESS Max)
-* **Status Proyek Terkini:** v4.1.0 GA Terkunci (${sessionState.tasks.length} task baseline aktif, 100% Automated Checks PASS)
+* **Nama Proyek:** ${projectName}
+* **Stack & Lingkungan:** ${projectStack} (Mode Kerja: ${projectMode})
+* **Kebijakan Keamanan Dasar:** Zero-Secret Policy (nol kredensial/API key tersimpan di repo atau client storage)
+* **Status Backlog Terkini:** ${sessionState.tasks.length} task tercatat (Task Aktif: \`${activeTask}\`, Selesai Terakhir: \`${lastDone}\`)
 * **Fokus Audit Saat Ini:** ${focus.title}
 
 ${focus.promptDirectives}
@@ -296,9 +362,9 @@ ${focus.promptDirectives}
 ---
 
 ## 2. ATURAN JAWABAN TEKNIS (STRICT CONSTRAINTS)
-Agar hasil review dapat langsung ditindaklanjuti secara presisi oleh tim teknis, Anda WAJIB mematuhi:
-1. **Bahasa Teknis & Singkat:** Gunakan terminologi rekayasa perangkat lunak standar (POSIX, atomic commits, LMK, debounce, viewport, idempotency). DILARANG menulis kata pengantar basa-basi atau pujian umum.
-2. **Terstruktur & Terbukti:** Setiap temuan wajib menyertakan **Bukti Konkret** (mengutip baris kode, nama berkas, atau nomor task terkait) beserta **Tingkat Keparahan (CRITICAL / HIGH / MEDIUM / LOW)**.
+Agar hasil review dapat langsung ditindaklanjuti secara presisi oleh tim pengembang, Anda WAJIB mematuhi:
+1. **Bahasa Teknis & Objektif:** Gunakan terminologi rekayasa perangkat lunak standar. DILARANG menulis kata pengantar basa-basi atau pujian umum tanpa bukti.
+2. **Terstruktur & Terbukti:** Setiap temuan wajib menyertakan **Bukti Konkret** (mengutip nama berkas, fungsi, atau baris kode terkait) beserta **Tingkat Keparahan (CRITICAL / HIGH / MEDIUM / LOW)**.
 3. **Preskriptif & Terukur:** Sertakan rekomendasi solusi teknis nyata yang siap diubah menjadi task perbaikan atomik.
 4. **Anti-Placeholder:** Jika memberikan cuplikan kode koreksi, tulis secara lengkap tanpa komentar pemotongan \`// ... existing code ...\`.
 5. **Stop Token Wajib:** Akhiri ulasan teknis Anda dengan persis: \`${stopToken}\`.
@@ -310,20 +376,22 @@ Sajikan ulasan Anda dalam format Markdown berikut:
 
 \`\`\`markdown
 # LAPORAN AUDIT & REVIEW TEKNIS: [${modelName}]
+Proyek: ${projectName}
 Tanggal Audit: [YYYY-MM-DD HH:mm]
 Skor Kesiapan Produksi: [0-100 / 100]
+Keputusan: [GO / NEEDS POLISHING / NOT READY FOR PRODUCTION (NO-GO)]
 
 ## A. RINGKASAN EKSEKUTIF (Maks. 3 Paragraf Teknis)
-[Ringkasan temuan menyeluruh arsitektur, kelayakan tablet 3GB, dan ketahanan zero-loss context]
+[Ringkasan temuan menyeluruh arsitektur, kualitas implementasi, keamanan, dan kesiapan produksi]
 
-## B. MATRIKS EVALUASI PILAR ARSITEKTUR
-| Pilar Arsitektur | Status (PASS/CONCERN/FAIL) | Catatan Kritis & Bukti |
+## B. MATRIKS EVALUASI PILAR UTAMA
+| Pilar Evaluasi | Status (PASS/CONCERN/FAIL) | Catatan Kritis & Bukti |
 | :--- | :--- | :--- |
-| Zero-Secret & Security Model | [PASS/CONCERN] | [Bukti scripts/security-audit.sh & clean-auth] |
-| Ketahanan LMK & Efisiensi RAM 3GB | [PASS/CONCERN] | [Bukti useAutoDraftCache & zero-daemon] |
-| Ergonomi Layar Sentuh 8.7" (44px+) | [PASS/CONCERN] | [Bukti MobileLayout & index.css] |
-| Format Konteks Portabel & Multi-AI | [PASS/CONCERN] | [Bukti contextPackGenerator & stop tokens] |
-| Test Coverage & Integritas Kontrol | [PASS/CONCERN] | [Bukti run-tests.py (73 checks) & zlce-check] |
+| Arsitektur & Kualitas Kode | [PASS/CONCERN/FAIL] | [Bukti file/modul terkait] |
+| Keamanan & Zero-Secret Policy | [PASS/CONCERN/FAIL] | [Bukti sanitasi/auth/env] |
+| UI/UX, Aksesibilitas & Responsivitas | [PASS/CONCERN/FAIL] | [Bukti komponen/layout] |
+| Performa, Memori & Reliabilitas | [PASS/CONCERN/FAIL] | [Bukti optimasi/caching/recovery] |
+| Pengujian & Dokumentasi | [PASS/CONCERN/FAIL] | [Bukti test suite & README] |
 
 ## C. TEMUAN CELAH, RISIKO ATAU SARAN PENINGKATAN
 ### Temuan #1: [Judul Temuan]
@@ -341,15 +409,13 @@ ${stopToken}
 
 ---
 
-## 4. METADATA SESI PROYEK SAAT INI (TIER 0 TRUTH)
-* **Cabang Git:** \`v4-mobile\`
-* **Task Terakhir:** \`${lastDone}\` (Status: DONE)
-* **Kerapian ZLCE Check:** \`RESULT: OK (0 error, 0 warn, ${sessionState.tasks.length} task)\`
-* **Test Runner:** \`100% automated test checks PASS\`
-* **Perangkat Acuan:** Samsung Galaxy Tab A7 Lite (SM-T225, 3GB LPDDR4X, WXGA+ 1340x800)
+## 4. METADATA SESI PROYEK SAAT INI
+* **Cabang Git:** \`${gitBranch}\`
+* **Task Aktif:** \`${activeTask}\` | **Task Selesai Terakhir:** \`${lastDone}\`
+* **Total Task Terdaftar:** ${sessionState.tasks.length} task
 
 ${config.customNotes ? `* **Catatan Tambahan Pengembang:** ${config.customNotes}\n` : ''}
-Mulailah audit Anda dengan membaca seluruh berkas bundel \`zlce-audit-review-bundle.zip\` yang dilampirkan.`;
+Mulailah audit Anda dengan memeriksa berkas proyek atau bundel konteks yang dilampirkan.`;
 }
 
 /**
@@ -496,9 +562,9 @@ export function parseReviewFeedbackToProposedTasks(rawReviewText: string): Parse
   // Model name detector
   let modelName = 'External AI Reviewer';
   if (/chatgpt|gpt-4/i.test(rawReviewText)) modelName = 'ChatGPT (GPT-4o)';
-  else if (/claude/i.test(rawReviewText)) modelName = 'Claude 3.5 Sonnet';
+  else if (/claude/i.test(rawReviewText)) modelName = 'Claude 5.5 Sonnet';
   else if (/deepseek/i.test(rawReviewText)) modelName = 'DeepSeek-V3';
-  else if (/gemini/i.test(rawReviewText)) modelName = 'Gemini 1.5 Pro';
+  else if (/gemini/i.test(rawReviewText)) modelName = 'Gemini 4 Hydrogen (Free)';
 
   // Score extraction
   const scoreMatch = rawReviewText.match(/(?:Skor|Score|Kesiapan|Nilai)[^0-9]*([0-9]{1,3})\s*(?:\/|\s*dari)?\s*100/i);
