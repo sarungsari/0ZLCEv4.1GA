@@ -167,15 +167,15 @@ export const ZLCE_TEMPLATES: TemplateItem[] = [
     title: 'SESSION_STATE.md (Proyek Aktif: ZLCE Mobile Workbench v4.1.0 GA)',
     filename: 'SESSION_STATE.md',
     category: 'state',
-    description: 'Status sesi riil yang sedang berjalan di workspace: ZLCE Mobile Workbench v4.1.0 GA / ZLCEv4.1Mob (Fase 0 s/d 21, 134 task tablet bersama).',
+    description: 'Status sesi baseline terkunci ZLCE Mobile Workbench v4.1.0 GA / ZLCEv4.1Mob (siap dipakai di proyek baru, lanjutan, atau modifikasi).',
     content: currentProjectSessionState
   },
   {
     id: 'current-project-tasks',
-    title: 'TASKS.md (Backlog 134 Task ZLCEv4.1Mob)',
+    title: 'TASKS.md (Baseline Terkunci ZLCEv4.1Mob)',
     filename: 'TASKS.md',
     category: 'workflow',
-    description: 'Backlog lengkap 134 task atomik Fase 0 s/d 21 untuk tablet bersama Samsung Tab A7 Lite (8 anggota).',
+    description: 'Baseline task operasional terkunci v4.1.0 GA untuk verifikasi PWA, keamanan Zero-Secret, dan integritas repositori.',
     content: currentProjectTasks
   },
   {
@@ -207,7 +207,7 @@ export const ZLCE_TEMPLATES: TemplateItem[] = [
     title: 'MOBILE_BLUEPRINT.md (Indeks Cetak Biru Arsitektur Mobile)',
     filename: 'MOBILE_BLUEPRINT.md',
     category: 'blueprint',
-    description: 'Ringkasan eksekutif arsitektur mobile, 14 cetak biru, 9 ADR, model memori LMK RPO <= 400ms, dan 134 task (Fase 0 s/d 21).',
+    description: 'Ringkasan eksekutif arsitektur mobile, 14 cetak biru, 9 ADR, model memori LMK RPO <= 400ms, dan baseline rilis v4.1.0 GA terkunci.',
     content: mobileBlueprintIndex
   },
   {

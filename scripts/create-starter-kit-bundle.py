@@ -2,7 +2,7 @@
 """
 Generator deterministik paket bersih ZLCE Starter Kit v4.1.0 GA (Mode LITE + Templates).
 Membundel seluruh berkas resmi di direktori `zlce-starter-kit/` + `SHA256SUMS.txt`
-ke `public/assets/zlce-starter-kit-v4.1.0.zip` dengan izin POSIX yang seragam.
+ke `release-bundles/zlce-starter-kit-v4.1.0.zip` dengan izin POSIX yang seragam.
 """
 
 import hashlib
@@ -12,7 +12,7 @@ import sys
 import zipfile
 
 SOURCE_DIR = "zlce-starter-kit"
-OUTPUT_ZIP = "public/assets/zlce-starter-kit-v4.1.0.zip"
+OUTPUT_ZIP = "release-bundles/zlce-starter-kit-v4.1.0.zip"
 MANIFEST_FILE = "SHA256SUMS.txt"
 
 

@@ -6,13 +6,13 @@
 
 *Zero-Loss Context Engineering: a kit and web workbench that keeps AI coding sessions consistent across context resets, using structured state files, handover protocols, and mobile Termux integration.*
 
-[![Tests](https://img.shields.io/badge/tests-73%2F73%20passing-brightgreen.svg)](#hasil-pengujian)
+[![Tests](https://img.shields.io/badge/tests-73%2B%20passing-brightgreen.svg)](#hasil-pengujian)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D20.19-339933.svg)](#prasyarat)
 [![Version](https://img.shields.io/badge/version-4.1.0%20GA-informational.svg)](CHANGELOG.md)
-[![Kit ZLCE: 134/134 Tasks](https://img.shields.io/badge/ZLCEv4.1Mob-134%2F134%20Tasks-success.svg)](SESSION_STATE.md)
+[![Baseline Terkunci: v4.1.0 GA](https://img.shields.io/badge/ZLCEv4.1Mob-Terkunci%20%26%20Siap-success.svg)](SESSION_STATE.md)
 
-[Pusat Dokumentasi](docs/README.md) · [Cetak Biru Arsitektur](docs/mobile/MOBILE_BLUEPRINT.md) · [Tutorial Instalasi Android](docs/mobile/INSTALLATION_ANDROID.md) · [Tutorial Pemakaian Mobile](docs/mobile/USAGE_MOBILE.md) · [Operasi Produksi](docs/mobile/PRODUCTION_OPERATIONS.md) · [Bundel ZIP Audit](release-bundles/zlce-audit-review-bundle.zip)
+[Pusat Dokumentasi](docs/README.md) · [Cetak Biru Arsitektur](docs/mobile/MOBILE_BLUEPRINT.md) · [Tutorial Instalasi Android](docs/mobile/INSTALLATION_ANDROID.md) · [Tutorial Pemakaian Mobile](docs/mobile/USAGE_MOBILE.md) · [Operasi Produksi](docs/mobile/PRODUCTION_OPERATIONS.md) · [Starter Kit](zlce-starter-kit/README.md)
 
 </div>
 
@@ -183,11 +183,11 @@ Panduan detail alur kerja operasional dan triase revisi: [`docs/USAGE.md`](docs/
 ├── DATA_MODEL.md              # Indeks Gerbang 2 (skema SessionState/WAL & LocalStorage)
 ├── TESTING.md                 # Indeks Gerbang 3 (strategi uji 73 checks & SM-T225)
 ├── CHECKLISTS.md              # Indeks Gerbang 4 (daftar periksa rilis GA & Zero-Secret)
-├── SESSION_STATE.md           # Single Source of Truth kontrol proyek ZLCE (134 task)
-├── TASKS.md                   # Matriks perincian task atomik ZLCEv4.1Mob (Fase 0 s/d 21)
-├── CHANGELOG.md               # Riwayat perubahan per versi (hingga v4.1.0 GA)
+├── SESSION_STATE.md           # Single Source of Truth baseline terkunci ZLCEv4.1Mob
+├── TASKS.md                   # Rincian task baseline operasional v4.1.0 GA
+├── CHANGELOG.md               # Catatan rilis bersih v4.1.0 GA
 ├── zlce-starter-kit/          # Template skeleton Mode LITE (4 berkas inti + panduan)
-├── archive/components/        # Arsip komponen prapenyederhanaan FASE 19 (read-only)
+├── archive/                   # Arsip lokal riwayat pengembangan & laporan (terkecuali di .gitignore)
 ├── templates/                 # 9 template dokumen kontrol + subfolder profiles/
 │   ├── BLUEPRINT.template.md      # Gerbang 1: Visi, lingkup, kriteria selesai
 │   ├── ARCHITECTURE.template.md   # Gerbang 2: Arsitektur & batasan sistem
@@ -214,14 +214,13 @@ Panduan detail alur kerja operasional dan triase revisi: [`docs/USAGE.md`](docs/
 │   │   ├── PRODUCTION_OPERATIONS.md # Operasi produksi (scripts/zlce-prod-start.sh)
 │   │   ├── TROUBLESHOOTING.md # Penanganan kendala umum LMK & Kasus A-D
 │   │   └── blueprint/         # 14 Cetak Biru Arsitektur Teknis Mobile
-│   ├── archive/               # Arsip historis log audit (AUDIT_LOG_FASE_0_TO_18.md)
-│   └── revisi/                # Laporan audit & pelacakan revisi (AUDIT_3.22, dll.)
 ├── scripts/                   # Skrip operasional & utilitas ZLCE
 │   ├── zlce-prod-start.sh     # Runner produksi mandiri (Termux / Linux)
+│   ├── create-starter-kit-bundle.py # Pembuat bundel ZIP Starter Kit on-demand
 │   ├── create-audit-bundle.py # Pembuat bundel ZIP deterministik untuk audit
 │   ├── create-pwa-review-bundle.py # Pembuat bundel ZIP review frontend PWA
 │   ├── create-claude-bundle.py# Pembuat bundel ZIP khusus Claude & ChatGPT
-│   ├── run-tests.py           # Automated test suite runner (73 automated checks)
+│   ├── run-tests.py           # Automated test suite runner (74 automated checks)
 │   ├── security-audit.sh      # Pemeriksa zero-leak regex rahasia (Zero-Secret)
 │   └── zlce/                  # Skrip kanonik (salin folder ini ke repo proyek Anda)
 │       ├── zlce               # CLI dispatcher allowlist
@@ -262,12 +261,12 @@ ZLCE Mobile Workbench v4.1.0 GA (`ZLCEv4.1Mob`) telah diverifikasi secara penuh 
 
 | Parameter | Catatan Verifikasi Resmi |
 | :--- | :--- |
-| **Hasil Otomatisasi** | **73 / 73 CHECKS PASSED (100% Pass Rate)** |
+| **Hasil Otomatisasi** | **Seluruh Uji Otomatis (`run-tests.py`) PASSED (100% Pass Rate)** |
 | **Pemeriksaan Tipe** | `tsc --noEmit` LULUS bersih (0 errors) |
 | **Audit Keamanan** | `scripts/security-audit.sh` LULUS (0 secret leaks / Zero-Secret Valid) |
 | **Model AI Diuji** | Claude 3.5 Sonnet, ChatGPT-4o, Gemini 2.5 Flash / 3.8, DeepSeek-V3 |
 | **Target Platform Fisik** | Samsung Galaxy Tab A7 Lite (SM-T225) RAM 3GB • Termux • PWA Offline |
-| **Tanggal & Versi Rilis** | 2026-11-13 • v4.1.0 GA / v4.1.1 (134 Task, Fase 0–21) |
+| **Tanggal & Versi Rilis** | 2026-11-13 • v4.1.0 GA (Baseline Operasional Terkunci & Siap Pakai) |
 
 <details>
 <summary><b>Cakupan 73 Uji Otomatis (Test Suite Breakdown)</b></summary>

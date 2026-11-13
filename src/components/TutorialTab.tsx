@@ -272,7 +272,7 @@ export const TutorialTab: React.FC<TutorialTabProps> = ({
     if (readyTask) return readyTask.id;
     const activeTask = sessionState.tasks.find(t => t.status === 'IN_PROGRESS');
     if (activeTask) return activeTask.id;
-    return sessionState.tasks[sessionState.tasks.length - 1]?.id || 'TASK-134';
+    return sessionState.tasks[sessionState.tasks.length - 1]?.id || 'TASK-001';
   }, [initialTaskId, sessionState]);
 
   const [selectedTaskId, setSelectedTaskId] = useState<string>(defaultTask);

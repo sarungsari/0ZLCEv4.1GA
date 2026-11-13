@@ -84,7 +84,6 @@ export const FeedbackReviewTab: React.FC<FeedbackReviewTabProps> = ({
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const [uploadedFileSize, setUploadedFileSize] = useState<string | null>(null);
   const [isDraggingFile, setIsDraggingFile] = useState<boolean>(false);
-  const [isLoadingReport, setIsLoadingReport] = useState<boolean>(false);
   const [severityFilter, setSeverityFilter] = useState<'ALL' | 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW'>('ALL');
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
@@ -133,7 +132,7 @@ export const FeedbackReviewTab: React.FC<FeedbackReviewTabProps> = ({
           second: '2-digit'
         });
         setLastGeneratedAt(timeNow);
-        setZipSuccessMessage(`Bundel 69 berkas berhasil di-generate & diunduh (${timeNow}) - 100% mutakhir!`);
+        setZipSuccessMessage(`Bundel audit terbaru berhasil di-generate on-demand & diunduh (${timeNow})!`);
         setTimeout(() => setZipSuccessMessage(null), 6000);
       }
     } catch (err: any) {
@@ -242,50 +241,6 @@ Sistem ZLCE Mobile Workbench v4.1.0 GA (ZLCEv4.1Mob) menunjukkan arsitektur yang
     }
   };
 
-  // Load latest audit report asset from disk (/assets/aistudio/Laporan_Audit_ZLCE_v4.0.0_150d1d16.md)
-  const handleLoadLatestAuditReportAsset = async () => {
-    setIsLoadingReport(true);
-    try {
-      const res = await fetch('/assets/aistudio/Laporan_Audit_ZLCE_v4.0.0_150d1d16.md');
-      if (!res.ok) throw new Error('File lampiran audit tidak ditemukan');
-      const text = await res.text();
-      setRawReviewInput(text);
-      setUploadedFileName('Laporan_Audit_ZLCE_v4.0.0_150d1d16.md');
-      setUploadedFileSize(`${(new Blob([text]).size / 1024).toFixed(1)} KB`);
-      const parsed = parseReviewFeedbackToProposedTasks(text);
-      setParsedFeedback(parsed);
-      setProposedTasks(parsed.proposedTasks);
-      setTasksIntegratedStatus(null);
-    } catch (err: any) {
-      console.error('Gagal memuat berkas laporan audit:', err);
-      showToast('Gagal memuat berkas lampiran laporan audit: ' + (err?.message || err), 'error');
-    } finally {
-      setIsLoadingReport(false);
-    }
-  };
-
-  // Load second audit review report asset (/assets/aistudio/LAPORAN_TINJAUAN_KEDUA_ZLCE_1d0ccc58.md)
-  const handleLoadSecondAuditReviewAsset = async () => {
-    setIsLoadingReport(true);
-    try {
-      const res = await fetch('/assets/aistudio/LAPORAN_TINJAUAN_KEDUA_ZLCE_1d0ccc58.md');
-      if (!res.ok) throw new Error('File lampiran tinjauan kedua tidak ditemukan');
-      const text = await res.text();
-      setRawReviewInput(text);
-      setUploadedFileName('LAPORAN_TINJAUAN_KEDUA_ZLCE_1d0ccc58.md');
-      setUploadedFileSize(`${(new Blob([text]).size / 1024).toFixed(1)} KB`);
-      const parsed = parseReviewFeedbackToProposedTasks(text);
-      setParsedFeedback(parsed);
-      setProposedTasks(parsed.proposedTasks);
-      setTasksIntegratedStatus(null);
-    } catch (err: any) {
-      console.error('Gagal memuat berkas tinjauan kedua:', err);
-      showToast('Gagal memuat berkas tinjauan kedua: ' + (err?.message || err), 'error');
-    } finally {
-      setIsLoadingReport(false);
-    }
-  };
-
   const handleSelectAllTasks = () => {
     setProposedTasks(prev => prev.map(t => ({ ...t, accepted: true })));
   };
@@ -356,28 +311,25 @@ Sistem ZLCE Mobile Workbench v4.1.0 GA (ZLCEv4.1Mob) menunjukkan arsitektur yang
     'README.md (Halaman Depan & Quickstart Proyek)',
     'docs/README.md (Pusat Indeks Navigasi Dokumentasi)',
     'docs/USAGE.md (Metodologi ZLCE: 4 Gerbang, WAL & Triase)',
-    'SESSION_STATE.md (Single Source of Truth, 82 Task DONE)',
-    'TASKS.md (Backlog 82 Task Atomik Lengkap - 100% DONE)',
+    'SESSION_STATE.md (Single Source of Truth v4.1.0 GA Terkunci)',
+    'TASKS.md (Baseline Task Operasional Terkunci v4.1.0 GA)',
     'docs/mobile/PRODUCTION_OPERATIONS.md (Manual Operasi Produksi Nyata)',
-    'docs/mobile/INSTALLATION.md (Panduan Tablet F-Droid & Termux)',
+    'docs/mobile/INSTALLATION_ANDROID.md & INSTALLATION.md (Panduan Tablet F-Droid & Termux)',
     'docs/mobile/TERMUX_SETUP.md (Quick-Ref Environment & Alias)',
-    'docs/mobile/USER_GUIDE.md (Alur Kerja Estafet 8 Anggota)',
+    'docs/mobile/USER_GUIDE.md & USAGE_MOBILE.md (Alur Kerja Estafet 8 Anggota)',
     'docs/mobile/TROUBLESHOOTING.md (Matriks Pemecahan Masalah & Kasus A-D)',
     'docs/mobile/SECURITY_AUDIT.md (Laporan Zero-Secret & Token Purge)',
     'docs/mobile/DEVICE_AUDIT.md (Audit Fisik Sentuh SM-T225)',
     'docs/mobile/MOBILE_BLUEPRINT.md (Cetak Biru Arsitektur Mobile)',
     'docs/mobile/blueprint/01..14 (Seluruh 14 Cetak Biru Arsitektur)',
-    'docs/revisi/AUDIT_3.22.md & REVISION_PLAN.md (Audit & Rencana Revisi)',
     'scripts/zlce-prod-start.sh (Automated 1-Tap Production Runner)',
     'scripts/zlce-check.py (Canonical POSIX Linter)',
-    'scripts/run-tests.py (Automated Suite 47 Checks)',
+    'scripts/run-tests.py (Automated Test Suite Lengkap)',
     'scripts/security-audit.sh (Regex Zero-Leak Scanner)',
     'scripts/zlce/zlce & clean-auth.sh (Dispatcher & RAM Purge)',
     'src/hooks/useAutoDraftCache.ts (Hook Debounce 400ms & Synchronous LMK Flush)',
     'src/tests/lmkRecovery.test.ts (Uji Ketahanan LMK RAM 3GB, 5/5 Checks PASS)',
     'package.json (Konfigurasi Runtime & Dependensi npm)',
-    'public/assets/aistudio/file.md_75a501e3.txt (Framework Audit 6-Tahap)',
-    'public/assets/aistudio/LAPORAN_TINJAUAN_KEDUA_ZLCE_1d0ccc58.md (Laporan Tinjauan Kedua 2026-11-08)',
     'public/manifest.webmanifest & sw.js (Offline PWA App Shell)',
     'public/icons/ (4 Aset Ikon PWA Standar)'
   ];
@@ -403,7 +355,7 @@ Sistem ZLCE Mobile Workbench v4.1.0 GA (ZLCEv4.1Mob) menunjukkan arsitektur yang
               Audit, Testing &amp; Review Multi-AI Hub
             </h1>
             <p className="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
-              Fasilitas evaluasi independen pihak ketiga: buat prompt audit terstruktur, unduh bundel ZIP 71 berkas proyek lengkap (mencakup seluruh arsitektur LMK &amp; recovery), tanggapi pertanyaan klarifikasi AI peninjau, dan integrasikan rekomendasi perbaikan melalui proposal task terstruktur.
+              Fasilitas evaluasi independen pihak ketiga: buat prompt audit terstruktur, generate bundel ZIP proyek secara on-demand (mencakup seluruh arsitektur LMK &amp; recovery), tanggapi pertanyaan klarifikasi AI peninjau, dan integrasikan rekomendasi perbaikan melalui proposal task terstruktur.
             </p>
           </div>
 
@@ -415,17 +367,17 @@ Sistem ZLCE Mobile Workbench v4.1.0 GA (ZLCEv4.1Mob) menunjukkan arsitektur yang
               className={`touch-target-44 min-h-[44px] px-4 py-2.5 bg-gradient-to-r from-indigo-600 via-cyan-600 to-emerald-600 hover:from-indigo-500 hover:to-emerald-500 text-white rounded-lg text-xs font-bold flex items-center gap-2 shadow-lg shadow-cyan-950/40 transition active:scale-95 border border-cyan-400/30 ${
                 isGeneratingZip ? 'opacity-80 cursor-wait' : ''
               }`}
-              title="Generate dan unduh bundel ZIP 71 berkas proyek paling mutakhir secara on-the-fly"
+              title="Generate dan unduh bundel ZIP proyek paling mutakhir secara on-the-fly"
             >
               {isGeneratingZip ? (
                 <>
                   <RefreshCw className="w-4 h-4 text-white animate-spin" />
-                  <span>Sedang Mengemas 71 Berkas...</span>
+                  <span>Sedang Mengemas Bundel ZIP...</span>
                 </>
               ) : (
                 <>
                   <Sparkles className="w-4 h-4 text-amber-300" />
-                  <span>Generate &amp; Unduh ZIP (71 Berkas)</span>
+                  <span>Generate &amp; Unduh ZIP On-Demand</span>
                 </>
               )}
             </button>
@@ -845,30 +797,6 @@ Sistem ZLCE Mobile Workbench v4.1.0 GA (ZLCEv4.1Mob) menunjukkan arsitektur yang
                   <FileText className="w-3.5 h-3.5 text-emerald-400" />
                   <span>Unggah Berkas Laporan Audit (Format .md / .txt / .json):</span>
                 </label>
-
-                <div className="flex flex-wrap items-center gap-2">
-                  <button
-                    type="button"
-                    disabled={isLoadingReport}
-                    onClick={handleLoadLatestAuditReportAsset}
-                    className="touch-target-44 min-h-[44px] px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white transition flex items-center gap-1.5 active:scale-95"
-                    title="Muat Laporan Audit Dokumentasi Pertama (file.md / AUD-001 s.d. AUD-014)"
-                  >
-                    <FileText className="w-3.5 h-3.5 text-slate-400" />
-                    <span>{isLoadingReport ? 'Memuat...' : '📄 Tinjauan Pertama'}</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    disabled={isLoadingReport}
-                    onClick={handleLoadSecondAuditReviewAsset}
-                    className="touch-target-44 min-h-[44px] px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-cyan-950/90 hover:bg-cyan-900 border border-cyan-600/80 text-cyan-200 hover:text-white transition flex items-center gap-1.5 active:scale-95 shadow-md shadow-cyan-950/40"
-                    title="Muat Laporan Tinjauan Kedua: Verifikasi Jawaban Tim & Rekomendasi Final (2026-11-08 / B1-B9)"
-                  >
-                    <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-                    <span>{isLoadingReport ? 'Memuat...' : '⚡ Muat Tinjauan Kedua (B1–B9 / Final GA)'}</span>
-                  </button>
-                </div>
               </div>
 
               {/* Hidden File Input */}

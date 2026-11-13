@@ -28,15 +28,13 @@ FILES_TO_BUNDLE = [
     "SECURITY.md",
     "CONTRIBUTING.md",
     "LICENSE",
-    "CLAUDE_CHATGPT_HANDOVER.md",
     "HANDOVER_PROMPT.md",
     "LANDING_PROMPT.md",
     "archive/components/README.md",
 
-    # 2. Dokumen Panduan Tablet, Operasional & Arsip Audit
+    # 2. Dokumen Panduan Tablet & Operasional
     "docs/README.md",
     "docs/USAGE.md",
-    "docs/archive/AUDIT_LOG_FASE_0_TO_18.md",
     "docs/mobile/INSTALLATION.md",
     "docs/mobile/INSTALLATION_ANDROID.md",
     "docs/mobile/USAGE_MOBILE.md",
@@ -46,13 +44,7 @@ FILES_TO_BUNDLE = [
     "docs/mobile/TROUBLESHOOTING.md",
     "docs/mobile/SECURITY_AUDIT.md",
     "docs/mobile/DEVICE_AUDIT.md",
-    "docs/mobile/FEASIBILITY_AND_DECISIONS.md",
     "docs/mobile/MOBILE_BLUEPRINT.md",
-    "docs/mobile/BLUEPRINT_REVIEW.md",
-    "docs/mobile/AUDIT_BASELINE.md",
-    "docs/revisi/AUDIT_3.22.md",
-    "docs/revisi/REVISION_PLAN.md",
-    "docs/revisi/REVISION_REPORT.md",
 
     # 3. Seluruh 14 Cetak Biru Arsitektur Mobile
     "docs/mobile/blueprint/01_SYSTEM_OVERVIEW.md",
@@ -255,7 +247,6 @@ FILES_TO_BUNDLE = [
     "public/icons/icon-192x192.png",
     "public/icons/icon-512x512-maskable.png",
     "public/icons/icon-512x512.png",
-    "public/assets/aistudio/file.md_75a501e3.txt",
 
     # 13. Konfigurasi Proyek & Git
     ".env.example",

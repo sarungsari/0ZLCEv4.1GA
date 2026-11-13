@@ -7,6 +7,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import { execSync } from 'child_process';
 import { 
   generateExternalAuditPrompt, 
   AuditPromptConfig 
@@ -77,16 +78,31 @@ export function runPwaReviewPromptTests() {
   }
   console.log('  ✓ 4. Rujukan bundel ZIP zlce-pwa-frontend-review-bundle.zip dan profil tablet SM-T225 valid');
 
-  // Check 5: Verifikasi keberadaan fisik berkas bundel ZIP di disk
-  const zipPath = path.resolve(rootDir, 'release-bundles/zlce-pwa-frontend-review-bundle.zip');
-  if (!fs.existsSync(zipPath)) {
-    throw new Error(`Berkas fisik bundel ZIP tidak ditemukan di: ${zipPath}`);
+  // Check 5: Verifikasi pembentukan on-demand & ukuran berkas bundel ZIP (tanpa meninggalkan file .zip statis)
+  const releaseDir = path.resolve(rootDir, 'release-bundles');
+  const zipPath = path.resolve(releaseDir, 'zlce-pwa-frontend-review-bundle.zip');
+  const existedBefore = fs.existsSync(zipPath);
+  const releaseDirExistedBefore = fs.existsSync(releaseDir);
+  try {
+    if (!existedBefore) {
+      execSync('python3 scripts/create-pwa-review-bundle.py', { cwd: rootDir, stdio: 'pipe' });
+    }
+    if (!fs.existsSync(zipPath)) {
+      throw new Error(`Berkas fisik bundel ZIP gagal dibentuk di: ${zipPath}`);
+    }
+    const stat = fs.statSync(zipPath);
+    if (stat.size < 100 * 1024) {
+      throw new Error(`Ukuran berkas ZIP terlalu kecil (${stat.size} bytes), diduga berkas korup`);
+    }
+    console.log(`  ✓ 5. Bundel ZIP on-demand terverifikasi (${(stat.size / 1024).toFixed(1)} KB, bersih tanpa residu .zip)`);
+  } finally {
+    if (!existedBefore && fs.existsSync(zipPath)) {
+      fs.unlinkSync(zipPath);
+    }
+    if (!releaseDirExistedBefore && fs.existsSync(releaseDir) && fs.readdirSync(releaseDir).length === 0) {
+      fs.rmdirSync(releaseDir);
+    }
   }
-  const stat = fs.statSync(zipPath);
-  if (stat.size < 100 * 1024) {
-    throw new Error(`Ukuran berkas ZIP terlalu kecil (${stat.size} bytes), diduga berkas korup`);
-  }
-  console.log(`  ✓ 5. Berkas fisik bundel ZIP terverifikasi di disk (${(stat.size / 1024).toFixed(1)} KB)`);
 
   // Check 6: Verifikasi skrip pembuat bundel scripts/create-pwa-review-bundle.py
   const scriptPath = path.resolve(rootDir, 'scripts/create-pwa-review-bundle.py');

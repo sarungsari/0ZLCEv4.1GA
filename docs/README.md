@@ -29,8 +29,6 @@ DOKUMENTASI PROYEK                TUTORIAL INSTALASI TERMUX               TUTORI
   Menjelaskan filosofi *Single Source of Truth* pada berkas, 4 Gerbang Kualitas (*Quality Gates*), *Write-Ahead Logging* (WAL) task atomik, dan protokol triase revisi R1–R7.
 * **[`docs/mobile/MOBILE_BLUEPRINT.md`](mobile/MOBILE_BLUEPRINT.md)** — **Ringkasan Eksekutif Arsitektur Mobile:**
   Visi tablet bersama 8.7" Samsung Galaxy Tab A7 Lite, kendala memori RAM 3GB, model estafet 8 anggota tim, dan prinsip *Zero-Secret*.
-* **[`docs/mobile/FEASIBILITY_AND_DECISIONS.md`](mobile/FEASIBILITY_AND_DECISIONS.md)** — **Analisis Kelayakan & Keputusan ADR:**
-  Hasil riset teknis pengujian tablet fisik SM-T225, uji performa browser, dan kompilasi keputusan arsitektur awal.
 
 ### 1.2 14 Cetak Biru Arsitektur Teknis (`docs/mobile/blueprint/`)
 Kompilasi spesifikasi arsitektur komprehensif yang menjadi acuan implementasi kode sumber:
@@ -52,18 +50,13 @@ Kompilasi spesifikasi arsitektur komprehensif yang menjadi acuan implementasi ko
 | **Blueprint 13** | Katalog Perintah CLI Siap Pakai & Parameter Allowlist | [`blueprint/13_COMMAND_TEMPLATES.md`](mobile/blueprint/13_COMMAND_TEMPLATES.md) |
 | **Blueprint 14** | Model Kolaborasi Multi-AI (Claude, ChatGPT, Gemini, DeepSeek) | [`blueprint/14_MULTI_AI_TEAM_MODEL.md`](mobile/blueprint/14_MULTI_AI_TEAM_MODEL.md) |
 
-### 1.3 Riwayat Audit & Evolusi Versi
-* **[`docs/revisi/AUDIT_3.22.md`](revisi/AUDIT_3.22.md)** — Laporan audit komparatif ZLCE v3.2.2 terhadap tantangan lingkungan mobile.
-* **[`docs/revisi/REVISION_PLAN.md`](revisi/REVISION_PLAN.md)** — Rencana aksi sistematis perbaikan 7 level revisi arsitektur.
-* **[`docs/revisi/REVISION_REPORT.md`](revisi/REVISION_REPORT.md)** — Bukti verifikasi penutupan seluruh temuan audit v3.2.2.
-* **[`docs/mobile/AUDIT_BASELINE.md`](mobile/AUDIT_BASELINE.md)** — Tolok ukur dasar pengujian fisik tablet Samsung Galaxy Tab A7 Lite.
-* **[`docs/mobile/BLUEPRINT_REVIEW.md`](mobile/BLUEPRINT_REVIEW.md)** — Evaluasi mendalam konsistensi 14 cetak biru.
-* **[`docs/archive/AUDIT_LOG_FASE_0_TO_18.md`](archive/AUDIT_LOG_FASE_0_TO_18.md)** — Arsip historis 62 entri log audit (`P2-CP1` s/d `TASK-118`, Fase 0–18).
-* **`docs/archive/reports/`** — Arsip laporan audit & tinjauan historis pra-v4.1.0 GA yang dipindahkan dari `public/assets/aistudio/` agar direktori publik hanya memuat berkas aktif UI (`TASK-131`).
+### 1.3 Pembersihan Arsip Historis & Generator Bundel On-Demand
+* Tugas pengembangan historis (`FASE 0` s/d `FASE 21`), laporan audit/tinjauan lama, dan catatan proses sebelumnya telah dipindahkan ke direktori lokal `archive/` yang dikecualikan dari repositori via `.gitignore` agar repositori tetap bersih dan ringan saat di-clone untuk proyek baru.
+* Tidak ada berkas `.zip` statis yang disimpan di `public/` maupun repositori; bundel ZIP Starter Kit maupun review dapat dibuat ulang kapan saja via antarmuka Web Studio (`/api/bundle/*`) atau `npm run bundles`.
 
 ### 1.4 Klarifikasi Hubungan Starter Kit vs Berkas Root
-* **`zlce-starter-kit/`** adalah template *clean skeleton* Mode LITE (4 berkas kontrol inti: `BLUEPRINT.md`, `TASKS.md`, `SESSION_STATE.md`, `HANDOVER.md`) untuk memulai proyek baru.
-* **Berkas Root Repositori** (10 dokumen kontrol Mode FULL: `BLUEPRINT.md`, `ARCHITECTURE.md`, `DATA_MODEL.md`, `TASKS.md`, `TESTING.md`, `CHECKLISTS.md`, `AI_WORKFLOW.md`, `SESSION_STATE.md`, `CHANGELOG.md`, `HANDOVER.md`) adalah *state aktif operasional* pengembangan **ZLCE Mobile Workbench v4.1.0 GA** (134 task terdaftar, Fase 0 s/d 21).
+* **`zlce-starter-kit/`** adalah template *clean skeleton* Mode LITE (4 berkas kontrol inti: `BLUEPRINT.md`, `TASKS.md`, `SESSION_STATE.md`, `HANDOVER.md`) lengkap dengan panduan Android/Termux untuk memulai proyek baru atau lanjutan.
+* **Berkas Root Repositori** (`BLUEPRINT.md`, `ARCHITECTURE.md`, `DATA_MODEL.md`, `TASKS.md`, `TESTING.md`, `CHECKLISTS.md`, `AI_WORKFLOW.md`, `SESSION_STATE.md`, `CHANGELOG.md`, `HANDOVER.md`) memuat **baseline terkunci dan bersih** `ZLCE Mobile Workbench v4.1.0 GA` yang siap dipakai sebagai proyek PWA workbench ataupun pijakan 3 alur kerja (`NEW`, `CONTINUE`, `MODIFY`).
 
 ---
 
@@ -170,4 +163,4 @@ Jika sesi kerja terputus atau terjadi crash browser akibat LMK:
 | *"Terjadi crash atau status Git tidak cocok dengan SESSION_STATE"* | 👉 [**Pilar 3 — Pemecahan Masalah & Kasus A–D**](mobile/TROUBLESHOOTING.md) |
 | *"Bagaimana aturan 4 Gerbang Kualitas dan Write-Ahead Logging ZLCE?"* | 👉 [**Pilar 1 — Metodologi ZLCE**](USAGE.md) |
 | *"Saya ingin membaca arsitektur teknis lengkap (14 Blueprint)"* | 👉 [**Pilar 1 — 14 Cetak Biru Arsitektur**](mobile/blueprint/01_SYSTEM_OVERVIEW.md) |
-| *"Saya ingin memeriksa laporan audit dan riwayat revisi repositori"* | 👉 [**Pilar 1 — Laporan Revisi Audit**](revisi/REVISION_REPORT.md) |
+| *"Bagaimana status baseline terkunci v4.1.0 GA saat ini?"* | 👉 [**Baseline Terkunci — `SESSION_STATE.md`**](../SESSION_STATE.md) |

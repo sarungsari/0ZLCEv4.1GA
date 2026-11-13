@@ -98,7 +98,7 @@ export function generateSmartFilename(docType: string, projectName?: string): st
 }
 
 export interface GenerateBundleOptions {
-  type?: 'audit' | 'claude' | 'lmk' | 'pwa-frontend';
+  type?: 'audit' | 'claude' | 'lmk' | 'pwa-frontend' | 'starter-kit';
   sessionStateMarkdown?: string;
   filename?: string;
 }
@@ -122,15 +122,17 @@ export async function generateAndDownloadZipBundle(
   options: GenerateBundleOptions = {}
 ): Promise<GenerateBundleResult> {
   const bundleType = options.type || 'audit';
-  const defaultFilename = bundleType === 'lmk'
-    ? 'zlce-lmk-recovery-bundle.zip'
-    : bundleType === 'pwa-frontend'
-      ? 'zlce-pwa-frontend-review-bundle.zip'
-      : bundleType === 'audit' 
-        ? 'zlce-audit-review-bundle.zip' 
-        : 'zlce-claude-chatgpt-bundle.zip';
+  const defaultFilename = bundleType === 'starter-kit'
+    ? 'zlce-starter-kit-v4.1.0.zip'
+    : bundleType === 'lmk'
+      ? 'zlce-lmk-recovery-bundle.zip'
+      : bundleType === 'pwa-frontend'
+        ? 'zlce-pwa-frontend-review-bundle.zip'
+        : bundleType === 'audit'
+          ? 'zlce-audit-review-bundle.zip'
+          : 'zlce-claude-chatgpt-bundle.zip';
   const filename = options.filename || defaultFilename;
-  const expectedFiles = bundleType === 'lmk' ? 5 : bundleType === 'pwa-frontend' ? 97 : bundleType === 'audit' ? 71 : 20;
+  const expectedFiles = bundleType === 'starter-kit' ? 28 : bundleType === 'lmk' ? 5 : bundleType === 'pwa-frontend' ? 195 : bundleType === 'audit' ? 240 : 70;
 
   try {
     // 1. Coba panggil server endpoint Vite untuk kompilasi bundel on-the-fly

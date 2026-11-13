@@ -20,6 +20,8 @@ import {
 } from 'lucide-react';
 import { ParsedSessionState } from '../types/zlce';
 import { copyText } from '../utils/clipboard';
+import { generateAndDownloadZipBundle } from '../utils/fileExport';
+import { showToast } from './mobile/ToastContainer';
 
 interface LandingWizardTabProps {
   stateData?: ParsedSessionState;
@@ -397,14 +399,25 @@ ${rawMarkdown || '<!-- Gunakan berkas SESSION_STATE.md aktual proyek -->'}
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <a
-            href="/assets/zlce-starter-kit-v4.1.0.zip"
-            download="zlce-starter-kit-v4.1.0.zip"
+          <button
+            type="button"
+            onClick={async () => {
+              const res = await generateAndDownloadZipBundle({
+                type: 'starter-kit',
+                sessionStateMarkdown: rawMarkdown,
+                filename: 'zlce-starter-kit-v4.1.0.zip'
+              });
+              if (res.success) {
+                showToast('Bundel zlce-starter-kit-v4.1.0.zip berhasil di-generate & diunduh.', 'success');
+              } else {
+                showToast('Mode Statis PWA: jalankan "npm run bundles" atau "python3 scripts/create-starter-kit-bundle.py" di Termux.', 'warning');
+              }
+            }}
             className="touch-target-44 min-h-[44px] flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow transition"
-            title="Unduh paket ZIP bersih berisi template, contoh terisi, dan skrip CLI untuk proyek baru"
+            title="Generate on-demand paket ZIP bersih berisi template, contoh terisi, dan skrip CLI untuk proyek baru"
           >
-            <Download className="w-4 h-4" /> Unduh Starter Kit (.ZIP)
-          </a>
+            <Download className="w-4 h-4" /> Generate &amp; Unduh Starter Kit (.ZIP)
+          </button>
           <button
             onClick={handleCopyPrompt}
             className="touch-target-44 min-h-[44px] flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan-600 hover:bg-cyan-500 text-white shadow transition"

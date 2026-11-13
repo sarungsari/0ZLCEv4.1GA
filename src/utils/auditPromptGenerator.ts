@@ -80,7 +80,7 @@ const FOCUS_AREA_DETAILS: Record<AuditFocusArea, { title: string; promptDirectiv
     title: 'Audit Dokumentasi (file.md): Review & Perbaikan README, Susunan docs/, Tutorial Android Termux & Pemakaian ZLCE v4',
     promptDirectives: `Fokus Mandat Audit (Berdasarkan Framework file.md):
 1. Review & Perbaikan README.md: Periksa kelengkapan, prasyarat, kesesuaian jalur berkas repositori v4.1.0 GA, navigasi, dan susun draf README perbaikan.
-2. Review & Restrukturisasi docs/: Atasi kebingungan struktur, hubungkan docs/README.md, docs/USAGE.md, 11 dokumen docs/mobile/*, 14 cetak biru docs/mobile/blueprint/*, dan docs/revisi/*.
+2. Review & Verifikasi docs/: Hubungkan docs/README.md, docs/USAGE.md, 8 dokumen docs/mobile/*, dan 14 cetak biru docs/mobile/blueprint/*.
 3. Panduan Instalasi & Persiapan Android dari Termux sampai Siap Pakai: Rinci langkah dari Termux F-Droid, pkg update, git/python/nodejs-lts, storage permission, hingga bash scripts/zlce-prod-start.sh & instalasi PWA di Samsung Galaxy Tab A7 Lite.
 4. Tutorial Pemakaian ZLCE Mobile v4: Panduan alur estafet 8 langkah tim, penegakan 1 task IN_PROGRESS, pembuatan context pack, penangkapan hasil (provenance metadata), dan clean-auth.
 5. Klasifikasi Rekomendasi Terstruktur: Susun temuan prioritas P0 (menghalangi), P1 (navigasi/pemahaman), P2 (gaya/opsional) dan beri penanda [PERLU KONFIRMASI].`
@@ -231,7 +231,6 @@ ${stopToken}
 # Target Model: [${modelName}]
 # Peran Anda: Senior Technical Writer, Dokumenter Software & Systems Architect
 # Berkas Bundel ZIP: release-bundles/zlce-claude-chatgpt-bundle.zip & release-bundles/zlce-audit-review-bundle.zip
-# Berkas Rujukan Audit: public/assets/aistudio/file.md_75a501e3.txt (Framework 6-Tahap)
 # Tanggal Mandat: ${new Date().toISOString().replace('T', ' ').substring(0, 19)} WIB
 
 ---
@@ -240,7 +239,7 @@ ${stopToken}
 Anda bertindak sebagai **technical writer dan reviewer dokumentasi perangkat lunak**. Tugas Anda adalah mengaudit repositori ini secara menyeluruh berdasarkan bukti nyata di kode/konfigurasi, lalu menyusun laporan perbaikan dan panduan teknis operasional yang jelas, komunikatif, profesional, dan mudah diikuti—termasuk oleh pemula:
 
 1. **Review & Perbaiki README.md:** Nilai README saat ini dan susun draf README baru yang profesional untuk halaman depan GitHub, akurat dengan kode v4.1.0 GA, lengkap dengan quickstart Termux dan link navigasi.
-2. **Review & Restrukturisasi direktori \`docs/\`:** Evaluasi struktur dan isi folder \`docs/\`, atasi redundansi dan kebingungan navigasi, hubungkan \`docs/README.md\`, \`docs/USAGE.md\`, 11 panduan \`docs/mobile/*\`, 14 cetak biru \`docs/mobile/blueprint/*\`, dan 3 dokumen \`docs/revisi/*\`.
+2. **Review & Verifikasi direktori \`docs/\`:** Evaluasi struktur dan isi folder \`docs/\`, pastikan navigasi bersih antara \`docs/README.md\`, \`docs/USAGE.md\`, panduan \`docs/mobile/*\`, dan 14 cetak biru \`docs/mobile/blueprint/*\`.
 3. **Susun Panduan Instalasi & Persiapan Pemula di Android (Termux):** Rinci langkah demi langkah dari nol (unduh Termux APK di F-Droid, update mirror, instal paket \`git python nodejs-lts bash coreutils micro openssh\`, \`termux-setup-storage\`, clone repo, npm install, eksekusi \`bash scripts/zlce-prod-start.sh\`, hingga instal PWA di layar utama Samsung Galaxy Tab A7 Lite).
 4. **Susun Tutorial Pemakaian Lengkap ZLCE Mobile v4:** Rinci alur kerja operasional harian 8 anggota tim estafet, aturan ketat 1 task IN_PROGRESS, pembuatan portable context pack, penangkapan hasil (result capture dengan provenance injection), verifikasi kanonik \`zlce check\`, hingga serah terima dan pembersihan memori \`clean-auth.sh\`.
 5. **Perapihan & Integrasi Preview Studio:** Berikan rekomendasi konkret untuk menyelaraskan antarmuka web workbench (FeedbackReviewTab, CommandHubTab, WorkspaceReader) dengan alur dokumentasi.
@@ -289,7 +288,7 @@ Anda ditugaskan melakukan audit teknis independen, pengujian kritis, dan review 
 * **Nama Proyek:** ZLCE Mobile Workbench v4.1.0 GA (ZLCEv4.1Mob)
 * **Lingkungan Target:** 1 Unit Tablet Samsung Galaxy Tab A7 Lite (SM-T225, RAM 3GB, Layar 8.7" 1340x800)
 * **Model Kerja:** 8 Anggota Tim Estafet Bergiliran (Zero-Secret Policy, 1 Task IN_PROGRESS Max)
-* **Status Proyek Terkini:** 134/134 Task (Fase 0 s/d 21, 73/73 Automated Checks PASS)
+* **Status Proyek Terkini:** v4.1.0 GA Terkunci (${sessionState.tasks.length} task baseline aktif, 100% Automated Checks PASS)
 * **Fokus Audit Saat Ini:** ${focus.title}
 
 ${focus.promptDirectives}
@@ -345,8 +344,8 @@ ${stopToken}
 ## 4. METADATA SESI PROYEK SAAT INI (TIER 0 TRUTH)
 * **Cabang Git:** \`v4-mobile\`
 * **Task Terakhir:** \`${lastDone}\` (Status: DONE)
-* **Kerapian ZLCE Check:** \`RESULT: OK (0 error, 0 warn, 134 task)\`
-* **Test Runner:** \`73/73 automated test checks PASS\`
+* **Kerapian ZLCE Check:** \`RESULT: OK (0 error, 0 warn, ${sessionState.tasks.length} task)\`
+* **Test Runner:** \`100% automated test checks PASS\`
 * **Perangkat Acuan:** Samsung Galaxy Tab A7 Lite (SM-T225, 3GB LPDDR4X, WXGA+ 1340x800)
 
 ${config.customNotes ? `* **Catatan Tambahan Pengembang:** ${config.customNotes}\n` : ''}
@@ -406,8 +405,7 @@ export function generateTechnicalClarificationResponse(
 1. **Peta Indeks Pusat (\`docs/README.md\`):** Mengatalogkan seluruh berkas dokumentasi berdasarkan peran dan kebutuhan pengembang.
 2. **Panduan Metodologi Inti (\`docs/USAGE.md\`):** Menjelaskan 3 alur operasional (proyek baru, lanjut sesi, restrukturisasi), protokol 4 gerbang, dan aturan triase revisi R1-R7.
 3. **Panduan Operasional Tablet (\`docs/mobile/\`):** 11 berkas panduan khusus tablet Samsung A7 Lite: \`INSTALLATION.md\`, \`TERMUX_SETUP.md\`, \`USER_GUIDE.md\`, \`PRODUCTION_OPERATIONS.md\`, \`TROUBLESHOOTING.md\`, \`SECURITY_AUDIT.md\`, dan \`DEVICE_AUDIT.md\`.
-4. **14 Cetak Biru Arsitektur (\`docs/mobile/blueprint/\`):** Desain teknis modular mulai dari 01_SYSTEM_OVERVIEW hingga 14_MULTI_AI_TEAM_MODEL.
-5. **Laporan Audit & Revisi (\`docs/revisi/\`):** Dokumentasi audit historis v3.2.2 ke v4.0.0 (\`AUDIT_3.22.md\`, \`REVISION_PLAN.md\`, \`REVISION_REPORT.md\`).`;
+4. **14 Cetak Biru Arsitektur (\`docs/mobile/blueprint/\`):** Desain teknis modular mulai dari 01_SYSTEM_OVERVIEW hingga 14_MULTI_AI_TEAM_MODEL.`;
   } else if (q.includes('tutorial') || q.includes('pemakaian') || q.includes('zlce mobile') || q.includes('relay') || q.includes('estafet') || q.includes('alur')) {
     matchedTopic = 'Tutorial Pemakaian ZLCE Mobile v4 (Alur Estafet 8 Anggota)';
     suggestedFiles.push(

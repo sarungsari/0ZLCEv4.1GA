@@ -21,7 +21,6 @@ FILES_TO_BUNDLE = [
     "TESTING.md",
     "CHECKLISTS.md",
     "HANDOVER.md",
-    "CLAUDE_CHATGPT_HANDOVER.md",
     "HANDOVER_PROMPT.md",
     "LANDING_PROMPT.md",
     "SESSION_STATE.md",
@@ -31,9 +30,7 @@ FILES_TO_BUNDLE = [
     "CONTRIBUTING.md",
     "LICENSE",
 
-    # 2. Acuan Audit Khusus & Arsip
-    "public/assets/aistudio/file.md_75a501e3.txt",
-    "docs/archive/AUDIT_LOG_FASE_0_TO_18.md",
+    # 2. Arsip Komponen Internal
     "archive/components/README.md",
 
     # 3. Dokumentasi Lengkap & Panduan Mobile (3 Pilar)
@@ -48,10 +45,7 @@ FILES_TO_BUNDLE = [
     "docs/mobile/TROUBLESHOOTING.md",
     "docs/mobile/SECURITY_AUDIT.md",
     "docs/mobile/DEVICE_AUDIT.md",
-    "docs/mobile/FEASIBILITY_AND_DECISIONS.md",
     "docs/mobile/MOBILE_BLUEPRINT.md",
-    "docs/mobile/BLUEPRINT_REVIEW.md",
-    "docs/mobile/AUDIT_BASELINE.md",
 
     # 4. Seluruh 14 Cetak Biru Arsitektur Mobile
     "docs/mobile/blueprint/01_SYSTEM_OVERVIEW.md",
@@ -69,13 +63,9 @@ FILES_TO_BUNDLE = [
     "docs/mobile/blueprint/13_COMMAND_TEMPLATES.md",
     "docs/mobile/blueprint/14_MULTI_AI_TEAM_MODEL.md",
 
-    # 5. Riwayat Revisi
-    "docs/revisi/AUDIT_3.22.md",
-    "docs/revisi/REVISION_PLAN.md",
-    "docs/revisi/REVISION_REPORT.md",
-
-    # 6. Skrip Eksekusi & Starter Produksi
+    # 5. Skrip Eksekusi & Starter Produksi
     "scripts/zlce-prod-start.sh",
+    "scripts/create-starter-kit-bundle.py",
     "scripts/create-claude-bundle.py",
     "scripts/create-audit-bundle.py",
     "scripts/create-pwa-review-bundle.py",

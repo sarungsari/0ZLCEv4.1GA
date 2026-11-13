@@ -47,7 +47,7 @@ import { ParsedSessionState, ValidationResult, TaskStatus, ZLCETask, ParsedBackl
 import { copyText } from '../utils/clipboard';
 import { serializeSessionStateToMarkdown, parseSessionStateMarkdown, parseTasksMarkdown } from '../utils/markdownParser';
 import { generatePortableContextPack } from '../utils/contextPackGenerator';
-import { downloadMarkdownBlob } from '../utils/fileExport';
+import { downloadMarkdownBlob, generateAndDownloadZipBundle } from '../utils/fileExport';
 import { TEAM_MEMBERS } from '../data/teamMembers';
 import { TeamMember, ProjectWorkflowMode } from '../types/mobile';
 import { UseSessionPersistenceReturn } from '../hooks/useSessionPersistence';
@@ -686,7 +686,7 @@ const DashboardTabComponent: React.FC<DashboardTabProps> = ({
             <div className="space-y-1">
               <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
                 <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold">
-                  v4.1.0 GA TERKUNCI (134/134 DONE)
+                  v4.1.0 GA TERKUNCI (SIAP PAKAI)
                 </span>
                 <span className="text-cyan-300 font-semibold">Fresh PWA &amp; Sistem ZLCE Siap Pakai</span>
               </div>
@@ -727,14 +727,26 @@ const DashboardTabComponent: React.FC<DashboardTabProps> = ({
           </div>
 
           <div className="pt-2.5 border-t border-slate-800/80 flex flex-wrap items-center gap-2">
-            <a
-              href="/assets/zlce-starter-kit-v4.1.0.zip"
-              download="zlce-starter-kit-v4.1.0.zip"
+            <button
+              type="button"
+              onClick={async () => {
+                const res = await generateAndDownloadZipBundle({
+                  type: 'starter-kit',
+                  sessionStateMarkdown: rawMarkdown,
+                  filename: 'zlce-starter-kit-v4.1.0.zip'
+                });
+                if (res.success) {
+                  showToast('Bundel zlce-starter-kit-v4.1.0.zip berhasil di-generate & diunduh.', 'success');
+                } else {
+                  showToast('Mode Statis PWA: generate zlce-starter-kit-v4.1.0.zip di Termux via "npm run bundles".', 'warning');
+                }
+              }}
               className="touch-target-44 min-h-[44px] px-3 py-2 rounded-lg bg-emerald-950/70 hover:bg-emerald-900 border border-emerald-700/60 text-emerald-300 text-xs font-semibold flex items-center gap-1.5 transition"
+              title="Generate dan unduh zlce-starter-kit-v4.1.0.zip secara on-demand tanpa menyimpan file ZIP statis di repo"
             >
               <Download className="w-4 h-4" />
-              <span>Unduh Starter Kit (.ZIP)</span>
-            </a>
+              <span>Generate &amp; Unduh Starter Kit (.ZIP)</span>
+            </button>
             <button
               type="button"
               onClick={() => onNavigateTab('tutorial')}
@@ -1641,7 +1653,7 @@ const DashboardTabComponent: React.FC<DashboardTabProps> = ({
           </div>
 
           <div className="bg-slate-950 p-3 rounded-lg border border-slate-800 text-xs text-slate-300 font-mono leading-relaxed space-y-1.5 whitespace-pre-wrap max-h-60 overflow-y-auto">
-            {stateData.handoverNotes || '* Gerbang Rilis ZLCE Mobile Workbench v4.1.0 GA telah disetujui resmi.\n* Backlog 134 task atomik (Fase 0 s/d 21) tersinkron di TASKS.md.'}
+            {stateData.handoverNotes || '* Gerbang Rilis ZLCE Mobile Workbench v4.1.0 GA telah dikunci dan siap dipakai.\n* Jalankan Proyek Baru, Lanjutan Setengah Jadi, atau Update & Modifikasi dari launcher di atas.'}
           </div>
         </div>
       </div>

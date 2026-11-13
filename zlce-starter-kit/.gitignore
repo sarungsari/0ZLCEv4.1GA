@@ -11,3 +11,6 @@ __pycache__/
 *.pyo
 .pytest_cache/
 release-bundles/*.zip
+public/assets/*.zip
+archive/
+docs/mobile/physical_lmk_test.log

@@ -84,32 +84,11 @@ Seluruh asumsi aktif (`ASM-01` s/d `ASM-03`) berstatus `CONFIRMED` di [`SESSION_
 
 ---
 
-## 7. PETA FASE IMPLEMENTASI TERKUNCI (FASE 0 s/d FASE 21 — 134/134 TASK DONE)
+## 7. PETA FASE BASELINE OPERASIONAL TERKUNCI (v4.1.0 GA)
 
-Seluruh 22 fase telah diaudit bebas *crosslink* (0 dependensi maju, 0 siklus, rentang task berkesinambungan 1–134, 100% sinkron antara [`TASKS.md`](TASKS.md), [`SESSION_STATE.md`](SESSION_STATE.md), [`src/data/taskPhases.ts`](src/data/taskPhases.ts), dan [`docs/mobile/blueprint/11_IMPLEMENTATION_ROADMAP.md`](docs/mobile/blueprint/11_IMPLEMENTATION_ROADMAP.md)):
+Riwayat pengembangan FASE 0 s/d FASE 21 (`TASK-001` s/d `TASK-134`) telah dikunci dan diarsipkan di `archive/history/`. Berkas kontrol aktif memuat baseline bersih siap pakai untuk 3 alur proyek (`NEW`, `CONTINUE`, `MODIFY`) yang tersinkron 1:1 antara [`TASKS.md`](TASKS.md), [`SESSION_STATE.md`](SESSION_STATE.md), dan [`src/data/taskPhases.ts`](src/data/taskPhases.ts):
 
-| Fase | Rentang Task | Jumlah | Fokus Utama | Status |
+| Fase | Rentang Task | Jumlah | Fokus Baseline Terkunci | Status |
 | :--- | :--- | :---: | :--- | :---: |
-| **Fase 0** | `TASK-001` s/d `TASK-002` | 2 | Baseline uji, test runner & struktur komponen mobile | DONE |
-| **Fase 1** | `TASK-003` s/d `TASK-007` | 5 | Fondasi PWA, manifest, Service Worker, ergonomi 8.7", Member & Project Switcher | DONE |
-| **Fase 2** | `TASK-008` s/d `TASK-012` | 5 | Workspace Markdown, parser, file picker, exporter & auto-draft cache 400ms | DONE |
-| **Fase 3** | `TASK-013` s/d `TASK-018` | 6 | Portable Context Pack, token budget adapter, prompt studio, provenance & cold-start AI | DONE |
-| **Fase 4** | `TASK-019` s/d `TASK-024` | 6 | Tim estafet 8 anggota, aturan 1 task `IN_PROGRESS`, persetujuan gerbang & handover | DONE |
-| **Fase 5** | `TASK-025` s/d `TASK-030` | 6 | Command Hub, shell sanitizer POSIX, One-Tap Copy, CLI `zlce` & paste-back | DONE |
-| **Fase 6** | `TASK-031` s/d `TASK-035` | 5 | Git branch per task, `-c user.name`, safe pull `--ff-only`, `clean-auth` & resolusi konflik | DONE |
-| **Fase 7** | `TASK-036` s/d `TASK-040` | 5 | Uji E2E 14 skenario, LMK recovery, offline 100%, ergonomi SM-T225 & Zero-Secret | DONE |
-| **Fase 8** | `TASK-041` s/d `TASK-043` | 3 | Panduan instalasi tablet, user guide tim estafet & troubleshooting Kasus A–D | DONE |
-| **Fase 9** | `TASK-044` s/d `TASK-046` | 3 | Generator prompt audit multi-AI, bundel ZIP review, Q&A & integrator revisi | DONE |
-| **Fase 10** | `TASK-047` s/d `TASK-060` | 14 | Remediasi audit `AUD-001..014`: pre-commit hook, LMK lifecycle, isolation & atomic write | DONE |
-| **Fase 11** | `TASK-061` s/d `TASK-074` | 14 | Remediasi Claude 5.5 `AUD-015..028`: closure gate, POSIX quoting, redaksi & target sentuh | DONE |
-| **Fase 12** | `TASK-075` s/d `TASK-082` | 8 | Production Hardening `AUD2-001..008`: RPO <= 400ms, CAS claim guard & deterministic SW | DONE |
-| **Fase 13** | `TASK-083` s/d `TASK-088` | 6 | Final polish `AUD3-001..006`: email `@zlce.local`, `HOST=127.0.0.1` & tab routing | DONE |
-| **Fase 14** | `TASK-089` s/d `TASK-095` | 7 | Pemisahan 3 pilar dokumentasi, tutorial Android, log kerja anggota & review PWA | DONE |
-| **Fase 15** | `TASK-096` s/d `TASK-100` | 5 | Remediasi P0: Zero-Secret persistence gate, fail-closed `clean-auth`, keyboard & SW | DONE |
-| **Fase 16** | `TASK-101` s/d `TASK-106` | 6 | Peningkatan UX P1: atomic claim, accessible dialogs, `React.lazy` & hard token cap | DONE |
-| **Fase 17** | `TASK-107` s/d `TASK-111` | 5 | Rekonsiliasi 14 blueprint `AS-BUILT`, Tailwind polish, telemetri SM-T225 & audit performa | DONE |
-| **Fase 18** | `TASK-112` s/d `TASK-118` | 7 | Remediasi review PWA ulang `R-01..R-12`, ikon PWA, `ModalShell`, `DraftTextarea` & `--header-h` | DONE |
-| **Fase 19** | `TASK-119` s/d `TASK-124` | 6 | Penyederhanaan frontend PWA ke 6 tab kanonik & dasbor teknis berdensitas tinggi | DONE |
-| **Fase 20** | `TASK-125` s/d `TASK-129` | 5 | Kelengkapan 10 dokumen Mode `FULL`, Mode `LITE` starter kit, arsip audit & bundel v4.1.0 GA | DONE |
-| **Fase 21** | `TASK-130` s/d `TASK-134` | 5 | Single Source of Truth, hapus 4 komponen yatim, `sync-assets` 25 target, `release-bundles/` & refaktor `TutorialTab` | DONE |
-| **TOTAL** | `TASK-001` s/d `TASK-134` | **134** | **Seluruh 22 Fase Terintegrasi, Bebas Crosslink & Terkunci (`v4.1.0 GA / v4.1.1`)** | **100% DONE** |
+| **Fase 0** | `TASK-001` s/d `TASK-003` | 3 | Baseline inti PWA 6-tab & offline SW, isolasi multi-proyek & starter-kit bersih, validasi Zero-Secret GA | DONE |
+| **TOTAL** | `TASK-001` s/d `TASK-003` | **3** | **Baseline Operasional Terkunci & Bersih (`v4.1.0 GA`)** | **100% DONE** |

@@ -51,34 +51,34 @@ function runBlueprintParityTests() {
     throw new Error('Check 1 GAGAL: Ada berkas blueprint yang belum berstatus APPROVED / AS-BUILT');
   }
 
-  // 2. Verifikasi Rekonsiliasi 134 Task di MOBILE_BLUEPRINT.md
+  // 2. Verifikasi Rekonsiliasi Baseline v4.1.0 GA di MOBILE_BLUEPRINT.md
   const mobileBlueprintPath = path.join(rootDir, 'docs/mobile/MOBILE_BLUEPRINT.md');
   const mobileBlueprintContent = fs.readFileSync(mobileBlueprintPath, 'utf8');
   if (
-    mobileBlueprintContent.includes('134 TASK RESMI TUNTAS') &&
-    mobileBlueprintContent.includes('134 task') &&
-    mobileBlueprintContent.includes('`TASK-134`')
+    mobileBlueprintContent.includes('v4.1.0 GA') &&
+    mobileBlueprintContent.includes('LOCKED AS-BUILT & BERSIH') &&
+    mobileBlueprintContent.includes('`TASK-001` s/d `TASK-003`')
   ) {
-    console.log('✓ Check 2: MOBILE_BLUEPRINT.md merekonsiliasi 134 task resmi');
+    console.log('✓ Check 2: MOBILE_BLUEPRINT.md merekonsiliasi baseline terkunci v4.1.0 GA (TASK-001..TASK-003)');
     passed++;
   } else {
-    throw new Error('Check 2 GAGAL: MOBILE_BLUEPRINT.md tidak memuat rekonsiliasi 134 task');
+    throw new Error('Check 2 GAGAL: MOBILE_BLUEPRINT.md tidak memuat rekonsiliasi baseline terkunci v4.1.0 GA');
   }
 
-  // 3. Verifikasi Konsistensi Total 134 Task di TASKS.md dan SESSION_STATE.md
+  // 3. Verifikasi Konsistensi Baseline Terkunci di TASKS.md dan SESSION_STATE.md
   const tasksPath = path.join(rootDir, 'TASKS.md');
   const tasksContent = fs.readFileSync(tasksPath, 'utf8');
   const sessionStatePath = path.join(rootDir, 'SESSION_STATE.md');
   const sessionStateContent = fs.readFileSync(sessionStatePath, 'utf8');
 
-  const task134InTasks = tasksContent.includes('TASK-134:');
-  const task134InSession = sessionStateContent.includes('`TASK-134`');
+  const baselineInTasks = ['TASK-001:', 'TASK-002:', 'TASK-003:'].every(t => tasksContent.includes(t));
+  const baselineInSession = ['`TASK-001`', '`TASK-002`', '`TASK-003`'].every(t => sessionStateContent.includes(t));
 
-  if (task134InTasks && task134InSession) {
-    console.log('✓ Check 3: TASKS.md dan SESSION_STATE.md sinkron memuat seluruh 134 task');
+  if (baselineInTasks && baselineInSession) {
+    console.log('✓ Check 3: TASKS.md dan SESSION_STATE.md sinkron memuat baseline terkunci v4.1.0 GA (TASK-001..TASK-003)');
     passed++;
   } else {
-    throw new Error('Check 3 GAGAL: TASK-134 tidak ditemukan di TASKS.md atau SESSION_STATE.md');
+    throw new Error('Check 3 GAGAL: Baseline TASK-001..TASK-003 tidak lengkap di TASKS.md atau SESSION_STATE.md');
   }
 
   // 4. Verifikasi Atribut Bahasa Dokumen lang="id" di index.html

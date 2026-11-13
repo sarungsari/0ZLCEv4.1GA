@@ -22,27 +22,21 @@ export function runDashboardPhaseFilterTests(): {
   const checks: { name: string; pass: boolean; details?: string }[] = [];
 
   // --- CHECK 1: Kelengkapan Seluruh Fase + All pada TASK_PHASES
-  const expectedPhaseIds = [
-    'all',
-    'fase-0', 'fase-1', 'fase-2', 'fase-3', 'fase-4',
-    'fase-5', 'fase-6', 'fase-7', 'fase-8', 'fase-9',
-    'fase-10', 'fase-11', 'fase-12', 'fase-13', 'fase-14',
-    'fase-15', 'fase-16', 'fase-17', 'fase-18', 'fase-19', 'fase-20', 'fase-21'
-  ];
+  const expectedPhaseIds = ['all', 'fase-0'];
 
   const actualPhaseIds = TASK_PHASES.map(p => p.id);
   const missingPhases = expectedPhaseIds.filter(id => !actualPhaseIds.includes(id));
   const pass1 = missingPhases.length === 0 && TASK_PHASES.length === expectedPhaseIds.length;
 
   checks.push({
-    name: `Check 1: Katalog TASK_PHASES memuat seluruh fase lengkap (Fase 0 s/d ${TASK_PHASES.length - 2}) ditambah opsi all`,
+    name: `Check 1: Katalog TASK_PHASES memuat fase baseline terkunci (Fase 0) ditambah opsi all`,
     pass: pass1,
     details: pass1
-      ? `Total ${TASK_PHASES.length} opsi fase tervalidasi lengkap (Fase 0 s/d ${TASK_PHASES.length - 2})`
+      ? `Total ${TASK_PHASES.length} opsi fase tervalidasi lengkap (all + fase-0)`
       : `Fase hilang: ${missingPhases.join(', ')} (total: ${TASK_PHASES.length})`
   });
 
-  // --- CHECK 2: Kontinuitas Rentang Task (Gapless Continuum 1..118)
+  // --- CHECK 2: Kontinuitas Rentang Task (Baseline Continuum 1..999)
   let pass2 = true;
   let gapDetails = '';
   const phasesOnly = TASK_PHASES.filter(p => p.id !== 'all');
@@ -66,31 +60,16 @@ export function runDashboardPhaseFilterTests(): {
   }
 
   checks.push({
-    name: 'Check 2: Rentang minNum dan maxNum mencakup seluruh nomor task secara berkesinambungan tanpa celah',
+    name: 'Check 2: Rentang minNum dan maxNum mencakup nomor task tanpa celah (1..999)',
     pass: pass2,
-    details: pass2 ? 'Rentang task 1 s/d 134 berkesinambungan (Fase 0 s/d 21)' : gapDetails
+    details: pass2 ? 'Rentang task 1..999 mencakup baseline & task proyek baru (Fase 0)' : gapDetails
   });
 
   // --- CHECK 3: Akurasi Penyaringan Task per Fase
-  // Uji simulasi filter untuk beberapa nomor task kritis
   const testSampleTasks = [
     { id: 'TASK-001', expectedPhase: 'fase-0' },
-    { id: 'TASK-005', expectedPhase: 'fase-1' },
-    { id: 'TASK-015', expectedPhase: 'fase-3' },
-    { id: 'TASK-042', expectedPhase: 'fase-8' },
-    { id: 'TASK-045', expectedPhase: 'fase-9' },
-    { id: 'TASK-055', expectedPhase: 'fase-10' },
-    { id: 'TASK-070', expectedPhase: 'fase-11' },
-    { id: 'TASK-080', expectedPhase: 'fase-12' },
-    { id: 'TASK-085', expectedPhase: 'fase-13' },
-    { id: 'TASK-092', expectedPhase: 'fase-14' },
-    { id: 'TASK-098', expectedPhase: 'fase-15' },
-    { id: 'TASK-104', expectedPhase: 'fase-16' },
-    { id: 'TASK-109', expectedPhase: 'fase-17' },
-    { id: 'TASK-116', expectedPhase: 'fase-18' },
-    { id: 'TASK-122', expectedPhase: 'fase-19' },
-    { id: 'TASK-128', expectedPhase: 'fase-20' },
-    { id: 'TASK-130', expectedPhase: 'fase-21' }
+    { id: 'TASK-002', expectedPhase: 'fase-0' },
+    { id: 'TASK-003', expectedPhase: 'fase-0' }
   ];
 
   let pass3 = true;
@@ -104,9 +83,9 @@ export function runDashboardPhaseFilterTests(): {
   }
 
   checks.push({
-    name: 'Check 3: Simulasi penyaringan task sampel pada seluruh fase mengembalikan kecocokan rentang yang akurat',
+    name: 'Check 3: Simulasi penyaringan task sampel pada fase baseline mengembalikan kecocokan rentang yang akurat',
     pass: pass3,
-    details: `${testSampleTasks.length} task sampel dari berbagai fase tervalidasi tepat rentang`
+    details: `${testSampleTasks.length} task sampel baseline tervalidasi tepat rentang`
   });
 
   // --- CHECK 4: Ketiadaan String Statis Outdated pada DashboardTab.tsx
@@ -136,7 +115,7 @@ export function runDashboardPhaseFilterTests(): {
   return {
     passed: allPassed,
     message: allPassed
-      ? 'TC-P18-05 PASS (5/5 checks): Dashboard Phase Filter & Dynamic 22-Phase Roadmap (Fase 0 s/d 21) terverifikasi 100%'
+      ? 'TC-P18-05 PASS (5/5 checks): Dashboard Phase Filter & Baseline Roadmap v4.1.0 GA terverifikasi 100%'
       : 'TC-P18-05 FAIL: Sebagian pengujian filter fase dashboard gagal',
     checks
   };

@@ -220,7 +220,6 @@ PWA_REVIEW_FILES = [
     # 10. Dokumentasi Terkait UX, Panduan, Blueprint & 10 Berkas Kontrol Mode FULL
     "docs/README.md",
     "docs/USAGE.md",
-    "docs/archive/AUDIT_LOG_FASE_0_TO_18.md",
     "docs/mobile/INSTALLATION.md",
     "docs/mobile/INSTALLATION_ANDROID.md",
     "docs/mobile/TERMUX_SETUP.md",
@@ -245,7 +244,6 @@ PWA_REVIEW_FILES = [
     "HANDOVER.md",
     "HANDOVER_PROMPT.md",
     "LANDING_PROMPT.md",
-    "CLAUDE_CHATGPT_HANDOVER.md",
     "SESSION_STATE.md",
     "TASKS.md",
     "CHANGELOG.md",

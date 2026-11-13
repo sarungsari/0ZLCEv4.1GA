@@ -3,7 +3,7 @@
 
 Tanggal: 2026-11-13  
 Versi Target: **ZLCE Mobile Workbench v4.1.0 GA (ZLCEv4.1Mob)**  
-Status: **IMPLEMENTASI SELESAI (FASE 0 s/d FASE 21 TUNTAS, 134 TASK RESMI TUNTAS 100%)**
+Status: **BASELINE v4.1.0 GA TERKUNCI & DIBERSIHKAN (SIAP PAKAI PROYEK BARU / LANJUTAN / MODIFIKASI)**
 
 ---
 
@@ -65,11 +65,11 @@ Seluruh aspek perancangan arsitektur, integrasi mobile, keamanan, kolaborasi tim
 
 ## 3. STATUS CHECKPOINT & HASIL AKHIR
 
-- **Status Rilis:** **v4.1.0 GA / v4.1.1 (`ZLCEv4.1Mob`) — Production Ready (LOCKED AS-BUILT)**
-- **Integritas Fase (Fase 0 s/d Fase 21):** Seluruh **22 fase** (`134/134` task `DONE`) tervalidasi bebas *crosslink* (0 dependensi maju, 0 siklus, rentang berkesinambungan 1–134, 100% sinkron dengan `BLUEPRINT.md`, `TASKS.md`, `SESSION_STATE.md`, `src/data/taskPhases.ts`, dan `11_IMPLEMENTATION_ROADMAP.md`).
-- **Hasil Verifikasi Linter:** `scripts/zlce-check.py` mengonfirmasi `RESULT: OK (0 error, 0 warn, 134 task)`.
-- **Hasil Test Runner Otomatis:** `scripts/run-tests.py` meloloskan seluruh 73/73 test checks PASS 100%.
-- **Kesiapan Tablet SM-T225:** 100% Siap operasional harian untuk 8 anggota tim estafet dengan jaminan Loss-Bounded Context Persistence (RPO ≤ 400ms) dan Zero Secret Leakage.
+- **Status Rilis:** **v4.1.0 GA (`ZLCEv4.1Mob`) — Production Ready (LOCKED AS-BUILT & BERSIH)**
+- **Baseline Operasional:** Seluruh fitur pengembangan (22 fase historis / 134 task diarsipkan di `archive/history/`) telah dikunci ke dalam baseline operasional bersih di `SESSION_STATE.md` dan `TASKS.md` (`TASK-001` s/d `TASK-003` DONE, 0 revisi terbuka).
+- **Hasil Verifikasi Linter:** `scripts/zlce-check.py` mengonfirmasi `RESULT: OK (0 error, 0 warn)`.
+- **Hasil Test Runner Otomatis:** `scripts/run-tests.py` meloloskan seluruh test checks PASS 100%.
+- **Kesiapan Tablet SM-T225:** 100% Siap operasional harian untuk 8 anggota tim estafet pada alur Proyek Baru (`NEW`), Lanjutan Setengah Jadi (`CONTINUE`), dan Update & Modifikasi (`MODIFY`).
 
 ---
 

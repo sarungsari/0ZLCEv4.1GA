@@ -17,7 +17,7 @@ export const DEFAULT_PROJECTS: ProjectMeta[] = [
     mode: 'FULL',
     workflow: 'MODIFY',
     stack: 'React 19 + TypeScript + Vite + Tailwind CSS + Termux',
-    description: 'Repositori kanonik ZLCE Mobile Workbench v4.1.0 GA (134/134 task DONE — Terkunci)'
+    description: 'Repositori kanonik ZLCE Mobile Workbench v4.1.0 GA (Terkunci & Siap Pakai)'
   },
   {
     id: 'todo-api-service',

@@ -33,9 +33,8 @@ ZLCE4.1/
 ├── index.html  package.json  tsconfig.json  vite.config.ts  vite-session-sync.ts
 ├── public/
 │   ├── manifest.webmanifest  sw.js
-│   ├── icons/                # Ikon PWA 192, 512, maskable, apple-touch-icon
-│   └── assets/               # Aset aktif UI (aistudio/, zlce-starter-kit-v4.1.0.zip)
-├── release-bundles/          # Bundel ZIP audit, PWA review, Claude/GPT, LMK + SHA256SUMS.txt
+│   └── icons/                # Ikon PWA 192, 512, maskable, apple-touch-icon
+├── release-bundles/          # Keluaran on-demand bundel ZIP + SHA256SUMS.txt (gitignored)
 ├── src/
 │   ├── App.tsx  main.tsx  index.css  sw-register.ts
 │   ├── types/                # zlce.ts (6 TabType kanonik), mobile.ts
@@ -45,11 +44,9 @@ ZLCE4.1/
 │   ├── components/           # DashboardTab, SessionStateTab, DiagnosticsTab, DocsReferenceTab, Header, dll.
 │   │   └── mobile/           # AiWorkbenchTab, TerminalGitTab, ModalShell, DraftTextarea, MobileLayout, dll.
 │   └── tests/                # 34+ suite uji otomatis TypeScript/Chromium
-├── archive/components/       # Arsip terisolasi 13 komponen asli pra-FASE 19 (dikecualikan di tsconfig.json)
+├── archive/                  # Arsip riwayat dev, laporan review & komponen pra-FASE 19 (gitignored)
 ├── docs/
 │   ├── README.md  USAGE.md
-│   ├── archive/              # Arsip log audit sesi lama
-│   ├── revisi/               # Laporan audit historis
 │   └── mobile/               # Pilar 1-3 + blueprint/ (14 modul blueprint APPROVED/AS-BUILT)
 ├── scripts/                  # run-tests.py, zlce-check.py, sync-assets.mjs, create-*-bundle.py, zlce/
 ├── templates/                # 9 template dokumen kontrol + profiles/DOMAIN_BOOKING.profile.md

@@ -18,7 +18,7 @@ Centang `[x]` hanya dengan bukti verifikasi nyata (output perintah, log uji, ata
 
 ## 2. PRE-PRODUCTION & HANDOVER TABLET BERSAMA
 
-- [ ] **Sinkronisasi Aset Kit & Bundel ZIP:** `npm run sync:assets` dijalankan dan seluruh generator bundel (`create-audit-bundle.py`, `create-pwa-review-bundle.py`, `create-claude-bundle.py`, `create-lmk-bundle.py`) lolos closure gate & `SHA256SUMS.txt`.
+- [ ] **Sinkronisasi Aset Kit & Bundel ZIP On-Demand:** `npm run sync:assets` dijalankan dan seluruh generator bundel (`create-starter-kit-bundle.py`, `create-audit-bundle.py`, `create-pwa-review-bundle.py`, `create-claude-bundle.py`, `create-lmk-bundle.py`) lolos closure gate & `SHA256SUMS.txt` (lalu bersihkan arsip `.zip` sementara bila tidak didistribusikan ke repo).
 - [ ] **Isolasi Jaringan Tablet:** server produksi lokal tablet bersama diluncurkan dengan `HOST=127.0.0.1 bash scripts/zlce-prod-start.sh` bila berada di jaringan publik.
 - [ ] **PWA & Offline Ready:** `public/manifest.webmanifest` (`ZLCE Mobile Workbench v4.1.0 GA` / `ZLCEv4.1Mob`) tervalidasi dan aset build ter-precache di `public/sw.js` (`zlce-mobile-v4.1.0`).
 - [ ] **Pembersihan Kredensial Serah Terima:** `bash scripts/zlce/clean-auth.sh` dijalankan sebelum menyerahkan fisik tablet SM-T225 ke anggota estafet berikutnya.

@@ -13,6 +13,8 @@ import {
 import { ZLCE_TEMPLATES } from '../data/templates';
 import { TemplateItem } from '../types/zlce';
 import { copyText } from '../utils/clipboard';
+import { generateAndDownloadZipBundle } from '../utils/fileExport';
+import { showToast } from './mobile/ToastContainer';
 
 
 export const TemplatesTab: React.FC = () => {
@@ -102,14 +104,24 @@ ${templatesOnly.map(t => `- templates/${t.filename}`).join('\n')}
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <a
-            href="/assets/zlce-starter-kit-v4.1.0.zip"
-            download="zlce-starter-kit-v4.1.0.zip"
+          <button
+            type="button"
+            onClick={async () => {
+              const res = await generateAndDownloadZipBundle({
+                type: 'starter-kit',
+                filename: 'zlce-starter-kit-v4.1.0.zip'
+              });
+              if (res.success) {
+                showToast('Bundel zlce-starter-kit-v4.1.0.zip berhasil di-generate & diunduh.', 'success');
+              } else {
+                showToast('Mode Statis PWA: jalankan "npm run bundles" atau "python3 scripts/create-starter-kit-bundle.py" di Termux.', 'warning');
+              }
+            }}
             className="touch-target-44 min-h-[44px] inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow transition"
-            title="Unduh paket ZIP bersih berisi seluruh template, contoh markdown terisi, dan skrip CLI yang siap diekstrak ke proyek baru"
+            title="Generate on-demand paket ZIP bersih berisi seluruh template, contoh markdown terisi, dan skrip CLI yang siap diekstrak ke proyek baru"
           >
-            <Download className="w-4 h-4" /> Unduh Starter Kit (.ZIP Bersih)
-          </a>
+            <Download className="w-4 h-4" /> Generate &amp; Unduh Starter Kit (.ZIP)
+          </button>
 
           <button
             onClick={() => setShowPackModal(!showPackModal)}
