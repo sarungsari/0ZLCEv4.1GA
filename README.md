@@ -6,7 +6,7 @@
 
 *Zero-Loss Context Engineering: a kit and web workbench that keeps AI coding sessions consistent across context resets, using structured state files, handover protocols, and mobile Termux integration.*
 
-[![Tests](https://img.shields.io/badge/tests-73%2B%20passing-brightgreen.svg)](#hasil-pengujian)
+[![Tests](https://img.shields.io/badge/tests-74%2B%20passing-brightgreen.svg)](#hasil-pengujian)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D20.19-339933.svg)](#prasyarat)
 [![Version](https://img.shields.io/badge/version-4.1.0%20GA-informational.svg)](CHANGELOG.md)
@@ -59,8 +59,8 @@ Kit ini kompatibel dengan semua AI coding agent modern yang dapat membaca teks/b
 
 | Komponen | Isi & Kemampuan |
 | :--- | :--- |
-| **Kit Kontrol** | Prompt inisiasi ([`LANDING_PROMPT.md`](LANDING_PROMPT.md)), prompt serah terima ([`HANDOVER_PROMPT.md`](HANDOVER_PROMPT.md)), 9 template dokumen kontrol ([`templates/`](templates/)), generator bundel mandiri `ZLCE_KIT_SINGLE.md` (via Pack Studio / `node scripts/sync-assets.mjs --single-kit`), dan profil domain booking. |
-| **Studio (Web)** | Editor visual `SESSION_STATE` dengan sinkronisasi formulir dan Markdown, validator aturan real-time, wizard recovery Kasus A–D, triase revisi R1–R7, kalkulator estimasi token, tutorial interaktif, dan generator bundel kit. |
+| **Kit Kontrol** | Prompt inisiasi ([`LANDING_PROMPT.md`](LANDING_PROMPT.md)), prompt serah terima ([`HANDOVER_PROMPT.md`](HANDOVER_PROMPT.md)), 9 template dokumen kontrol ([`templates/`](templates/)), generator bundel tunggal Mode SIMPLE `ZLCE_KIT_SIMPLE.md` (`--simple-kit`) & Mode FULL `ZLCE_KIT_SINGLE.md` (`--single-kit`), serta profil domain. |
+| **Studio (Web)** | Header ringkas (Project Switcher di kiri, Active Member Selector & Oper Tablet di kanan), editor visual `SESSION_STATE`, validator real-time, wizard recovery Kasus A–D, triase revisi R1–R7, Multi-AI Audit Hub (Claude 5.5 Sonnet, Gemini 4 Hydrogen Free, ChatGPT, DeepSeek), kalkulator token, tutorial interaktif, dan generator bundel Mode SIMPLE / FULL (.md & .ZIP). |
 | **CLI & Diagnostik** | `zlce-check.py` (validasi integritas state), `zlce-snapshot.sh` (snapshot status git dan WAL), `zlce-collect.py` (kolektor diagnostik bertopeng rahasia). |
 
 Dua mode proyek yang didukung:
@@ -85,7 +85,9 @@ Dua mode proyek yang didukung:
 2. **Isi parameter** di [`LANDING_PROMPT.md`](LANDING_PROMPT.md) (Nama Proyek, Aksi `BARU`/`RESTRUKTURISASI`, Tech Stack, Kebutuhan Inti).
 3. **Mulai sesi AI**:
    - Jika AI mendukung banyak lampiran (mis. Cursor/Windsurf/Claude Project): lampirkan folder [`templates/`](templates/) lalu tempel prompt.
-   - Jika AI berupa chat web prompt tunggal (mis. ChatGPT/Claude web): ekspor bundel satu berkas `ZLCE_KIT_SINGLE.md` langsung dari tab **Dokumentasi & Panduan → Template & Pack Studio**, perintah `node scripts/sync-assets.mjs --single-kit`, atau dari dalam paket `zlce-starter-kit-v4.1.0.zip`.
+   - Jika AI berupa chat web prompt tunggal (mis. ChatGPT/Claude/Gemini web):
+     - **Mode SIMPLE / LITE (6 berkas inti, direkomendasikan untuk hemat token):** ekspor `ZLCE_KIT_SIMPLE.md` dari Dashboard / Pack Studio / Tutorial, atau jalankan `node scripts/sync-assets.mjs --simple-kit`, atau unduh bundel `zlce-simple-kit-v4.1.0.zip`.
+     - **Mode FULL (12 berkas lengkap):** ekspor `ZLCE_KIT_SINGLE.md` dari Pack Studio, jalankan `node scripts/sync-assets.mjs --single-kit`, atau gunakan `zlce-starter-kit-v4.1.0.zip`.
 4. **Persetujuan Gerbang 1**: AI akan menyusun `BLUEPRINT.md` lalu **berhenti**. Periksa draf tersebut, lalu berikan konfirmasi:
    > *"Setujui Gerbang 1 (BLUEPRINT.md). Lanjutkan ke gerbang berikutnya."*
 
@@ -103,7 +105,7 @@ Untuk melanjutkan sesi atau berganti AI, gunakan [`HANDOVER_PROMPT.md`](HANDOVER
 **1. Peluncuran Produksi Nyata (Termux di Tablet Samsung Tab A7 Lite / Linux):**
 ```bash
 # Jalankan skrip produksi mandiri (otomatis normalisasi izin, validasi state, build dist & serve)
-cd ~/projects/ZLCE4.1
+cd ~/projects/0ZLCEv4.1GA
 bash scripts/zlce-prod-start.sh
 ```
 Akses di peramban tablet (Chrome/Samsung Internet) pada: <http://localhost:3000>  
@@ -111,8 +113,8 @@ Pilih **"Tambahkan ke Layar Utama" (Install PWA)** untuk pengalaman aplikasi man
 
 **2. Mode Pengembangan Standar:**
 ```bash
-git clone https://github.com/ekokeplek-glitch/ZLCE4.1.git
-cd ZLCE4.1
+git clone https://github.com/sarungsari/0ZLCEv4.1GA.git
+cd 0ZLCEv4.1GA
 npm install
 npm run dev
 ```
@@ -216,11 +218,12 @@ Panduan detail alur kerja operasional dan triase revisi: [`docs/USAGE.md`](docs/
 │   │   └── blueprint/         # 14 Cetak Biru Arsitektur Teknis Mobile
 ├── scripts/                   # Skrip operasional & utilitas ZLCE
 │   ├── zlce-prod-start.sh     # Runner produksi mandiri (Termux / Linux)
-│   ├── create-starter-kit-bundle.py # Pembuat bundel ZIP Starter Kit on-demand
-│   ├── create-audit-bundle.py # Pembuat bundel ZIP deterministik untuk audit
-│   ├── create-pwa-review-bundle.py # Pembuat bundel ZIP review frontend PWA
-│   ├── create-claude-bundle.py# Pembuat bundel ZIP khusus Claude & ChatGPT
-│   ├── run-tests.py           # Automated test suite runner (74 automated checks)
+│   ├── create-starter-kit-bundle.py # Pembuat bundel ZIP Starter Kit Lengkap (SIMPLE + FULL) on-demand
+│   ├── create-simple-kit-bundle.py  # Pembuat bundel ZIP Mode SIMPLE (LITE 4 berkas + CLI + panduan)
+│   ├── create-audit-bundle.py       # Pembuat bundel ZIP deterministik untuk audit
+│   ├── create-pwa-review-bundle.py  # Pembuat bundel ZIP review frontend PWA
+│   ├── create-claude-bundle.py      # Pembuat bundel ZIP khusus Claude & ChatGPT
+│   ├── run-tests.py                 # Automated test suite runner (74 automated checks)
 │   ├── security-audit.sh      # Pemeriksa zero-leak regex rahasia (Zero-Secret)
 │   └── zlce/                  # Skrip kanonik (salin folder ini ke repo proyek Anda)
 │       ├── zlce               # CLI dispatcher allowlist
@@ -250,26 +253,28 @@ Panduan detail alur kerja operasional dan triase revisi: [`docs/USAGE.md`](docs/
 
 Template tersedia dalam tiga bentuk dari satu sumber kebenaran:
 1. **Berkas modular** di `templates/` untuk IDE AI (Cursor, Windsurf, VS Code).
-2. **Bundel mandiri on-demand** `ZLCE_KIT_SINGLE.md` (dihasilkan dinamis via UI Pack Studio, `node scripts/sync-assets.mjs --single-kit`, atau otomatis di dalam `zlce-starter-kit-v4.1.0.zip`) untuk AI berbasis prompt tunggal.
+2. **Bundel mandiri on-demand**:
+   - **Mode SIMPLE (`ZLCE_KIT_SIMPLE.md`):** 6 berkas inti LITE via Pack Studio / Dashboard / Tutorial, `node scripts/sync-assets.mjs --simple-kit`, atau di `zlce-simple-kit-v4.1.0.zip`.
+   - **Mode FULL (`ZLCE_KIT_SINGLE.md`):** 12 berkas kontrol lengkap via Pack Studio, `node scripts/sync-assets.mjs --single-kit`, atau di `zlce-starter-kit-v4.1.0.zip`.
 3. **Impor statis** (`?raw`) ke dalam ZLCE Studio saat build aplikasi web.
 
 ---
 
 ## Hasil Pengujian
 
-ZLCE Mobile Workbench v4.1.0 GA (`ZLCEv4.1Mob`) telah diverifikasi secara penuh menggunakan rangkaian pengujian otomatis 73 langkah (`python3 scripts/run-tests.py`):
+ZLCE Mobile Workbench v4.1.0 GA (`ZLCEv4.1Mob`) telah diverifikasi secara penuh menggunakan rangkaian pengujian otomatis (`python3 scripts/run-tests.py`):
 
 | Parameter | Catatan Verifikasi Resmi |
 | :--- | :--- |
 | **Hasil Otomatisasi** | **Seluruh Uji Otomatis (`run-tests.py`) PASSED (100% Pass Rate)** |
 | **Pemeriksaan Tipe** | `tsc --noEmit` LULUS bersih (0 errors) |
 | **Audit Keamanan** | `scripts/security-audit.sh` LULUS (0 secret leaks / Zero-Secret Valid) |
-| **Model AI Diuji** | Claude 3.5 Sonnet, ChatGPT-4o, Gemini 2.5 Flash / 3.8, DeepSeek-V3 |
+| **Model AI Diuji** | Claude 5.5 Sonnet, ChatGPT-4o, Gemini 4 Hydrogen (Free), DeepSeek-V3 |
 | **Target Platform Fisik** | Samsung Galaxy Tab A7 Lite (SM-T225) RAM 3GB • Termux • PWA Offline |
-| **Tanggal & Versi Rilis** | 2026-11-13 • v4.1.0 GA (Baseline Operasional Terkunci & Siap Pakai) |
+| **Tanggal & Versi Rilis** | 2026-11-14 • v4.1.0 GA (Baseline Operasional Terkunci & Siap Pakai) |
 
 <details>
-<summary><b>Cakupan 73 Uji Otomatis (Test Suite Breakdown)</b></summary>
+<summary><b>Cakupan 74+ Uji Otomatis (Test Suite Breakdown)</b></summary>
 
 - **Uji Statis & Tipe:** TypeScript type-check, verifikasi integritas skrip kanonik POSIX, hash parity check.
 - **Uji Protokol ZLCE:** Validator state, deteksi konflik keputusan lintas AI, cold-start model AI (Invarian I2).

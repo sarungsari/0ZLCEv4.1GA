@@ -15,5 +15,5 @@
 
 Jika Anda menemukan potensi kerentanan keamanan pada kit atau aplikasi web ZLCEv4.1Mob:
 - Harap tidak mempublikasikannya langsung di issue publik.
-- Kirimkan detail temuan dan langkah reproduksi melalui email ke pengelola proyek atau buat *Security Advisory* privat di repositori GitHub resmi: `https://github.com/ekokeplek-glitch/ZLCE4.1/security/advisories`.
+- Kirimkan detail temuan dan langkah reproduksi melalui email ke pengelola proyek atau buat *Security Advisory* privat di repositori GitHub resmi: `https://github.com/sarungsari/0ZLCEv4.1GA/security/advisories`.
 - Kami akan meninjau dan merespons laporan dalam waktu 1–3 hari kerja.

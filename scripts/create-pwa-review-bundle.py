@@ -142,6 +142,7 @@ PWA_REVIEW_FILES = [
     "src/utils/zlceValidator.ts",
     "src/utils/performanceAuditEngine.ts",
     "src/utils/projectStarter.ts",
+    "src/utils/singleKitGenerator.ts",
     "src/utils/smartTaskCheck.ts",
 
     # 8. Seluruh 34 Berkas Test Suite & Test Harness (R-08 / FIN-002)
@@ -194,6 +195,8 @@ PWA_REVIEW_FILES = [
     "scripts/sync-assets.mjs",
     "scripts/create-audit-bundle.py",
     "scripts/create-pwa-review-bundle.py",
+    "scripts/create-starter-kit-bundle.py",
+    "scripts/create-simple-kit-bundle.py",
     "scripts/zlce/README.md",
     "scripts/zlce/zlce",
     "scripts/zlce/clean-auth.sh",
@@ -247,7 +250,14 @@ PWA_REVIEW_FILES = [
     "SESSION_STATE.md",
     "TASKS.md",
     "CHANGELOG.md",
-    "README.md"
+    "README.md",
+    "zlce-starter-kit/README.md",
+    "zlce-starter-kit/BLUEPRINT.md",
+    "zlce-starter-kit/TASKS.md",
+    "zlce-starter-kit/SESSION_STATE.md",
+    "zlce-starter-kit/HANDOVER.md",
+    "zlce-starter-kit/LANDING_PROMPT.md",
+    "zlce-starter-kit/HANDOVER_PROMPT.md"
 ]
 
 IMPORT_RE = re.compile(r"""(?:from|import)\s*\(?\s*['"](\.{1,2}/[^'"]+)['"]""")

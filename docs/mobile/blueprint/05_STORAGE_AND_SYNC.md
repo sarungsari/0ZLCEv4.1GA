@@ -45,11 +45,11 @@ PWA menyediakan **Project Switcher** yang memungkinkan anggota tim mengelola beb
   ```json
   [
     {
-      "id": "proj-todo-api",
-      "name": "Todo API Service",
-      "termuxPath": "~/projects/ZLCE4.1",
+      "id": "zlce-workbench-host",
+      "name": "ZLCE Mobile Workbench v4.1.0 GA",
+      "termuxPath": "~/projects/0ZLCEv4.1GA",
       "mode": "FULL",
-      "gitRemote": "https://github.com/ekokeplek-glitch/ZLCE4.1.git",
+      "gitRemote": "https://github.com/sarungsari/0ZLCEv4.1GA.git",
       "activeBranch": "v4-mobile",
       "lastAccessed": 1730700000000
     }

@@ -50,9 +50,9 @@ Dokumen ini memuat tutorial lengkap pemakaian ZLCE Mobile Workbench untuk operas
 
 ---
 
-### LANGKAH 2: AKTIFKAN PROFIL ANGGOTA (ZERO-SECRET POLICY)
-1. Perhatikan sudut kanan atas Header aplikasi: terdapat badge nama dan inisial anggota aktif.
-2. Ketuk tombol **Active Member Selector**.
+### LANGKAH 2: AKTIFKAN PROFIL ANGGOTA & PROYEK (ZERO-SECRET POLICY)
+1. Header aplikasi menampilkan **Registry Proyek** di sebelah kiri (untuk beralih antara host workspace dan proyek Anda) serta **Active Member Selector** & tombol **Oper Tablet** di sebelah kanan.
+2. Ketuk dropdown **Active Member Selector** di kanan Header.
 3. Pilih nama Anda dari daftar 8 profil resmi:
    - `eko` (Eko Siswanto - System & Git Coordinator)
    - `oned` (Oned Wiyono - Frontend & Mobile UI)
@@ -94,11 +94,11 @@ Dokumen ini memuat tutorial lengkap pemakaian ZLCE Mobile Workbench untuk operas
 1. Buka tab **Context Pack** di navigasi bawah/samping.
 2. Pilih ID Task aktif yang baru saja Anda klaim.
 3. Pilih model AI sasaran pada pemilih **Token Budget Selector**:
-   - **Claude (Mid Context ~30K):** Fokus pada blueprint terkait dan task atomik.
-   - **ChatGPT (Compact ~16K):** Konteks terkompresi tanpa lampiran historis berlebih.
-   - **Gemini (Large Context ~1M):** Menyertakan riwayat lengkap dan seluruh blueprint.
+   - **Claude 5.5 Sonnet (Mid Context ~30K):** Fokus pada blueprint terkait dan task atomik.
+   - **ChatGPT GPT-4o (Compact ~16K / 128K):** Konteks terkompresi tanpa lampiran historis berlebih.
+   - **Gemini 4 Hydrogen (Free · Large Context ~1M):** Menyertakan riwayat lengkap dan seluruh blueprint.
 4. Periksa indikator estimasi token yang ditampilkan (faktor keselamatan 3.2 char/token).
-5. Ketuk tombol **"1-Ketuk Salin Context Pack"** (target sentuh 44px+). Teks paket mandiri tersalin ke clipboard tablet.
+5. Ketuk tombol **"1-Ketuk Salin Context Pack"** (target sentuh 44px+). Anda juga dapat mengunduh **Kit Single SIMPLE (`ZLCE_KIT_SIMPLE.md`)** langsung dari Dashboard / Pack Studio untuk sesi AI chat baru.
 
 ---
 

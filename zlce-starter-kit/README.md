@@ -12,7 +12,8 @@ Paket starter kit bersih siap pakai untuk mengendalikan konteks AI agent (Claude
 ├── README.md                      # Panduan lengkap starter kit (berkas ini)
 ├── LANDING_PROMPT.md              # Prompt inisiasi AI sesi pertama (BARU & RESTRUKTURISASI)
 ├── HANDOVER_PROMPT.md             # Panduan & prompt serah terima sesi / ganti model
-├── ZLCE_KIT_SINGLE.md             # [Generated di arsip .ZIP / --single-kit] Bundel 1 berkas seluruh template
+├── ZLCE_KIT_SIMPLE.md             # [Generated Mode SIMPLE/LITE] Bundel 1 berkas inti LITE (6 file, hemat token)
+├── ZLCE_KIT_SINGLE.md             # [Generated Mode FULL] Bundel 1 berkas seluruh template (12 file)
 ├── .gitignore                     # Konfigurasi Git pelacak berkas kontrol ZLCE
 │
 ├── BLUEPRINT.md                   # [Mode LITE] Spesifikasi Gerbang 1 + §7 Model Data + §8 Strategi Uji
@@ -59,10 +60,11 @@ Paket starter kit bersih siap pakai untuk mengendalikan konteks AI agent (Claude
 
 ### Skenario A: Proyek Baru (Mulai dari Nol)
 1. Ekstrak seluruh isi kit ini ke folder root repositori baru Anda (`mkdir -p ~/projects/proyek-baru && cd ~/projects/proyek-baru`).
-2. **Mode LITE (Proyek < ~15 task):** cukup pakai 4 berkas kontrol inti (`BLUEPRINT.md`, `TASKS.md`, `SESSION_STATE.md`, `HANDOVER.md`).
-   **Mode FULL (Proyek kompleks > 15 task):** salin seluruh template dari `templates/` ke root (10 berkas kontrol).
-3. Buka sesi AI pertama, lampirkan berkas kontrol (atau `ZLCE_KIT_SINGLE.md`), dan tempel isi `LANDING_PROMPT.md` dengan `Aksi: BARU` serta `MODE: LITE` / `FULL`.
+2. **Mode SIMPLE / LITE (Proyek < ~15 task):** cukup pakai 4 berkas kontrol inti (`BLUEPRINT.md`, `TASKS.md`, `SESSION_STATE.md`, `HANDOVER.md`) atau tempel 1 berkas **`ZLCE_KIT_SIMPLE.md`** (atau unduh `zlce-simple-kit-v4.1.0.zip` dari PWA / `python3 scripts/create-simple-kit-bundle.py`).
+   **Mode FULL (Proyek kompleks > 15 task):** salin seluruh template dari `templates/` ke root (10 berkas kontrol) atau pakai **`ZLCE_KIT_SINGLE.md`**.
+3. Buka sesi AI pertama, lampirkan berkas kontrol (atau `ZLCE_KIT_SIMPLE.md` / `ZLCE_KIT_SINGLE.md`), dan tempel isi `LANDING_PROMPT.md` dengan `Aksi: BARU` serta `MODE: LITE` / `FULL`.
 4. AI akan memfinalkan `BLUEPRINT.md` di **Gerbang 1** dan menunggu persetujuan sebelum menulis kode pertama.
+5. Sumber repositori resmi PWA Workbench: `https://github.com/sarungsari/0ZLCEv4.1GA.git`.
 
 ### Skenario B: Proyek Lanjutan / Setengah Jadi
 * **Jika proyek sudah memakai ZLCE:**

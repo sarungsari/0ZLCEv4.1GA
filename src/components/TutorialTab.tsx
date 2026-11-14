@@ -42,6 +42,7 @@ import { TargetAIProvider } from '../utils/contextPackGenerator';
 import { TEAM_MEMBERS } from '../data/teamMembers';
 import { generateRelayHandover } from '../utils/relayHandoverGenerator';
 import { downloadMarkdownBlob, generateAndDownloadZipBundle } from '../utils/fileExport';
+import { generateSingleKitBundle } from '../utils/singleKitGenerator';
 
 export type ViewMode =
   | 'android-installation'
@@ -1139,19 +1140,32 @@ export const TutorialTab: React.FC<TutorialTabProps> = ({
                   {activeScenario === 'in-progress' && 'Melanjutkan Proyek & Pemulihan Sesi Terputus (Kasus A–D)'}
                 </h3>
               </div>
-              <button
-                type="button"
-                onClick={() =>
-                  copyToClipboard(
-                    activeScenario === 'in-progress' ? canonicalHandoverPrompt : canonicalLandingPrompt,
-                    `sc-${activeScenario}`
-                  )
-                }
-                className="touch-target-44 min-h-[44px] px-3.5 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold flex items-center gap-1.5 shrink-0 whitespace-nowrap"
-              >
-                {copiedId === `sc-${activeScenario}` ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                <span>{copiedId === `sc-${activeScenario}` ? 'Tersalin!' : 'Salin Prompt Kanonik'}</span>
-              </button>
+              <div className="flex flex-wrap items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const { markdown, filename } = generateSingleKitBundle('simple');
+                    handleDownloadDoc(markdown, filename);
+                  }}
+                  className="touch-target-44 min-h-[44px] px-3.5 py-2 rounded-xl bg-emerald-950/70 hover:bg-emerald-900 border border-emerald-700/60 text-emerald-200 text-xs font-semibold flex items-center gap-1.5 whitespace-nowrap"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Kit SIMPLE (.md)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    copyToClipboard(
+                      activeScenario === 'in-progress' ? canonicalHandoverPrompt : canonicalLandingPrompt,
+                      `sc-${activeScenario}`
+                    )
+                  }
+                  className="touch-target-44 min-h-[44px] px-3.5 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold flex items-center gap-1.5 whitespace-nowrap"
+                >
+                  {copiedId === `sc-${activeScenario}` ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                  <span>{copiedId === `sc-${activeScenario}` ? 'Tersalin!' : 'Salin Prompt Kanonik'}</span>
+                </button>
+              </div>
             </div>
 
             {activeScenario === 'in-progress' && (
@@ -1379,11 +1393,11 @@ export const TutorialTab: React.FC<TutorialTabProps> = ({
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
                 {[
-                  { id: 'claude', name: 'Claude 3.5 Sonnet', limit: '30K Mid' },
+                  { id: 'claude', name: 'Claude 5.5 Sonnet', limit: '30K Mid' },
                   { id: 'chatgpt', name: 'ChatGPT GPT-4o', limit: '128K Wide' },
                   { id: 'cursor', name: 'Cursor AI', limit: '64K Coding' },
                   { id: 'copilot', name: 'GitHub Copilot', limit: '32K Flow' },
-                  { id: 'gemini', name: 'Gemini Flash', limit: '1M Mega' },
+                  { id: 'gemini', name: 'Gemini 4 Hydrogen (Free)', limit: '1M Mega' },
                   { id: 'deepseek', name: 'DeepSeek Reasoner', limit: '64K Deep' }
                 ].map(item => (
                   <button

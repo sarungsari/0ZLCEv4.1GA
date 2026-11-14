@@ -31,10 +31,19 @@ SINGLE_KIT_SOURCES = [
     "templates/profiles/DOMAIN_BOOKING.profile.md",
 ]
 
+SINGLE_KIT_SIMPLE_SOURCES = [
+    ("LANDING_PROMPT.md", "LANDING_PROMPT.md"),
+    ("HANDOVER_PROMPT.md", "HANDOVER_PROMPT.md"),
+    (f"{SOURCE_DIR}/BLUEPRINT.md", "BLUEPRINT.md"),
+    (f"{SOURCE_DIR}/TASKS.md", "TASKS.md"),
+    (f"{SOURCE_DIR}/SESSION_STATE.md", "SESSION_STATE.md"),
+    (f"{SOURCE_DIR}/HANDOVER.md", "HANDOVER.md"),
+]
+
 
 def build_single_kit_bytes(base_dir: str) -> bytes:
     lines = [
-        "# ZLCE KIT (SATU BERKAS) v4.1.0 GA",
+        "# ZLCE KIT (SATU BERKAS MODE FULL) v4.1.0 GA",
         "",
         "Berkas ini adalah bundel tunggal (*derived artifact*) Zero-Loss Context Engineering (ZLCE) v4.1.0 GA.",
         "Dihasilkan otomatis dari sumber kanonik `LANDING_PROMPT.md`, `HANDOVER_PROMPT.md`, dan `templates/`.",
@@ -43,6 +52,7 @@ def build_single_kit_bytes(base_dir: str) -> bytes:
         "<<<FILE: path>>> dan <<<END FILE>>>.",
         "Perlakukan tiap bagian sebagai berkas terpisah dengan path tersebut.",
         "",
+        "MODE: FULL (12 Berkas Lengkap)",
         "DAFTAR BERKAS:",
         *[f"- {rel}" for rel in SINGLE_KIT_SOURCES],
         "",
@@ -53,6 +63,30 @@ def build_single_kit_bytes(base_dir: str) -> bytes:
         with open(full_path, "r", encoding="utf-8") as f:
             content = f.read().strip()
         body_parts.append(f"\n<<<FILE: {rel}>>>\n{content}\n<<<END FILE>>>\n")
+    return ("\n".join(lines) + "".join(body_parts)).encode("utf-8")
+
+
+def build_simple_kit_bytes(base_dir: str) -> bytes:
+    lines = [
+        "# ZLCE KIT MODE SIMPLE (SATU BERKAS LITE) v4.1.0 GA",
+        "",
+        "Bundel tunggal ringkas Mode SIMPLE / LITE (4 berkas kontrol inti + Landing & Handover Prompt) untuk proyek < ~15 task dan AI chat/prompt tunggal.",
+        "",
+        "Setiap berkas di dalamnya dibatasi penanda:",
+        "<<<FILE: path>>> dan <<<END FILE>>>.",
+        "Perlakukan tiap bagian sebagai berkas terpisah dengan path tersebut.",
+        "",
+        "MODE: SIMPLE (LITE - 6 Berkas Inti)",
+        "DAFTAR BERKAS:",
+        *[f"- {label}" for _, label in SINGLE_KIT_SIMPLE_SOURCES],
+        "",
+    ]
+    body_parts = []
+    for src_rel, label in SINGLE_KIT_SIMPLE_SOURCES:
+        full_path = os.path.join(base_dir, src_rel)
+        with open(full_path, "r", encoding="utf-8") as f:
+            content = f.read().strip()
+        body_parts.append(f"\n<<<FILE: {label}>>>\n{content}\n<<<END FILE>>>\n")
     return ("\n".join(lines) + "".join(body_parts)).encode("utf-8")
 
 
@@ -106,7 +140,8 @@ def create_starter_kit_bundle() -> int:
         return 0
 
     virtual_files = {
-        f"{SOURCE_DIR}/ZLCE_KIT_SINGLE.md": build_single_kit_bytes(base_dir)
+        f"{SOURCE_DIR}/ZLCE_KIT_SINGLE.md": build_single_kit_bytes(base_dir),
+        f"{SOURCE_DIR}/ZLCE_KIT_SIMPLE.md": build_simple_kit_bytes(base_dir),
     }
 
     disk_entries = []

@@ -12,7 +12,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     role: 'System & Git Coordinator (Lead)',
     email: 'eko@zlce.local',
     avatarColor: 'from-indigo-600 to-violet-500',
-    aiPreference: 'Gemini 2.5 Flash / Claude 3.5 Sonnet',
+    aiPreference: 'Gemini 4 Hydrogen (Free) / Claude 5.5 Sonnet',
     notes: 'Inisiator ZLCE Mobile Workbench & administrator tablet SM-T225'
   },
   {
@@ -21,7 +21,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     role: 'Frontend & Mobile UI Specialist',
     email: 'oned@zlce.local',
     avatarColor: 'from-blue-600 to-cyan-500',
-    aiPreference: 'Claude 3.5 Sonnet',
+    aiPreference: 'Claude 5.5 Sonnet',
     notes: 'Desain layout tablet 8.7", target sentuh 44px, dan komponen visual'
   },
   {
@@ -30,7 +30,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     role: 'QA & Test Harness Lead',
     email: 'cxperia@zlce.local',
     avatarColor: 'from-emerald-600 to-teal-500',
-    aiPreference: 'Gemini 2.5 Flash',
+    aiPreference: 'Gemini 4 Hydrogen (Free)',
     notes: 'Eksekusi suite uji cold-start, verifikasi gerbang kualitas, dan regression test'
   },
   {
@@ -39,7 +39,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     role: 'PWA & Offline Architect',
     email: 'sulistiyani@zlce.local',
     avatarColor: 'from-amber-600 to-yellow-500',
-    aiPreference: 'Claude 3.5 Sonnet',
+    aiPreference: 'Claude 5.5 Sonnet',
     notes: 'Service Worker, cache-first shell, offline resilience, dan Web App Manifest'
   },
   {
@@ -48,7 +48,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     role: 'Context & Prompt Engineer',
     email: 'layang@zlce.local',
     avatarColor: 'from-purple-600 to-pink-500',
-    aiPreference: 'Claude 3.5 Sonnet / ChatGPT',
+    aiPreference: 'Claude 5.5 Sonnet / ChatGPT',
     notes: 'Penyusun Portable Context Pack, kuota budget manager, dan anti-amnesia guard'
   },
   {
@@ -57,8 +57,8 @@ export const TEAM_MEMBERS: TeamMember[] = [
     role: 'Git & Sync Hub Specialist',
     email: 'acimau@zlce.local',
     avatarColor: 'from-rose-600 to-red-500',
-    aiPreference: 'Gemini 2.5 Pro',
-    notes: 'Pengelola remote repository (ekokeplek-glitch/ZLCE4.1.git) & merge branch'
+    aiPreference: 'Gemini 4 Hydrogen (Free)',
+    notes: 'Pengelola remote repository (sarungsari/0ZLCEv4.1GA.git) & merge branch'
   },
   {
     id: 'kepek',
@@ -66,7 +66,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     role: 'Security & Zero-Secret Officer',
     email: 'kepek@zlce.local',
     avatarColor: 'from-cyan-600 to-blue-500',
-    aiPreference: 'Gemini 2.5 Flash',
+    aiPreference: 'Gemini 4 Hydrogen (Free)',
     notes: 'Audit zero-secret on disk, timeout 900s credential cache, dan sanitasi shell'
   },
   {
@@ -75,7 +75,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     role: 'Mobile UX & Ergonomics Reviewer',
     email: 'gete@zlce.local',
     avatarColor: 'from-teal-600 to-emerald-500',
-    aiPreference: 'Claude 3.5 Haiku',
+    aiPreference: 'Claude 5.5 Sonnet',
     notes: 'Verifikasi kenyamanan jempol, rotasi layar, dan virtual keyboard visualViewport'
   }
 ];

@@ -52,10 +52,10 @@ Kompilasi spesifikasi arsitektur komprehensif yang menjadi acuan implementasi ko
 
 ### 1.3 Pembersihan Arsip Historis & Generator Bundel On-Demand
 * Tugas pengembangan historis (`FASE 0` s/d `FASE 21`), laporan audit/tinjauan lama, dan catatan proses sebelumnya telah dipindahkan ke direktori lokal `archive/` yang dikecualikan dari repositori via `.gitignore` agar repositori tetap bersih dan ringan saat di-clone untuk proyek baru.
-* Tidak ada berkas `.zip` statis yang disimpan di `public/` maupun repositori; bundel ZIP Starter Kit maupun review dapat dibuat ulang kapan saja via antarmuka Web Studio (`/api/bundle/*`) atau `npm run bundles`.
+* Tidak ada berkas `.zip` statis yang disimpan di `public/` maupun repositori; bundel ZIP Mode SIMPLE (`zlce-simple-kit-v4.1.0.zip`), Starter Kit Lengkap (`zlce-starter-kit-v4.1.0.zip`), maupun audit/review dapat dibuat ulang on-demand kapan saja via Web Studio (`/api/bundle/*`) atau `npm run bundles`.
 
 ### 1.4 Klarifikasi Hubungan Starter Kit vs Berkas Root
-* **`zlce-starter-kit/`** adalah template *clean skeleton* Mode LITE (4 berkas kontrol inti: `BLUEPRINT.md`, `TASKS.md`, `SESSION_STATE.md`, `HANDOVER.md`) lengkap dengan panduan Android/Termux untuk memulai proyek baru atau lanjutan.
+* **`zlce-starter-kit/`** adalah template *clean skeleton* Mode SIMPLE / LITE (4 berkas kontrol inti: `BLUEPRINT.md`, `TASKS.md`, `SESSION_STATE.md`, `HANDOVER.md`) lengkap dengan panduan Android/Termux dan dukungan ekspor satu berkas `ZLCE_KIT_SIMPLE.md` maupun `ZLCE_KIT_SINGLE.md`.
 * **Berkas Root Repositori** (`BLUEPRINT.md`, `ARCHITECTURE.md`, `DATA_MODEL.md`, `TASKS.md`, `TESTING.md`, `CHECKLISTS.md`, `AI_WORKFLOW.md`, `SESSION_STATE.md`, `CHANGELOG.md`, `HANDOVER.md`) memuat **baseline terkunci dan bersih** `ZLCE Mobile Workbench v4.1.0 GA` yang siap dipakai sebagai proyek PWA workbench ataupun pijakan 3 alur kerja (`NEW`, `CONTINUE`, `MODIFY`).
 
 ---
@@ -82,7 +82,7 @@ Kompilasi spesifikasi arsitektur komprehensif yang menjadi acuan implementasi ko
 [3. termux-setup-storage & Konfigurasi ~/.bashrc]
            │
            ▼
-[4. git clone https://github.com/ekokeplek-glitch/ZLCE4.1.git & cd ZLCE4.1 & npm install]
+[4. git clone https://github.com/sarungsari/0ZLCEv4.1GA.git & cd 0ZLCEv4.1GA & npm install]
            │
            ▼
 [5. Pasang Symlink CLI: ln -sf .../scripts/zlce/zlce ~/bin/zlce]
@@ -120,18 +120,18 @@ Setiap aksi di PWA otomatis tercatat ke profil pengemudi yang aktif tanpa menyim
 
 | Alias | Nama Anggota | Peran Utama Kanonik | Preferensi Engine AI | Surel Publik |
 | :--- | :--- | :--- | :--- | :--- |
-| `eko` | Eko Siswanto | System & Git Coordinator (Lead) | Gemini 2.5 Flash / Claude 3.5 | `eko@zlce.local` |
-| `oned` | Oned Wiyono | Frontend & Mobile UI Specialist | Claude 3.5 Sonnet | `oned@zlce.local` |
-| `cxperia` | Chris X. Peria | QA & Test Harness Lead | Gemini 2.5 Flash | `cxperia@zlce.local` |
-| `sulistiyani` | Sulistiyani | PWA & Offline Architect | Claude 3.5 Sonnet | `sulistiyani@zlce.local` |
-| `layang` | Layang Seta | Context & Prompt Engineer | Claude 3.5 Sonnet / ChatGPT | `layang@zlce.local` |
-| `acimau` | Acimau Dev | Git & Sync Hub Specialist | Gemini 2.5 Pro | `acimau@zlce.local` |
-| `kepek` | Kepek Aris | Security & Zero-Secret Officer | Gemini 2.5 Flash | `kepek@zlce.local` |
-| `gete` | Gete Prakoso | Mobile UX & Ergonomics Reviewer | Claude 3.5 Haiku | `gete@zlce.local` |
+| `eko` | Eko Siswanto | System & Git Coordinator (Lead) | Gemini 4 Hydrogen (Free) / Claude 5.5 | `eko@zlce.local` |
+| `oned` | Oned Wiyono | Frontend & Mobile UI Specialist | Claude 5.5 Sonnet | `oned@zlce.local` |
+| `cxperia` | Chris X. Peria | QA & Test Harness Lead | Gemini 4 Hydrogen (Free) | `cxperia@zlce.local` |
+| `sulistiyani` | Sulistiyani | PWA & Offline Architect | Claude 5.5 Sonnet | `sulistiyani@zlce.local` |
+| `layang` | Layang Seta | Context & Prompt Engineer | Claude 5.5 Sonnet / ChatGPT | `layang@zlce.local` |
+| `acimau` | Acimau Dev | Git & Sync Hub Specialist | Gemini 4 Hydrogen (Free) | `acimau@zlce.local` |
+| `kepek` | Kepek Aris | Security & Zero-Secret Officer | Gemini 4 Hydrogen (Free) | `kepek@zlce.local` |
+| `gete` | Gete Prakoso | Mobile UX & Ergonomics Reviewer | Claude 5.5 Sonnet | `gete@zlce.local` |
 
 ### 3.3 Alur Kerja Estafet Harian (8 Langkah Standar):
 1. **Ambil Tablet:** Hidupkan tablet Samsung Galaxy Tab A7 Lite, buka aplikasi **ZLCEv4.1Mob** dari Layar Utama (PWA Standalone).
-2. **Pilih Anggota & Cek Status:** Buka modal *Active Member Selector* di pojok kanan atas Header, pilih profil Anda, dan pastikan tidak ada task menggantung.
+2. **Pilih Proyek & Anggota:** Gunakan dropdown **Registry Proyek** di kiri Header untuk memilih proyek kerja, dan buka dropdown **Active Member Selector** di kanan Header untuk memilih profil Anda tanpa kata sandi.
 3. **Klaim Task Atomik (1 Max):** Buka tab **SESSION_STATE & WAL**, pilih task `READY`, dan kunci status menjadi `IN_PROGRESS` (Invarian I3).
 4. **Rancang Context Pack:** Buka tab **AI Workbench** (`1. Rakit Prompt` / `Context Pack`), sesuaikan model AI sasaran (budget token 30K / 128K / 1M), lalu ketuk **1-Ketuk Salin Context Pack**.
 5. **Eksekusi AI di Peramban:** Buka peramban AI (Claude/ChatGPT/Gemini), tempel Context Pack, dan eksekusi rekayasa kode pada cabang terisolasi `git checkout -b task/TASK-xxx`.

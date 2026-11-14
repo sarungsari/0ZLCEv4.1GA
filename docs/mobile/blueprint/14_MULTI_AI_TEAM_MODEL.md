@@ -31,8 +31,8 @@ Sistem membedakan entitas kolaborasi ke dalam 4 tingkatan aktor:
    - Setiap anggota memiliki wewenang penuh menyetujui Gerbang (Gerbang 1–4) dengan pencatatan provenance eksplisit (ADR-07).
 2. **Penyedia & Model AI (AI Provider & Engine):**
    - Berbagai AI coding assistant yang diakses lewat peramban web tablet:
-     - Google Gemini (Gemini 1.5 Flash / 1.5 Pro / 2.0 / 3.8 Flash)
-     - Anthropic Claude (Claude 3.5 Sonnet / Haiku)
+     - Google Gemini (Gemini 4 Hydrogen (Free) / 2.5 Flash / 2.5 Pro)
+     - Anthropic Claude (Claude 5.5 Sonnet / Haiku)
      - ChatGPT (GPT-4o / o1)
      - Layanan lain: DeepSeek, Phind, Qwen, Perplexity.
 3. **Akun AI (AI Account Registry):**
@@ -122,7 +122,7 @@ Dilarang menghalusinasikan waktu nyata (gunakan "jam: ?").
 
 Sesuai persetujuan pengguna atas **Rekomendasi Optimal (Satu Repositori Bersama + Branch per Task)**:
 
-1. **Satu Repositori Bersama di GitHub:** `https://github.com/ekokeplek-glitch/ZLCE4.1.git` (`ekokeplek-glitch/ZLCE4.1`).
+1. **Satu Repositori Bersama di GitHub:** `https://github.com/sarungsari/0ZLCEv4.1GA.git` (`sarungsari/0ZLCEv4.1GA`).
 2. **Branching Model:**
    - `main`: Branch produksi / rilis stabil (terlindungi, hanya bisa di-merge via Pull Request yang lulus uji).
    - `task/TASK-001`, `task/TASK-002`, dst.: Setiap task dikerjakan pada branch tersendiri.

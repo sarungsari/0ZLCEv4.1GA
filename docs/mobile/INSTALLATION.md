@@ -60,8 +60,8 @@ mkdir -p ~/projects
 cd ~/projects
 
 # 2. Clone repositori bersama ZLCE
-git clone https://github.com/ekokeplek-glitch/ZLCE4.1.git
-cd ZLCE4.1
+git clone https://github.com/sarungsari/0ZLCEv4.1GA.git
+cd 0ZLCEv4.1GA
 
 # 3. Pindah ke branch kerja v4-mobile (lewati jika clone sudah berada di branch default)
 git checkout v4-mobile 2>/dev/null || true
@@ -84,7 +84,7 @@ Agar perintah diagnostik dapat dipanggil dengan singkat (misalnya `zlce check`),
 mkdir -p ~/bin
 
 # 2. Buat symlink ke dispatcher zlce
-ln -sf ~/projects/ZLCE4.1/scripts/zlce/zlce ~/bin/zlce
+ln -sf ~/projects/0ZLCEv4.1GA/scripts/zlce/zlce ~/bin/zlce
 
 # 3. Muat ulang path shell
 export PATH="$HOME/bin:$PATH"
@@ -119,7 +119,7 @@ Subperintah resmi yang diizinkan (allowlist):
 Jalankan skrip produksi mandiri ZLCE di jendela Termux:
 
 ```bash
-cd ~/projects/ZLCE4.1
+cd ~/projects/0ZLCEv4.1GA
 bash scripts/zlce-prod-start.sh
 ```
 
@@ -140,13 +140,13 @@ Skrip ini akan memeriksa dependensi, memvalidasi integritas dokumen `SESSION_STA
 Buka jendela terminal Termux baru atau hentikan server sementara (`Ctrl+C`), lalu jalankan verifikasi diagnostik:
 
 ```bash
-cd ~/projects/ZLCE4.1
+cd ~/projects/0ZLCEv4.1GA
 zlce check
 ```
 
 Bila seluruh berkas kontrol utuh, keluaran terminal akan menampilkan:
 ```text
-RESULT: OK (0 error, 0 warn, 93 task)
+RESULT: OK (0 error, 0 warn, 3 task)
 ```
 
 Tablet Samsung Galaxy Tab A7 Lite kini 100% siap digunakan oleh 8 anggota tim estafet!

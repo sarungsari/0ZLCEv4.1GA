@@ -326,8 +326,8 @@ export const PromptStudio: React.FC<PromptStudioProps> = ({
             <label className="text-xs font-semibold text-slate-400 block">Pilih AI Coding Assistant:</label>
             <div className="grid grid-cols-2 gap-2">
               {[
-                { id: 'claude', name: 'Claude 3.5', color: 'border-amber-500/40 text-amber-300' },
-                { id: 'gemini', name: 'Gemini 1.5/2.0', color: 'border-cyan-500/40 text-cyan-300' },
+                { id: 'claude', name: 'Claude 5.5', color: 'border-amber-500/40 text-amber-300' },
+                { id: 'gemini', name: 'Gemini 4 Hydrogen', color: 'border-cyan-500/40 text-cyan-300' },
                 { id: 'chatgpt', name: 'ChatGPT 4o', color: 'border-emerald-500/40 text-emerald-300' },
                 { id: 'deepseek', name: 'DeepSeek V3/R1', color: 'border-sky-500/40 text-sky-300' },
                 { id: 'copilot', name: 'Copilot', color: 'border-teal-500/40 text-teal-300' },

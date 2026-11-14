@@ -101,10 +101,10 @@ mkdir -p ~/projects
 cd ~/projects
 
 # 2. Clone repositori ZLCE Mobile Workbench v4.1.0 GA
-git clone https://github.com/ekokeplek-glitch/ZLCE4.1.git
-cd ZLCE4.1
+git clone https://github.com/sarungsari/0ZLCEv4.1GA.git
+cd 0ZLCEv4.1GA
 
-# 3. Pindah ke branch kerja aktif
+# 3. Pindah ke branch kerja aktif (lewati jika clone sudah berada di branch default)
 git checkout v4-mobile 2>/dev/null || true
 
 # 4. Instal seluruh dependensi front-end (React, Vite, Tailwind CSS, Lucide)
@@ -125,7 +125,7 @@ Agar seluruh anggota tim dapat menjalankan diagnostik hanya dengan mengetik peri
 mkdir -p ~/bin
 
 # 2. Buat symlink simbolik ke dispatcher ZLCE
-ln -sf ~/projects/ZLCE4.1/scripts/zlce/zlce ~/bin/zlce
+ln -sf ~/projects/0ZLCEv4.1GA/scripts/zlce/zlce ~/bin/zlce
 
 # 3. Pasang shortcut alias dan lingkungan ramah layar sentuh di ~/.bashrc
 cat << 'EOF' >> ~/.bashrc
@@ -135,7 +135,7 @@ export PATH="$HOME/bin:$PATH"
 export EDITOR=micro
 export VISUAL=micro
 
-alias cdp="cd ~/projects/ZLCE4.1"
+alias cdp="cd ~/projects/0ZLCEv4.1GA"
 alias zcheck="zlce check"
 alias zsnap="zlce snapshot"
 alias zclean="zlce clean-auth"
@@ -208,7 +208,7 @@ Untuk memastikan tablet 100% siap dipakai tanpa kendala memori maupun jaringan:
 ### 8.1 Uji Mode Mandiri / Standalone:
 - Ketuk ikon **ZLCEv4.1Mob** di Layar Utama Android.
 - Pastikan aplikasi terbuka tanpa bilah alamat URL peramban (layar penuh bersih).
-- Header atas menampilkan inisial anggota aktif dan status kesehatan sesi.
+- Header atas menampilkan pemilih proyek (**Registry Proyek**) di sebelah kiri serta **Active Member Selector** + tombol **Oper Tablet** di sebelah kanan.
 
 ### 8.2 Uji Ketahanan Mode Offline (Mode Pesawat):
 1. Tarik panel notifikasi Android ke bawah, lalu aktifkan **Mode Pesawat (Airplane Mode)**.
@@ -224,7 +224,9 @@ zlce check
 ```
 Keluaran yang diharapkan:
 ```text
-RESULT: OK (0 error, 0 warn, 93 task)
+RESULT: OK (0 error, 0 warn, 3 task)
 ```
+
+> 💡 **Mode SIMPLE untuk Proyek Baru:** Anda juga dapat mengunduh **Kit Single SIMPLE (`ZLCE_KIT_SIMPLE.md`)** atau **`zlce-simple-kit-v4.1.0.zip`** langsung dari tab **Dashboard** atau **Template & Pack Studio** untuk memulai proyek baru yang ringan dengan AI.
 
 🎉 **Selamat! ZLCE Mobile Workbench kini 100% terpasang dan siap digunakan untuk kolaborasi estafet 8 anggota tim.**

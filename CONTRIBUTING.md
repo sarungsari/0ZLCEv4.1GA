@@ -27,7 +27,7 @@ python3 scripts/zlce/zlce-check.py --state examples/SESSION_STATE.example.md --n
 ## Aturan Perubahan Berkas Kontrol & Template
 
 - Jika Anda mengubah berkas template di `templates/` atau prompt di `LANDING_PROMPT.md` / `HANDOVER_PROMPT.md`:
-  - Pastikan bundel tunggal `ZLCE_KIT_SINGLE.md` juga disinkronkan.
+  - Pastikan bundel tunggal `ZLCE_KIT_SIMPLE.md` dan `ZLCE_KIT_SINGLE.md` diuji via `npm run sync:assets` & `--simple-kit` / `--single-kit`.
   - Periksa konsistensi impor raw di `src/data/templates.ts`.
 - Skrip kanonik berada di `scripts/zlce/`. Berkas di root `scripts/` (mis. `scripts/zlce-check.py`) hanyalah wrapper tipis dan harus tetap meneruskan argumen ke direktori kanonik.
 
@@ -35,7 +35,7 @@ python3 scripts/zlce/zlce-check.py --state examples/SESSION_STATE.example.md --n
 
 ## Alur Pull Request
 
-1. Fork repositori: `https://github.com/ekokeplek-glitch/ZLCE4.1.git`.
+1. Fork repositori: `https://github.com/sarungsari/0ZLCEv4.1GA.git`.
 2. Buat branch baru dari `main` (contoh: `git checkout -b feat/nama-perbaikan`).
 3. Commit perubahan dengan pesan yang deskriptif dan jelas.
 4. Pastikan semua pemeriksaan lokal (`lint`, `build`, `zlce-check.py`) lulus.

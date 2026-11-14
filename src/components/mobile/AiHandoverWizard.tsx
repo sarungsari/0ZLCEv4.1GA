@@ -62,11 +62,11 @@ interface AiHandoverWizardProps {
 }
 
 const AI_OPTIONS = [
-  { id: 'claude', name: 'Anthropic Claude', models: ['Claude 3.5 Sonnet', 'Claude 3.7 Sonnet', 'Claude 3.5 Haiku'], defaultBudget: 'claude-30k', badge: 'High-Precision' },
-  { id: 'gemini', name: 'Google Gemini', models: ['Gemini 2.5 Flash', 'Gemini 2.5 Pro', 'Gemini 3.8 Flash', 'Gemini 1.5 Pro'], defaultBudget: 'gemini-1m', badge: '1M Large Context' },
+  { id: 'claude', name: 'Anthropic Claude', models: ['Claude 5.5 Sonnet', 'Claude 3.5 Sonnet', 'Claude 5.5 Haiku'], defaultBudget: 'claude-30k', badge: 'High-Precision' },
+  { id: 'gemini', name: 'Google Gemini', models: ['Gemini 4 Hydrogen (Free)', 'Gemini 2.5 Flash', 'Gemini 2.5 Pro'], defaultBudget: 'gemini-1m', badge: '1M Large Context' },
   { id: 'chatgpt', name: 'OpenAI ChatGPT', models: ['GPT-4o', 'o1-preview', 'o3-mini', 'GPT-4.5'], defaultBudget: 'gpt-128k', badge: 'General Reasoner' },
-  { id: 'cursor', name: 'Cursor Composer / Agent', models: ['Claude 3.5 Sonnet (Cursor)', 'Cursor Fast'], defaultBudget: 'cursor-64k', badge: 'IDE Agent' },
-  { id: 'copilot', name: 'GitHub Copilot', models: ['Copilot Chat', 'Claude 3.5 Sonnet (Copilot)'], defaultBudget: 'copilot-32k', badge: 'Repo Grounded' },
+  { id: 'cursor', name: 'Cursor Composer / Agent', models: ['Claude 5.5 Sonnet (Cursor)', 'Cursor Fast'], defaultBudget: 'cursor-64k', badge: 'IDE Agent' },
+  { id: 'copilot', name: 'GitHub Copilot', models: ['Copilot Chat', 'Claude 5.5 Sonnet (Copilot)'], defaultBudget: 'copilot-32k', badge: 'Repo Grounded' },
   { id: 'deepseek', name: 'DeepSeek R1 / V3', models: ['DeepSeek-R1 (Reasoning)', 'DeepSeek-V3'], defaultBudget: 'deepseek-64k', badge: 'Deep Reasoning' },
   { id: 'qwen', name: 'Qwen 2.5 Coder', models: ['Qwen 2.5 32B', 'Qwen 2.5 72B'], defaultBudget: 'deepseek-64k', badge: 'Fast Coding' },
 ];

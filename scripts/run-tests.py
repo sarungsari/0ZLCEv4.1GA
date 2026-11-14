@@ -149,9 +149,14 @@ def main():
         elif file_sha256(src_path) != file_sha256(dest_path):
             sync_errors.append(f"Hash mismatch: {src} != {dest}")
 
-    for stale_single in ("ZLCE_KIT_SINGLE.md", "zlce-starter-kit/ZLCE_KIT_SINGLE.md"):
+    for stale_single in (
+        "ZLCE_KIT_SINGLE.md",
+        "zlce-starter-kit/ZLCE_KIT_SINGLE.md",
+        "ZLCE_KIT_SIMPLE.md",
+        "zlce-starter-kit/ZLCE_KIT_SIMPLE.md",
+    ):
         if os.path.exists(os.path.join(ROOT, stale_single)):
-            sync_errors.append(f"Duplicate static ZLCE_KIT_SINGLE.md still on disk: {stale_single}")
+            sync_errors.append(f"Duplicate static kit still on disk: {stale_single}")
 
     import tempfile
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -169,6 +174,22 @@ def main():
             single_txt = open(out_single, encoding="utf-8").read()
             if "<<<FILE: templates/SESSION_STATE.template.md>>>" not in single_txt or "<<<FILE: LANDING_PROMPT.md>>>" not in single_txt:
                 sync_errors.append("Dynamic --single-kit output missing expected canonical FILE blocks")
+
+        out_simple = os.path.join(tmpdir, "ZLCE_KIT_SIMPLE.md")
+        res_simple = subprocess.run(
+            ["node", "scripts/sync-assets.mjs", "--simple-kit", out_simple],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=30
+        )
+        if res_simple.returncode != 0 or not os.path.isfile(out_simple):
+            sync_errors.append(f"Dynamic --simple-kit generator failed: {res_simple.stderr or res_simple.stdout}")
+        else:
+            simple_txt = open(out_simple, encoding="utf-8").read()
+            for marker in ("<<<FILE: LANDING_PROMPT.md>>>", "<<<FILE: BLUEPRINT.md>>>", "<<<FILE: TASKS.md>>>", "<<<FILE: SESSION_STATE.md>>>", "<<<FILE: HANDOVER.md>>>"):
+                if marker not in simple_txt:
+                    sync_errors.append(f"Dynamic --simple-kit output missing {marker}")
 
     if sync_errors:
         print(f"FAIL ({len(sync_errors)} mismatches)")
@@ -1651,6 +1672,7 @@ all_bundles = [
     ("release-bundles/zlce-claude-chatgpt-bundle.zip", 45, False),
     ("release-bundles/zlce-lmk-recovery-bundle.zip", 5, False),
     ("release-bundles/zlce-starter-kit-v4.1.0.zip", 20, False),
+    ("release-bundles/zlce-simple-kit-v4.1.0.zip", 10, False),
 ]
 try:
     subprocess.run(["python3", "scripts/create-audit-bundle.py"], check=True)
@@ -1658,8 +1680,18 @@ try:
     subprocess.run(["python3", "scripts/create-claude-bundle.py"], check=True)
     subprocess.run(["python3", "scripts/create-lmk-bundle.py"], check=True)
     subprocess.run(["python3", "scripts/create-starter-kit-bundle.py"], check=True)
+    subprocess.run(["python3", "scripts/create-simple-kit-bundle.py"], check=True)
 
-    # 2. Verifikasi SHA256SUMS.txt pada seluruh 5 bundel rilis & closure import pada bundel penuh
+    with zipfile.ZipFile("release-bundles/zlce-starter-kit-v4.1.0.zip", "r") as skf:
+        for req_name in ("zlce-starter-kit/ZLCE_KIT_SINGLE.md", "zlce-starter-kit/ZLCE_KIT_SIMPLE.md"):
+            if req_name not in skf.namelist():
+                raise AssertionError(f"{req_name} hilang di zlce-starter-kit-v4.1.0.zip")
+
+    with zipfile.ZipFile("release-bundles/zlce-simple-kit-v4.1.0.zip", "r") as smf:
+        if "ZLCE_KIT_SIMPLE.md" not in smf.namelist():
+            raise AssertionError("ZLCE_KIT_SIMPLE.md hilang di zlce-simple-kit-v4.1.0.zip")
+
+    # 2. Verifikasi SHA256SUMS.txt pada seluruh 6 bundel rilis & closure import pada bundel penuh
     for bpath, min_entries, check_closure in all_bundles:
         stale_public = os.path.join("public", "assets", os.path.basename(bpath))
         if os.path.exists(stale_public):

@@ -9,8 +9,8 @@ export const DEFAULT_PROJECTS: ProjectMeta[] = [
   {
     id: HOST_WORKBENCH_PROJECT_ID,
     name: 'ZLCE Mobile Workbench v4.1.0 GA',
-    termuxPath: '~/projects/ZLCE4.1',
-    repoUrl: 'https://github.com/ekokeplek-glitch/ZLCE4.1.git',
+    termuxPath: '~/projects/0ZLCEv4.1GA',
+    repoUrl: 'https://github.com/sarungsari/0ZLCEv4.1GA.git',
     branch: 'v4-mobile',
     activeMemberId: 'eko',
     lastAccessed: new Date().toISOString(),
@@ -90,14 +90,15 @@ export function useProjectRegistry() {
             .map((p: ProjectMeta) => {
               if (
                 p.id === HOST_WORKBENCH_PROJECT_ID ||
+                p.repoUrl?.includes('ekokeplek-glitch/ZLCE4.1') ||
                 p.repoUrl?.includes('ZLCE3.22-studio') ||
                 p.repoUrl?.includes('T1ZLCE-Mobench-v4.0.0GA')
               ) {
                 return {
                   ...p,
                   name: 'ZLCE Mobile Workbench v4.1.0 GA',
-                  termuxPath: '~/projects/ZLCE4.1',
-                  repoUrl: 'https://github.com/ekokeplek-glitch/ZLCE4.1.git',
+                  termuxPath: '~/projects/0ZLCEv4.1GA',
+                  repoUrl: 'https://github.com/sarungsari/0ZLCEv4.1GA.git',
                   workflow: p.workflow || 'MODIFY'
                 };
               }

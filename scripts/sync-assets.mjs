@@ -127,45 +127,66 @@ export const SYNC_PAIRS = [
   }
 ];
 
-const SINGLE_KIT_FILES = [
-  'LANDING_PROMPT.md',
-  'HANDOVER_PROMPT.md',
-  'templates/AI_WORKFLOW.template.md',
-  'templates/BLUEPRINT.template.md',
-  'templates/ARCHITECTURE.template.md',
-  'templates/DATA_MODEL.template.md',
-  'templates/TASKS.template.md',
-  'templates/SESSION_STATE.template.md',
-  'templates/TESTING.template.md',
-  'templates/CHECKLISTS.template.md',
-  'templates/CHANGELOG.template.md',
-  'templates/profiles/DOMAIN_BOOKING.profile.md'
+const SINGLE_KIT_FULL_ITEMS = [
+  { src: 'LANDING_PROMPT.md', label: 'LANDING_PROMPT.md' },
+  { src: 'HANDOVER_PROMPT.md', label: 'HANDOVER_PROMPT.md' },
+  { src: 'templates/AI_WORKFLOW.template.md', label: 'templates/AI_WORKFLOW.template.md' },
+  { src: 'templates/BLUEPRINT.template.md', label: 'templates/BLUEPRINT.template.md' },
+  { src: 'templates/ARCHITECTURE.template.md', label: 'templates/ARCHITECTURE.template.md' },
+  { src: 'templates/DATA_MODEL.template.md', label: 'templates/DATA_MODEL.template.md' },
+  { src: 'templates/TASKS.template.md', label: 'templates/TASKS.template.md' },
+  { src: 'templates/SESSION_STATE.template.md', label: 'templates/SESSION_STATE.template.md' },
+  { src: 'templates/TESTING.template.md', label: 'templates/TESTING.template.md' },
+  { src: 'templates/CHECKLISTS.template.md', label: 'templates/CHECKLISTS.template.md' },
+  { src: 'templates/CHANGELOG.template.md', label: 'templates/CHANGELOG.template.md' },
+  { src: 'templates/profiles/DOMAIN_BOOKING.profile.md', label: 'templates/profiles/DOMAIN_BOOKING.profile.md' }
 ];
 
-export function buildSingleKitMarkdown(baseDir = root) {
+const SINGLE_KIT_SIMPLE_ITEMS = [
+  { src: 'LANDING_PROMPT.md', label: 'LANDING_PROMPT.md' },
+  { src: 'HANDOVER_PROMPT.md', label: 'HANDOVER_PROMPT.md' },
+  { src: 'zlce-starter-kit/BLUEPRINT.md', label: 'BLUEPRINT.md' },
+  { src: 'zlce-starter-kit/TASKS.md', label: 'TASKS.md' },
+  { src: 'zlce-starter-kit/SESSION_STATE.md', label: 'SESSION_STATE.md' },
+  { src: 'zlce-starter-kit/HANDOVER.md', label: 'HANDOVER.md' }
+];
+
+export function buildSingleKitMarkdown(baseDir = root, mode = 'full') {
+  const normalized = String(mode || 'full').toLowerCase();
+  const isSimple = normalized === 'simple' || normalized === 'lite';
+  const items = isSimple ? SINGLE_KIT_SIMPLE_ITEMS : SINGLE_KIT_FULL_ITEMS;
+
+  const title = isSimple
+    ? '# ZLCE KIT MODE SIMPLE (SATU BERKAS LITE) v4.1.0 GA'
+    : '# ZLCE KIT (SATU BERKAS MODE FULL) v4.1.0 GA';
+
+  const subtitle = isSimple
+    ? 'Bundel tunggal ringkas Mode SIMPLE / LITE (4 berkas kontrol inti + Landing & Handover Prompt) untuk proyek < ~15 task dan AI berbasis chat/prompt tunggal.'
+    : 'Berkas ini adalah bundel tunggal (*derived artifact*) Zero-Loss Context Engineering (ZLCE) v4.1.0 GA. Dihasilkan otomatis dari sumber kanonik `LANDING_PROMPT.md`, `HANDOVER_PROMPT.md`, dan `templates/` agar kompatibel dengan AI berbasis chat/prompt tunggal tanpa multi-upload.';
+
   const header = [
-    '# ZLCE KIT (SATU BERKAS) v4.1.0 GA',
+    title,
     '',
-    'Berkas ini adalah bundel tunggal (*derived artifact*) Zero-Loss Context Engineering (ZLCE) v4.1.0 GA.',
-    'Dihasilkan otomatis dari sumber kanonik `LANDING_PROMPT.md`, `HANDOVER_PROMPT.md`, dan `templates/` agar kompatibel dengan AI berbasis chat/prompt tunggal tanpa multi-upload.',
+    subtitle,
     '',
     'Setiap berkas di dalamnya dibatasi penanda:',
     '<<<FILE: path>>> dan <<<END FILE>>>.',
     'Perlakukan tiap bagian sebagai berkas terpisah dengan path tersebut.',
     '',
+    `MODE: ${isSimple ? 'SIMPLE (LITE - 6 Berkas Inti)' : 'FULL (12 Berkas Lengkap)'}`,
     'DAFTAR BERKAS:',
-    ...SINGLE_KIT_FILES.map((f) => `- ${f}`),
+    ...items.map((f) => `- ${f.label}`),
     ''
   ].join('\n');
 
   let body = '';
-  for (const rel of SINGLE_KIT_FILES) {
-    const abs = path.join(baseDir, rel);
+  for (const item of items) {
+    const abs = path.join(baseDir, item.src);
     if (!fs.existsSync(abs)) {
-      throw new Error(`Missing canonical source for single-kit: ${rel}`);
+      throw new Error(`Missing canonical source for single-kit (${normalized}): ${item.src}`);
     }
     const content = fs.readFileSync(abs, 'utf8').trim();
-    body += `\n<<<FILE: ${rel}>>>\n${content}\n<<<END FILE>>>\n`;
+    body += `\n<<<FILE: ${item.label}>>>\n${content}\n<<<END FILE>>>\n`;
   }
 
   return `${header}${body}`;
@@ -206,16 +227,23 @@ function runSync() {
 }
 
 const args = process.argv.slice(2);
+const modeIdx = args.indexOf('--mode');
+const explicitMode = modeIdx !== -1 && args[modeIdx + 1] ? args[modeIdx + 1].toLowerCase() : null;
+const simpleKitIdx = args.indexOf('--simple-kit');
 const singleKitIdx = args.indexOf('--single-kit');
-if (singleKitIdx !== -1) {
-  const targetArg = args[singleKitIdx + 1] && !args[singleKitIdx + 1].startsWith('--')
-    ? args[singleKitIdx + 1]
-    : 'dist/ZLCE_KIT_SINGLE.md';
+
+if (simpleKitIdx !== -1 || singleKitIdx !== -1) {
+  const flagIdx = simpleKitIdx !== -1 ? simpleKitIdx : singleKitIdx;
+  const mode = simpleKitIdx !== -1 ? 'simple' : (explicitMode || 'full');
+  const defaultOut = mode === 'simple' || mode === 'lite' ? 'dist/ZLCE_KIT_SIMPLE.md' : 'dist/ZLCE_KIT_SINGLE.md';
+  const targetArg = args[flagIdx + 1] && !args[flagIdx + 1].startsWith('--')
+    ? args[flagIdx + 1]
+    : defaultOut;
   const outPath = path.isAbsolute(targetArg) ? targetArg : path.join(root, targetArg);
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
-  const md = buildSingleKitMarkdown(root);
+  const md = buildSingleKitMarkdown(root, mode);
   fs.writeFileSync(outPath, md, 'utf8');
-  console.log(`[OK] Generated derived single-file kit at ${path.relative(root, outPath) || outPath} (${Buffer.byteLength(md, 'utf8')} bytes).`);
+  console.log(`[OK] Generated derived single-file kit (${mode}) at ${path.relative(root, outPath) || outPath} (${Buffer.byteLength(md, 'utf8')} bytes).`);
 } else {
   runSync();
 }

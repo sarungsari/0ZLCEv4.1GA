@@ -450,8 +450,8 @@ export function generateTechnicalClarificationResponse(
    Jalankan \`termux-setup-storage\` dan ketuk "Izinkan" pada pop-up sistem Android agar Termux dapat membaca memori bersama.
 4. **Clone Repositori & Instal Dependensi:**
    \`mkdir -p ~/projects && cd ~/projects\`
-   \`git clone https://github.com/ekokeplek-glitch/ZLCE4.1.git\`
-   \`cd ZLCE4.1 && npm install\`
+   \`git clone https://github.com/sarungsari/0ZLCEv4.1GA.git\`
+   \`cd 0ZLCEv4.1GA && npm install\`
 5. **Peluncuran Produksi Satu Langkah:**
    Jalankan skrip mandiri: \`bash scripts/zlce-prod-start.sh\`
    Skrip ini otomatis menormalisasi izin POSIX (chmod +x), memvalidasi \`SESSION_STATE.md\`, mengompilasi bundel \`dist/\`, dan menjalankan server preview pada port 3000.

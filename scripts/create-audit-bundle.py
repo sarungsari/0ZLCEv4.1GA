@@ -92,6 +92,7 @@ FILES_TO_BUNDLE = [
     "scripts/create-audit-bundle.py",
     "scripts/create-pwa-review-bundle.py",
     "scripts/create-starter-kit-bundle.py",
+    "scripts/create-simple-kit-bundle.py",
     "scripts/zlce/zlce",
     "scripts/zlce/clean-auth.sh",
     "scripts/zlce/zlce-check.py",
@@ -142,6 +143,7 @@ FILES_TO_BUNDLE = [
     "src/utils/memberWorkLogs.ts",
     "src/utils/performanceAuditEngine.ts",
     "src/utils/projectStarter.ts",
+    "src/utils/singleKitGenerator.ts",
     "src/utils/smartTaskCheck.ts",
 
     # 9. Test Suite

@@ -57,7 +57,7 @@ Sistem ini mentransformasikan metodologi **Zero-Loss Context Engineering (ZLCE)*
           ▼
 ┌──────────────────────────────────────────────────────────────┐
 │                 GITHUB REMOTE REPOSITORY                     │
-│       https://github.com/ekokeplek-glitch/ZLCE4.1.git               │
+│       https://github.com/sarungsari/0ZLCEv4.1GA.git             │
 │         Branch 'main' (Protected) + Branch 'task/TASK-xxx'   │
 └──────────────────────────────────────────────────────────────┘
 ```

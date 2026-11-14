@@ -36,7 +36,7 @@ Penggunaan 1 tablet Samsung Galaxy Tab A7 Lite secara bergantian oleh 8 anggota 
      - Riwayat shell terminal (`~/.bash_history` di Termux).
      - Riwayat commit git atau pesan commit.
 2. **Registry Akun Non-Rahasia:**
-   - Registry akun AI di PWA hanya memuat **metadata publik**: Nama alias (misal: `Akun-Claude-Budi`), penyedia (`Anthropic`), model (`Claude 3.5 Sonnet`), tanggal reset kuota token, dan kuota request gratis. Tidak ada field untuk API key atau password.
+   - Registry akun AI di PWA hanya memuat **metadata publik**: Nama alias (misal: `Akun-Claude-Budi`), penyedia (`Anthropic`), model (`Claude 5.5 Sonnet`), tanggal reset kuota token, dan kuota request gratis. Tidak ada field untuk API key atau password.
 
 ---
 

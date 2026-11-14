@@ -11,14 +11,14 @@ Sesuai **ADR-04** dan **ADR-07**, sistem menggunakan 8 profil anggota tim yang t
 
 | Alias | Nama Lengkap | Peran Utama (Sumber: `teamMembers.ts`) | Preferensi AI Model | Email Non-Kredensial |
 | :--- | :--- | :--- | :--- | :--- |
-| `eko` | Eko Siswanto | System & Git Coordinator (Lead) | Gemini 2.5 Flash / Claude 3.5 Sonnet | `eko@zlce.local` |
-| `oned` | Oned Wiyono | Frontend & Mobile UI Specialist | Claude 3.5 Sonnet | `oned@zlce.local` |
-| `cxperia` | Chris X. Peria | QA & Test Harness Lead | Gemini 2.5 Flash | `cxperia@zlce.local` |
-| `sulistiyani` | Sulistiyani | PWA & Offline Architect | Claude 3.5 Sonnet | `sulistiyani@zlce.local` |
-| `layang` | Layang Seta | Context & Prompt Engineer | Claude 3.5 Sonnet / ChatGPT | `layang@zlce.local` |
-| `acimau` | Acimau Dev | Git & Sync Hub Specialist | Gemini 2.5 Pro | `acimau@zlce.local` |
-| `kepek` | Kepek Aris | Security & Zero-Secret Officer | Gemini 2.5 Flash | `kepek@zlce.local` |
-| `gete` | Gete Prakoso | Mobile UX & Ergonomics Reviewer | Claude 3.5 Haiku | `gete@zlce.local` |
+| `eko` | Eko Siswanto | System & Git Coordinator (Lead) | Gemini 4 Hydrogen (Free) / Claude 5.5 Sonnet | `eko@zlce.local` |
+| `oned` | Oned Wiyono | Frontend & Mobile UI Specialist | Claude 5.5 Sonnet | `oned@zlce.local` |
+| `cxperia` | Chris X. Peria | QA & Test Harness Lead | Gemini 4 Hydrogen (Free) | `cxperia@zlce.local` |
+| `sulistiyani` | Sulistiyani | PWA & Offline Architect | Claude 5.5 Sonnet | `sulistiyani@zlce.local` |
+| `layang` | Layang Seta | Context & Prompt Engineer | Claude 5.5 Sonnet / ChatGPT | `layang@zlce.local` |
+| `acimau` | Acimau Dev | Git & Sync Hub Specialist | Gemini 4 Hydrogen (Free) | `acimau@zlce.local` |
+| `kepek` | Kepek Aris | Security & Zero-Secret Officer | Gemini 4 Hydrogen (Free) | `kepek@zlce.local` |
+| `gete` | Gete Prakoso | Mobile UX & Ergonomics Reviewer | Claude 5.5 Sonnet | `gete@zlce.local` |
 
 ### Cara Beralih Anggota di PWA:
 1. Di bagian kanan atas Header PWA, ketuk tombol **Active Member Selector** (terdapat badge inisial dan nama).
@@ -71,7 +71,7 @@ Setiap anggota tim yang memegang tablet wajib mengikuti alur 8 langkah berurutan
 - Kembali ke PWA ZLCEv4.1Mob. PWA otomatis memulihkan state dari LocalStorage berkat proteksi LMK.
 - Buka tab **Result Capture** untuk memvalidasi keluaran dan menyuntikkan metadata provenance otomatis (`[Aktor, AI Model, Timestamp, Task ID]`).
 - Simpan perubahan berkas ke disk proyek.
-- Buka Termux, masuk ke folder repositori (`cdp` atau `cd ~/projects/ZLCE4.1`).
+- Buka Termux, masuk ke folder repositori (`cdp` atau `cd ~/projects/0ZLCEv4.1GA`).
 - Jalankan validasi kanonik:
   ```bash
   zlce check

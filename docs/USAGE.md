@@ -20,7 +20,7 @@ Dokumen ini memuat panduan operasional detail untuk metodologi dan perangkat **Z
 
 | Situasi Kerja | Tindakan & Berkas yang Digunakan |
 | :--- | :--- |
-| **Memulai Proyek Baru** | Gunakan `LANDING_PROMPT.md` (Aksi: `BARU`). Lampirkan template kontrol atau `ZLCE_KIT_SINGLE.md` (ekspor via Pack Studio / `node scripts/sync-assets.mjs --single-kit`). |
+| **Memulai Proyek Baru** | Gunakan `LANDING_PROMPT.md` (Aksi: `BARU`). Lampirkan template kontrol atau bundel tunggal `ZLCE_KIT_SIMPLE.md` (Mode SIMPLE/LITE) / `ZLCE_KIT_SINGLE.md` (Mode FULL) via Dashboard / Pack Studio / `--simple-kit` / `--single-kit`. |
 | **Melanjutkan Sesi / Pindah AI / Sesi Normal Selesai** | Gunakan `HANDOVER_PROMPT.md` + lampirkan: `SESSION_STATE.md`, `TASKS.md`, `AI_WORKFLOW.md`. |
 | **Merapikan Proyek Lama (Existing Codebase)** | Gunakan `LANDING_PROMPT.md` (Aksi: `RESTRUKTURISASI`). AI dilarang mengubah kode sebelum audit dan matriks selesai. |
 | **Validasi Integritas Format State** | Jalankan `python3 scripts/zlce/zlce-check.py .` di terminal, atau gunakan tab **Session State** di ZLCE Studio. |
@@ -34,7 +34,7 @@ Dokumen ini memuat panduan operasional detail untuk metodologi dan perangkat **Z
 1. **Inisiasi via Landing Prompt**:
    - Tentukan mode: **LITE** (4 berkas kontrol: `BLUEPRINT`, `TASKS`, `SESSION_STATE`, `HANDOVER`) atau **FULL** (10 dokumen lengkap).
    - Isi parameter di `LANDING_PROMPT.md` (Nama Proyek, Aksi `BARU`, Tech Stack, Kebutuhan Inti).
-   - Lampirkan `templates/` (atau `ZLCE_KIT_SINGLE.md` dari Pack Studio / `node scripts/sync-assets.mjs --single-kit`), lalu kirim prompt.
+   - Lampirkan `templates/` (atau unduh `ZLCE_KIT_SIMPLE.md` untuk Mode LITE / `ZLCE_KIT_SINGLE.md` untuk Mode FULL dari Pack Studio / `node scripts/sync-assets.mjs --simple-kit`), lalu kirim prompt.
 2. **Gerbang Kualitas Bertahap (Quality Gates)**:
    - **Gerbang 1**: AI menyusun `BLUEPRINT.md` (Visi, Lingkup, Batasan, Acceptance Criteria) lalu **BERHENTI**. Anda memeriksa dan memberikan persetujuan eksplisit.
    - **Gerbang 2** *(Hanya Mode FULL)*: AI menyusun `ARCHITECTURE.md` & `DATA_MODEL.md` lalu berhenti untuk persetujuan.

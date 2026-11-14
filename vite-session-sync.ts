@@ -242,39 +242,46 @@ export function sessionSyncPlugin(): Plugin {
         }
 
         // 5. Dynamic on-demand ZIP bundle generator (anti-stale live generation)
-        if (url === '/api/bundle/audit' || url === '/api/bundle/claude' || url === '/api/bundle/lmk' || url === '/api/bundle/pwa-frontend' || url === '/api/bundle/starter-kit' || (url === '/api/bundle/generate')) {
-          const isStarterKit = url === '/api/bundle/starter-kit' || rawUrl.includes('type=starter-kit');
-          const isLmk = !isStarterKit && (url === '/api/bundle/lmk' || rawUrl.includes('type=lmk'));
-          const isPwa = !isStarterKit && !isLmk && (url === '/api/bundle/pwa-frontend' || rawUrl.includes('type=pwa-frontend'));
-          const isClaude = !isStarterKit && !isLmk && !isPwa && (url === '/api/bundle/claude' || rawUrl.includes('type=claude'));
-          const scriptName = isStarterKit
-            ? 'scripts/create-starter-kit-bundle.py'
-            : isLmk
-              ? 'scripts/create-lmk-bundle.py'
-              : isPwa
-                ? 'scripts/create-pwa-review-bundle.py'
-                : isClaude
-                  ? 'scripts/create-claude-bundle.py'
-                  : 'scripts/create-audit-bundle.py';
-          const outputRelPath = isStarterKit
-            ? 'release-bundles/zlce-starter-kit-v4.1.0.zip'
-            : isLmk
-              ? 'release-bundles/zlce-lmk-recovery-bundle.zip'
-              : isPwa
-                ? 'release-bundles/zlce-pwa-frontend-review-bundle.zip'
-                : isClaude
-                  ? 'release-bundles/zlce-claude-chatgpt-bundle.zip'
-                  : 'release-bundles/zlce-audit-review-bundle.zip';
-          const defaultFilename = isStarterKit
-            ? 'zlce-starter-kit-v4.1.0.zip'
-            : isLmk
-              ? 'zlce-lmk-recovery-bundle.zip'
-              : isPwa
-                ? 'zlce-pwa-frontend-review-bundle.zip'
-                : isClaude
-                  ? 'zlce-claude-chatgpt-bundle.zip'
-                  : 'zlce-audit-review-bundle.zip';
-          const fileCount = isStarterKit ? 28 : isLmk ? 5 : isPwa ? 195 : isClaude ? 70 : 240;
+        if (url === '/api/bundle/audit' || url === '/api/bundle/claude' || url === '/api/bundle/lmk' || url === '/api/bundle/pwa-frontend' || url === '/api/bundle/starter-kit' || url === '/api/bundle/simple-kit' || url === '/api/bundle/single-kit' || (url === '/api/bundle/generate')) {
+          const isSimpleKit = url === '/api/bundle/simple-kit' || url === '/api/bundle/single-kit' || rawUrl.includes('type=simple-kit') || rawUrl.includes('type=single-kit');
+          const isStarterKit = !isSimpleKit && (url === '/api/bundle/starter-kit' || rawUrl.includes('type=starter-kit'));
+          const isLmk = !isSimpleKit && !isStarterKit && (url === '/api/bundle/lmk' || rawUrl.includes('type=lmk'));
+          const isPwa = !isSimpleKit && !isStarterKit && !isLmk && (url === '/api/bundle/pwa-frontend' || rawUrl.includes('type=pwa-frontend'));
+          const isClaude = !isSimpleKit && !isStarterKit && !isLmk && !isPwa && (url === '/api/bundle/claude' || rawUrl.includes('type=claude'));
+          const scriptName = isSimpleKit
+            ? 'scripts/create-simple-kit-bundle.py'
+            : isStarterKit
+              ? 'scripts/create-starter-kit-bundle.py'
+              : isLmk
+                ? 'scripts/create-lmk-bundle.py'
+                : isPwa
+                  ? 'scripts/create-pwa-review-bundle.py'
+                  : isClaude
+                    ? 'scripts/create-claude-bundle.py'
+                    : 'scripts/create-audit-bundle.py';
+          const outputRelPath = isSimpleKit
+            ? 'release-bundles/zlce-simple-kit-v4.1.0.zip'
+            : isStarterKit
+              ? 'release-bundles/zlce-starter-kit-v4.1.0.zip'
+              : isLmk
+                ? 'release-bundles/zlce-lmk-recovery-bundle.zip'
+                : isPwa
+                  ? 'release-bundles/zlce-pwa-frontend-review-bundle.zip'
+                  : isClaude
+                    ? 'release-bundles/zlce-claude-chatgpt-bundle.zip'
+                    : 'release-bundles/zlce-audit-review-bundle.zip';
+          const defaultFilename = isSimpleKit
+            ? 'zlce-simple-kit-v4.1.0.zip'
+            : isStarterKit
+              ? 'zlce-starter-kit-v4.1.0.zip'
+              : isLmk
+                ? 'zlce-lmk-recovery-bundle.zip'
+                : isPwa
+                  ? 'zlce-pwa-frontend-review-bundle.zip'
+                  : isClaude
+                    ? 'zlce-claude-chatgpt-bundle.zip'
+                    : 'zlce-audit-review-bundle.zip';
+          const fileCount = isSimpleKit ? 14 : isStarterKit ? 29 : isLmk ? 5 : isPwa ? 195 : isClaude ? 70 : 240;
 
           const handleGenerateAndRespond = (optionalSessionState?: string) => {
             try {
@@ -356,6 +363,7 @@ export function sessionSyncPlugin(): Plugin {
           const claudeZip = path.resolve(rootDir, 'release-bundles/zlce-claude-chatgpt-bundle.zip');
           const lmkZip = path.resolve(rootDir, 'release-bundles/zlce-lmk-recovery-bundle.zip');
           const starterZip = path.resolve(rootDir, 'release-bundles/zlce-starter-kit-v4.1.0.zip');
+          const simpleZip = path.resolve(rootDir, 'release-bundles/zlce-simple-kit-v4.1.0.zip');
 
           const getInfo = (p: string, expectedFiles: number) => {
             if (!fs.existsSync(p)) return { exists: false, filesCount: expectedFiles, size: 0, mtime: 0 };
@@ -375,7 +383,8 @@ export function sessionSyncPlugin(): Plugin {
           res.end(
             JSON.stringify({
               isLiveGeneratorActive: true,
-              starterKitBundle: getInfo(starterZip, 28),
+              simpleKitBundle: getInfo(simpleZip, 14),
+              starterKitBundle: getInfo(starterZip, 29),
               auditBundle: getInfo(auditZip, 240),
               claudeBundle: getInfo(claudeZip, 70),
               lmkBundle: getInfo(lmkZip, 5),

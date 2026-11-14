@@ -23,7 +23,7 @@ export VISUAL=micro
 export PATH="$HOME/bin:$PATH"
 
 # Shortcut Direktori Proyek
-alias cdp="cd ~/projects/ZLCE4.1"
+alias cdp="cd ~/projects/0ZLCEv4.1GA"
 
 # Shortcut Diagnostik ZLCE
 alias zcheck="zlce check"

@@ -37,7 +37,7 @@ ZLCE Mobile Workbench v4.1.0 GA (`ZLCEv4.1Mob`) dirancang khusus untuk memfasili
 Untuk memulai Workbench di lingkungan nyata (Termux di Samsung Tab A7 Lite), buka aplikasi Termux dan jalankan:
 
 ```bash
-cd ~/projects/ZLCE4.1
+cd ~/projects/0ZLCEv4.1GA
 bash scripts/zlce-prod-start.sh
 ```
 
@@ -90,7 +90,7 @@ Setiap anggota tim yang menerima giliran memegang tablet fisik wajib mengikuti s
 
 ### Langkah 4: Menghasilkan Context Pack Portabel
 * Buka tab **Context Pack** atau **Prompt Studio**.
-* Pilih AI sasaran yang akan Anda gunakan (Claude 3.5/5.5 Sonnet, ChatGPT GPT-4o, Gemini 2.5/3.8, DeepSeek).
+* Pilih AI sasaran yang akan Anda gunakan (Claude 5.5 Sonnet, ChatGPT GPT-4o, Gemini 4 Hydrogen (Free), DeepSeek).
 * Ketuk tombol **Salin Context Pack (1-Ketukan)** atau unduh `.md`.
 
 ### Langkah 5: Eksekusi Rekayasa dengan AI Eksternal

@@ -58,6 +58,7 @@ import {
   getWorkflowLabel,
   getWorkflowShortTag
 } from '../utils/projectStarter';
+import { generateSingleKitBundle } from '../utils/singleKitGenerator';
 import { ConfirmDialog } from './mobile/ConfirmDialog';
 import { ModalShell } from './mobile/ModalShell';
 import { DraftTextarea } from './mobile/DraftTextarea';
@@ -146,7 +147,7 @@ const DashboardTabComponent: React.FC<DashboardTabProps> = ({
     }, 600);
   };
 
-  // Lazy-load TASKS.md detail backlog hanya untuk repositori host ZLCE4.1; proyek pengguna memakai starter backlog mandiri
+  // Lazy-load TASKS.md detail backlog hanya untuk repositori host 0ZLCEv4.1GA; proyek pengguna memakai starter backlog mandiri
   const [tasksMarkdown, setTasksMarkdown] = useState<string | null>(null);
   const ensureTasksBacklogLoaded = React.useCallback(async (): Promise<string> => {
     if (!isHostProject) return '';
@@ -734,6 +735,40 @@ const DashboardTabComponent: React.FC<DashboardTabProps> = ({
           <div className="pt-2.5 border-t border-slate-800/80 flex flex-wrap items-center gap-2">
             <button
               type="button"
+              onClick={() => {
+                const { markdown, filename } = generateSingleKitBundle('simple');
+                const res = downloadMarkdownBlob(markdown, { filename });
+                if (res.success) {
+                  showToast(`Kit Single Mode SIMPLE (${res.filename}) berhasil diunduh.`, 'success');
+                }
+              }}
+              className="touch-target-44 min-h-[44px] px-3 py-2 rounded-lg bg-cyan-950/70 hover:bg-cyan-900 border border-cyan-700/60 text-cyan-200 text-xs font-semibold flex items-center gap-1.5 transition"
+              title="Unduh bundel satu berkas Mode SIMPLE / LITE (6 berkas inti siap tempel ke chat AI)"
+            >
+              <Download className="w-4 h-4" />
+              <span>Kit Single SIMPLE (.md)</span>
+            </button>
+            <button
+              type="button"
+              onClick={async () => {
+                const res = await generateAndDownloadZipBundle({
+                  type: 'simple-kit',
+                  filename: 'zlce-simple-kit-v4.1.0.zip'
+                });
+                if (res.success) {
+                  showToast('Bundel zlce-simple-kit-v4.1.0.zip berhasil di-generate & diunduh.', 'success');
+                } else {
+                  showToast('Mode Statis PWA: generate zlce-simple-kit-v4.1.0.zip di Termux via "npm run bundles".', 'warning');
+                }
+              }}
+              className="touch-target-44 min-h-[44px] px-3 py-2 rounded-lg bg-indigo-950/70 hover:bg-indigo-900 border border-indigo-700/60 text-indigo-200 text-xs font-semibold flex items-center gap-1.5 transition"
+              title="Generate dan unduh bundel ringkas Mode SIMPLE (.ZIP) beserta skrip CLI & panduan Android"
+            >
+              <Download className="w-4 h-4" />
+              <span>Bundel Mode SIMPLE (.ZIP)</span>
+            </button>
+            <button
+              type="button"
               onClick={async () => {
                 const res = await generateAndDownloadZipBundle({
                   type: 'starter-kit',
@@ -833,6 +868,38 @@ const DashboardTabComponent: React.FC<DashboardTabProps> = ({
             >
               <Download className="w-3.5 h-3.5" />
               <span>Unduh BLUEPRINT.md</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                const opts = {
+                  projectName: activeProject.name,
+                  stack: activeProject.stack,
+                  mode: activeProject.mode,
+                  workflow: activeProject.workflow || 'NEW',
+                  branch: activeProject.branch,
+                  termuxPath: activeProject.termuxPath,
+                  description: activeProject.description
+                };
+                const { markdown, filename } = generateSingleKitBundle(
+                  activeProject.mode === 'FULL' ? 'full' : 'simple',
+                  {
+                    projectName: activeProject.name,
+                    sessionStateMd: rawMarkdown,
+                    tasksMd: buildFreshTasksMarkdown(opts),
+                    blueprintMd: buildFreshBlueprintMarkdown(opts)
+                  }
+                );
+                const res = downloadMarkdownBlob(markdown, { filename });
+                if (res.success) {
+                  showToast(`Kit Tunggal (${res.filename}) untuk "${activeProject.name}" berhasil diunduh.`, 'success');
+                }
+              }}
+              className="touch-target-44 min-h-[44px] px-3 py-2 rounded-lg bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-700/60 text-cyan-200 text-xs font-semibold flex items-center gap-1.5 transition"
+              title="Ekspor seluruh berkas kontrol proyek ini menjadi 1 berkas tunggal siap tempel ke AI"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Unduh Kit Tunggal ({activeProject.mode === 'FULL' ? 'FULL' : 'SIMPLE'} .md)</span>
             </button>
             <button
               type="button"
@@ -1794,7 +1861,7 @@ const DashboardTabComponent: React.FC<DashboardTabProps> = ({
           <div className="bg-slate-950 p-3.5 rounded-xl border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono">
               <div className="space-y-0.5">
                 <span className="text-slate-400 block text-xs">REMOTE ORIGIN TERHUBUNG:</span>
-                <span className="text-emerald-400 font-bold break-all">https://github.com/ekokeplek-glitch/ZLCE4.1.git</span>
+                <span className="text-emerald-400 font-bold break-all">https://github.com/sarungsari/0ZLCEv4.1GA.git</span>
               </div>
               <div className="text-left sm:text-right space-y-0.5 shrink-0">
                 <span className="text-slate-400 block text-xs">CABANG AKTIF:</span>

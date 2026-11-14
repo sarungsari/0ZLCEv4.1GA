@@ -33,6 +33,10 @@ import troubleshootingGuide from '../../docs/mobile/TROUBLESHOOTING.md?raw';
 import landingPromptDoc from '../../LANDING_PROMPT.md?raw';
 import handoverPromptDoc from '../../HANDOVER_PROMPT.md?raw';
 import aiWorkflowDoc from '../../AI_WORKFLOW.md?raw';
+import starterBlueprintLite from '../../zlce-starter-kit/BLUEPRINT.md?raw';
+import starterTasksLite from '../../zlce-starter-kit/TASKS.md?raw';
+import starterSessionStateLite from '../../zlce-starter-kit/SESSION_STATE.md?raw';
+import starterHandoverLite from '../../zlce-starter-kit/HANDOVER.md?raw';
 
 export const CURRENT_PROJECT_SESSION_STATE_MD = currentProjectSessionState;
 export const CURRENT_PROJECT_TASKS_MD = currentProjectTasks;
@@ -48,6 +52,10 @@ export const TROUBLESHOOTING_MD = troubleshootingGuide;
 export const LANDING_PROMPT_MD = landingPromptDoc;
 export const HANDOVER_PROMPT_MD = handoverPromptDoc;
 export const AI_WORKFLOW_MD = aiWorkflowDoc;
+export const STARTER_BLUEPRINT_LITE_MD = starterBlueprintLite;
+export const STARTER_TASKS_LITE_MD = starterTasksLite;
+export const STARTER_SESSION_STATE_LITE_MD = starterSessionStateLite;
+export const STARTER_HANDOVER_LITE_MD = starterHandoverLite;
 
 export const ZLCE_TEMPLATES: TemplateItem[] = [
   {
