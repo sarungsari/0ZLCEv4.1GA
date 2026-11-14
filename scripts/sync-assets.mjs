@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
  * ZLCE Canonical Asset Synchronizer & Single-Kit Generator
- * Syncs all canonical files from root, scripts/, templates/, and examples/
- * one-way to scripts/zlce/ and zlce-starter-kit/, and generates ZLCE_KIT_SINGLE.md on demand.
+ * Syncs all canonical files from root, scripts/, templates/, and docs/mobile/
+ * one-way to scripts/zlce/ and zlce-starter-kit/, and generates ZLCE_KIT_SINGLE.md / ZLCE_KIT_SIMPLE.md on demand.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -49,23 +49,6 @@ export const SYNC_PAIRS = [
   {
     src: 'HANDOVER.md',
     destinations: ['zlce-starter-kit/HANDOVER.md']
-  },
-  // Canonical Examples: from examples/ to zlce-starter-kit/examples/
-  {
-    src: 'examples/AI_WORKFLOW.example.md',
-    destinations: ['zlce-starter-kit/examples/AI_WORKFLOW.example.md']
-  },
-  {
-    src: 'examples/BLUEPRINT.example.md',
-    destinations: ['zlce-starter-kit/examples/BLUEPRINT.example.md']
-  },
-  {
-    src: 'examples/SESSION_STATE.example.md',
-    destinations: ['zlce-starter-kit/examples/SESSION_STATE.example.md']
-  },
-  {
-    src: 'examples/TASKS.example.md',
-    destinations: ['zlce-starter-kit/examples/TASKS.example.md']
   },
   // Canonical Templates: from templates/ to zlce-starter-kit/templates/
   {

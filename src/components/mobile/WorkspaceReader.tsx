@@ -157,7 +157,7 @@ export const WorkspaceReader: React.FC<WorkspaceReaderProps> = ({
   2. Matriks task diparsing menjadi array objek terstruktur.
   3. Tidak memicu crash bila terdapat baris Markdown tak terduga.
 * **Test Case:** TC-P2-01
-* **Metode Verifikasi:** Uji unit parsing terhadap berkas contoh di templates/ dan examples/.
+* **Metode Verifikasi:** Uji unit parsing terhadap berkas template kanonik di templates/ dan zlce-starter-kit/.
 `);
     } else if (type === 'BLUEPRINT') {
       setInputText(`# SPESIFIKASI TEKNIS & BLUEPRINT SISTEM: ZLCE Mobile Workbench

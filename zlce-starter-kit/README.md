@@ -41,12 +41,6 @@ Paket starter kit bersih siap pakai untuk mengendalikan konteks AI agent (Claude
 │   └── profiles/
 │       └── DOMAIN_BOOKING.profile.md  # Profil domain reservasi & sewa unit
 │
-├── examples/                      # Berkas Contoh Nyata Terverifikasi (Todo API)
-│   ├── SESSION_STATE.example.md   # Contoh status sesi aktif, WAL, dan asumsi
-│   ├── TASKS.example.md           # Contoh rincian task atomik (TASK-001 s/d TASK-005)
-│   ├── AI_WORKFLOW.example.md     # Contoh aturan eksekusi AI & Checkpoint Block
-│   └── BLUEPRINT.example.md       # Contoh blueprint spesifikasi sistem terisi
-│
 └── scripts/                       # CLI & Skrip Otomasi Python / Bash
     ├── README.md                  # Panduan rinci eksekusi CLI
     ├── zlce-check.py              # Linter otomatis pemeriksa integritas ZLCE

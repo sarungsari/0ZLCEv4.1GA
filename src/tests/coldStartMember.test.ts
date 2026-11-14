@@ -132,7 +132,6 @@ export function runColdStartMemberSuite(customSessionMarkdown?: string): ColdSta
     try {
       if (typeof process !== 'undefined' && typeof process.cwd === 'function' && typeof fs?.existsSync === 'function') {
         const candidates = [
-          path.resolve(process.cwd(), 'examples/SESSION_STATE.example.md'),
           path.resolve(process.cwd(), 'SESSION_STATE.md')
         ];
         for (const p of candidates) {

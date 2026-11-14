@@ -35,7 +35,7 @@ export const SCENARIOS: SelfTestScenario[] = [
     category: 'verification',
     description: 'Verifikasi eksekusi skrip CLI di lingkungan lokal/terminal terhadap dependensi git dan struktur berkas.',
     status: 'PASS',
-    testPrompt: 'Jalankan uji diagnostik dan verifikasi berkas contoh: python3 scripts/zlce/zlce-check.py --state examples/SESSION_STATE.example.md',
+    testPrompt: 'Jalankan uji diagnostik dan verifikasi kerangka starter kit: python3 scripts/zlce/zlce-check.py zlce-starter-kit --strict --no-git',
     evaluationCriteria: {
       passConditions: [
         'Skrip CLI mengembalikan exit code 0 tanpa error syntax python',

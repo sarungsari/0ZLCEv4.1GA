@@ -51,7 +51,7 @@ Nilai lain dilarang di semua berkas dan divalidasi ketat oleh `scripts/zlce/zlce
 | :--- | :--- | :--- |
 | 0 | `SESSION_STATE.md` + entri task aktif di `TASKS.md` | Setiap sesi / awal handoff |
 | 1 | Berkas di `Docs Terkait` task + kode modul yang diubah (`ARCHITECTURE.md`, `DATA_MODEL.md`, `docs/mobile/blueprint/`) | Per task |
-| 2 | Contoh pengisian (`examples/`) dan arsip lokal pra-GA (`archive/`, terkecuali di `.gitignore`) | Hanya bila perlu |
+| 2 | Template baku (`templates/`), starter kit (`zlce-starter-kit/`), dan arsip lokal pra-GA (`archive/`, terkecuali di `.gitignore`) | Hanya bila perlu |
 
 ---
 

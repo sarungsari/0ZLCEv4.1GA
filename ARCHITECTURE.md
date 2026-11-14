@@ -50,7 +50,6 @@ ZLCE4.1/
 │   └── mobile/               # Pilar 1-3 + blueprint/ (14 modul blueprint APPROVED/AS-BUILT)
 ├── scripts/                  # run-tests.py, zlce-check.py, sync-assets.mjs, create-*-bundle.py, zlce/
 ├── templates/                # 9 template dokumen kontrol + profiles/DOMAIN_BOOKING.profile.md
-├── examples/                 # Contoh proyek terisi (Todo API)
 └── zlce-starter-kit/         # Starter kit skeleton bersih siap salin untuk proyek baru (Mode LITE & FULL)
 ```
 

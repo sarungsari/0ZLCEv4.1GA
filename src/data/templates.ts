@@ -11,10 +11,6 @@ import testingTemplate from '../../templates/TESTING.template.md?raw';
 import checklistsTemplate from '../../templates/CHECKLISTS.template.md?raw';
 import changelogTemplate from '../../templates/CHANGELOG.template.md?raw';
 import domainBookingProfile from '../../templates/profiles/DOMAIN_BOOKING.profile.md?raw';
-import sessionStateExample from '../../examples/SESSION_STATE.example.md?raw';
-import tasksExample from '../../examples/TASKS.example.md?raw';
-import aiWorkflowExample from '../../examples/AI_WORKFLOW.example.md?raw';
-import blueprintExample from '../../examples/BLUEPRINT.example.md?raw';
 
 // Live current active project & canonical docs imports
 import currentProjectSessionState from '../../SESSION_STATE.md?raw';
@@ -137,38 +133,6 @@ export const ZLCE_TEMPLATES: TemplateItem[] = [
     category: 'profile',
     description: 'Profil domain spesifik untuk reservasi rental, booking harian, dan ketersediaan unit.',
     content: domainBookingProfile
-  },
-  {
-    id: 'example-session-state',
-    title: 'SESSION_STATE.example.md (Contoh Terisi)',
-    filename: 'SESSION_STATE.example.md',
-    category: 'example',
-    description: 'Contoh nyata status sesi Todo API (FastAPI / SQLite / pytest, WAL, Matriks Task, Asumsi).',
-    content: sessionStateExample
-  },
-  {
-    id: 'example-tasks',
-    title: 'TASKS.example.md (Contoh Backlog Atomik)',
-    filename: 'TASKS.example.md',
-    category: 'example',
-    description: 'Contoh nyata backlog tugas atomik terstruktur (TASK-001 s/d TASK-005) dengan kriteria uji.',
-    content: tasksExample
-  },
-  {
-    id: 'example-ai-workflow',
-    title: 'AI_WORKFLOW.example.md (Contoh Tata Kelola AI)',
-    filename: 'AI_WORKFLOW.example.md',
-    category: 'example',
-    description: 'Contoh aturan kerja AI, enum tunggal, checkpoint format, dan Aturan X1 Jam.',
-    content: aiWorkflowExample
-  },
-  {
-    id: 'example-blueprint',
-    title: 'BLUEPRINT.example.md (Contoh Spesifikasi Gerbang 1)',
-    filename: 'BLUEPRINT.example.md',
-    category: 'example',
-    description: 'Contoh spesifikasi teknis, non-goals, matriks modul, dan standar keamanan sistem.',
-    content: blueprintExample
   },
   {
     id: 'current-project-session-state',

@@ -18,8 +18,9 @@ npm run lint
 # 3. Jalankan build produksi
 npm run build
 
-# 4. Validasi contoh berkas SESSION_STATE dengan checker kanonik
-python3 scripts/zlce/zlce-check.py --state examples/SESSION_STATE.example.md --no-git
+# 4. Validasi integritas state & starter kit dengan checker kanonik
+python3 scripts/zlce/zlce-check.py zlce-starter-kit --strict --no-git
+python3 scripts/zlce/zlce-check.py . --strict --no-git
 ```
 
 ---

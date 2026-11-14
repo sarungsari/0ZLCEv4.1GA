@@ -16,8 +16,27 @@ import { downloadMarkdownBlob, generateAndDownloadZipBundle } from '../utils/fil
 import { generateSingleKitBundle, SingleKitMode } from '../utils/singleKitGenerator';
 import { showToast } from './mobile/ToastContainer';
 
+const CORE_TEMPLATE_IDS = new Set([
+  'session-state',
+  'blueprint',
+  'tasks',
+  'ai-workflow',
+  'architecture',
+  'data-model',
+  'testing',
+  'checklists',
+  'changelog',
+  'domain-booking'
+]);
+
 export const TemplatesTab: React.FC = () => {
-  const [selectedTemplate, setSelectedTemplate] = useState<TemplateItem>(ZLCE_TEMPLATES[0]);
+  const coreTemplates = useMemo(
+    () => ZLCE_TEMPLATES.filter((t) => CORE_TEMPLATE_IDS.has(t.id)),
+    []
+  );
+  const [selectedTemplate, setSelectedTemplate] = useState<TemplateItem>(
+    () => coreTemplates[0] || ZLCE_TEMPLATES[0]
+  );
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [copiedFile, setCopiedFile] = useState(false);
   const [copiedPack, setCopiedPack] = useState(false);
@@ -25,7 +44,7 @@ export const TemplatesTab: React.FC = () => {
   const [showPackModal, setShowPackModal] = useState(true);
   const [isDownloadingZip, setIsDownloadingZip] = useState<'simple' | 'full' | null>(null);
 
-  const filtered = ZLCE_TEMPLATES.filter((t) => {
+  const filtered = coreTemplates.filter((t) => {
     if (categoryFilter === 'all') return true;
     return t.category === categoryFilter;
   });
@@ -227,15 +246,11 @@ export const TemplatesTab: React.FC = () => {
               onChange={(e) => setCategoryFilter(e.target.value)}
               className="touch-target-44 min-h-[44px] text-xs bg-slate-900 border border-slate-700 rounded px-2 py-1 text-slate-300 focus:outline-none"
             >
-              <option value="all">Semua Kategori ({ZLCE_TEMPLATES.length})</option>
+              <option value="all">Semua Template ({coreTemplates.length})</option>
               <option value="state">State (Session)</option>
               <option value="workflow">Workflow &amp; Tata Kelola</option>
               <option value="spec">Spesifikasi Arsitektur</option>
               <option value="profile">Profil Domain</option>
-              <option value="example">Contoh Terisi (.example.md)</option>
-              <option value="install">Panduan Instalasi</option>
-              <option value="usage">Panduan Pemakaian</option>
-              <option value="blueprint">Arsitektur Blueprint</option>
             </select>
           </div>
 

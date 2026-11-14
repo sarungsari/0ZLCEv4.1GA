@@ -204,7 +204,7 @@ PWA_REVIEW_FILES = [
     "scripts/zlce/zlce-collect.py",
     "scripts/zlce/zlce-snapshot.sh",
 
-    # 9. Template & Contoh Kanonik (diimpor ?raw oleh src/data/templates.ts)
+    # 9. Template Kanonik (diimpor ?raw oleh src/data/templates.ts)
     "templates/SESSION_STATE.template.md",
     "templates/BLUEPRINT.template.md",
     "templates/TASKS.template.md",
@@ -215,10 +215,6 @@ PWA_REVIEW_FILES = [
     "templates/CHECKLISTS.template.md",
     "templates/CHANGELOG.template.md",
     "templates/profiles/DOMAIN_BOOKING.profile.md",
-    "examples/SESSION_STATE.example.md",
-    "examples/TASKS.example.md",
-    "examples/AI_WORKFLOW.example.md",
-    "examples/BLUEPRINT.example.md",
 
     # 10. Dokumentasi Terkait UX, Panduan, Blueprint & 10 Berkas Kontrol Mode FULL
     "docs/README.md",

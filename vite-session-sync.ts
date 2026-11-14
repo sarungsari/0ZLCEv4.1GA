@@ -281,7 +281,7 @@ export function sessionSyncPlugin(): Plugin {
                   : isClaude
                     ? 'zlce-claude-chatgpt-bundle.zip'
                     : 'zlce-audit-review-bundle.zip';
-          const fileCount = isSimpleKit ? 14 : isStarterKit ? 29 : isLmk ? 5 : isPwa ? 195 : isClaude ? 70 : 240;
+          const fileCount = isSimpleKit ? 14 : isStarterKit ? 29 : isLmk ? 5 : isPwa ? 191 : isClaude ? 70 : 232;
 
           const handleGenerateAndRespond = (optionalSessionState?: string) => {
             try {
@@ -385,7 +385,7 @@ export function sessionSyncPlugin(): Plugin {
               isLiveGeneratorActive: true,
               simpleKitBundle: getInfo(simpleZip, 14),
               starterKitBundle: getInfo(starterZip, 29),
-              auditBundle: getInfo(auditZip, 240),
+              auditBundle: getInfo(auditZip, 232),
               claudeBundle: getInfo(claudeZip, 70),
               lmkBundle: getInfo(lmkZip, 5),
               timestamp: new Date().toISOString()

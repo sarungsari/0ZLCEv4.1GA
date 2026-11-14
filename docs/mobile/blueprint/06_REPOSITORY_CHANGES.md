@@ -28,7 +28,7 @@ Pengembangan ZLCE Mobile Workbench memegang teguh prinsip **penambahan lapisan b
 | **`src/components/SessionStateTab.tsx`** | Single column desktop | **DIADAPTASI**: Target sentuh 44px+, layout ramah keyboard virtual | Ergonomi sentuhan jari dan mencegah form tertutup keyboard layar. |
 | **`src/utils/zlceValidator.ts`** | Validasi aturan v3.2.2 | **DIPERTAHANKAN**: Ditambahkan dukungan validasi nama pemberi persetujuan di kolom Disetujui | Kompatibilitas 100% dengan Core ZLCE. |
 | **`scripts/zlce-check.py`** | Baseline Track 1 (v3.3.0) | **DIPERTAHANKAN**: Mendukung `--tasks` dan pesan status git | Skrip kanonik CLI yang dieksekusi di Termux. |
-| **`templates/` & `examples/`** | Baseline Track 1 | **DIPERTAHANKAN 100%**: Tidak diubah | Menjaga konsistensi ZLCE Core. |
+| **`templates/` & `zlce-starter-kit/`** | Baseline Track 1 | **DIPERTAHANKAN & DIRINGKAS**: Template kanonik dan starter kit Mode LITE tanpa duplikasi `examples/` | Menjaga konsistensi ZLCE Core tanpa berkas ganda. |
 
 ---
 

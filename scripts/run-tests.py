@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ZLCE Automated Test Suite
-Runs validation checks across TypeScript types, canonical templates, examples, and script synchronization.
+Runs validation checks across TypeScript types, canonical templates, starter kit, and script synchronization.
 """
 import hashlib
 import os
@@ -89,10 +89,10 @@ def main():
     if not ok:
         failures += 1
 
-    # 2. Python zlce-check on examples/
+    # 2. Python zlce-check on zlce-starter-kit
     ok, _ = run_step(
-        "ZLCE Check on examples/SESSION_STATE.example.md",
-        ["python3", "scripts/zlce-check.py", "examples/", "--state", "examples/SESSION_STATE.example.md", "--no-git"]
+        "ZLCE Check on zlce-starter-kit (--strict --no-git)",
+        ["python3", "scripts/zlce-check.py", "zlce-starter-kit", "--strict", "--no-git"]
     )
     if not ok:
         failures += 1
@@ -120,10 +120,6 @@ def main():
         ("LANDING_PROMPT.md", "zlce-starter-kit/LANDING_PROMPT.md"),
         ("HANDOVER_PROMPT.md", "zlce-starter-kit/HANDOVER_PROMPT.md"),
         ("HANDOVER.md", "zlce-starter-kit/HANDOVER.md"),
-        ("examples/AI_WORKFLOW.example.md", "zlce-starter-kit/examples/AI_WORKFLOW.example.md"),
-        ("examples/BLUEPRINT.example.md", "zlce-starter-kit/examples/BLUEPRINT.example.md"),
-        ("examples/SESSION_STATE.example.md", "zlce-starter-kit/examples/SESSION_STATE.example.md"),
-        ("examples/TASKS.example.md", "zlce-starter-kit/examples/TASKS.example.md"),
         ("templates/AI_WORKFLOW.template.md", "zlce-starter-kit/templates/AI_WORKFLOW.template.md"),
         ("templates/ARCHITECTURE.template.md", "zlce-starter-kit/templates/ARCHITECTURE.template.md"),
         ("templates/BLUEPRINT.template.md", "zlce-starter-kit/templates/BLUEPRINT.template.md"),

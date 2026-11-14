@@ -61,11 +61,7 @@ FILES_TO_BUNDLE = [
     "docs/mobile/blueprint/13_COMMAND_TEMPLATES.md",
     "docs/mobile/blueprint/14_MULTI_AI_TEAM_MODEL.md",
 
-    # 4. Berkas Contoh Kanonik & Template
-    "examples/AI_WORKFLOW.example.md",
-    "examples/BLUEPRINT.example.md",
-    "examples/SESSION_STATE.example.md",
-    "examples/TASKS.example.md",
+    # 4. Template Kanonik
     "templates/AI_WORKFLOW.template.md",
     "templates/ARCHITECTURE.template.md",
     "templates/BLUEPRINT.template.md",
@@ -271,10 +267,6 @@ FILES_TO_BUNDLE = [
     "zlce-starter-kit/README.md",
     "zlce-starter-kit/SESSION_STATE.md",
     "zlce-starter-kit/TASKS.md",
-    "zlce-starter-kit/examples/AI_WORKFLOW.example.md",
-    "zlce-starter-kit/examples/BLUEPRINT.example.md",
-    "zlce-starter-kit/examples/SESSION_STATE.example.md",
-    "zlce-starter-kit/examples/TASKS.example.md",
     "zlce-starter-kit/scripts/README.md",
     "zlce-starter-kit/scripts/zlce-check.py",
     "zlce-starter-kit/scripts/zlce-collect.py",

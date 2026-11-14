@@ -129,10 +129,13 @@ npm run preview   # uji pratinjau lokal build produksi
 
 ### C. Pakai Skrip CLI
 
-Uji langsung contoh berkas yang disertakan tanpa konfigurasi git:
+Uji langsung pada starter kit maupun root workbench tanpa konfigurasi git:
 ```bash
-python3 scripts/zlce/zlce-check.py --state examples/SESSION_STATE.example.md --no-git
-# KELUARAN: OK (0 error, 1 warn, 3 task)
+python3 scripts/zlce/zlce-check.py zlce-starter-kit --strict --no-git
+# KELUARAN: RESULT: OK (0 error, 0 warn, 3 task)
+
+python3 scripts/zlce/zlce-check.py . --strict --no-git
+# KELUARAN: RESULT: OK (0 error, 0 warn, 3 task)
 ```
 
 Untuk proyek Anda sendiri, salin folder `scripts/zlce/` ke direktori proyek Anda:
@@ -202,7 +205,6 @@ Panduan detail alur kerja operasional dan triase revisi: [`docs/USAGE.md`](docs/
 │   ├── CHANGELOG.template.md      # Gerbang 4: Log riwayat rilis
 │   └── profiles/
 │       └── DOMAIN_BOOKING.profile.md  # Profil domain reservasi & sewa
-├── examples/                  # Contoh dokumen SESSION_STATE yang valid
 ├── docs/                      # Dokumentasi komprehensif ZLCE (3 Pilar Terstruktur)
 │   ├── README.md              # Peta & indeks seluruh dokumentasi proyek (Pilar 1, 2, 3)
 │   ├── USAGE.md               # Panduan penggunaan lengkap 3 alur & triase revisi
@@ -311,10 +313,10 @@ Kontribusi berupa saran, perbaikan bug, atau penambahan fitur sangat disambut. S
 npm ci
 npm run lint
 npm run build
-python3 scripts/zlce/zlce-check.py --state examples/SESSION_STATE.example.md --no-git
+python3 scripts/zlce/zlce-check.py . --strict --no-git
 ```
 
-Jika Anda mengubah berkas template di `templates/`, `examples/`, atau prompt kontrol di root, jalankan `npm run sync:assets` agar `zlce-starter-kit/` dan `scripts/zlce/` tetap sinkron 100% dari sumber kanonik tunggal. Panduan kontribusi selengkapnya dapat dibaca di [`CONTRIBUTING.md`](CONTRIBUTING.md). Riwayat versi dapat dilihat di [`CHANGELOG.md`](CHANGELOG.md).
+Jika Anda mengubah berkas template di `templates/` atau prompt kontrol di root, jalankan `npm run sync:assets` agar `zlce-starter-kit/` dan `scripts/zlce/` tetap sinkron 100% dari sumber kanonik tunggal. Panduan kontribusi selengkapnya dapat dibaca di [`CONTRIBUTING.md`](CONTRIBUTING.md). Riwayat versi dapat dilihat di [`CHANGELOG.md`](CHANGELOG.md).
 
 ---
 
