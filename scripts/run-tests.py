@@ -1813,6 +1813,15 @@ print("TC-P17-FIN & TC-P18-FIN PASS: Dual ZIP closure + SHA256SUMS, zero-secret,
     if not ok:
         failures += 1
 
+    # 75. Project Archive Registry & Dashboard Archive Section Check
+    ok, _ = run_step(
+        "Project Archive Registry & Dashboard Archive Section Check",
+        ["npx", "tsx", "src/tests/projectArchiveRegistry.test.ts"],
+        timeout=60
+    )
+    if not ok:
+        failures += 1
+
     print("=" * 60)
     print(ACTIVE_COUNTER.summary())
     print("=" * 60)

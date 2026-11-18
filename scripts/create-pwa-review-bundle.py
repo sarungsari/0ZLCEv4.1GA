@@ -181,6 +181,7 @@ PWA_REVIEW_FILES = [
     "src/tests/uiResilience.test.ts",
     "src/tests/universalDraftCache.test.ts",
     "src/tests/zeroSecretPersistence.test.ts",
+    "src/tests/projectArchiveRegistry.test.ts",
 
     # 9. Skrip Verifikasi, Runner Uji, Validator & Dispatcher (R-08 / FIN-002)
     "scripts/README.md",

@@ -47,6 +47,10 @@ export interface ProjectMeta {
   description?: string;
 }
 
+export interface ArchivedProjectMeta extends ProjectMeta {
+  archivedAt: string;
+}
+
 export interface ContextPack {
   projectName: string;
   taskId: string;

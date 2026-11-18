@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useProjectRegistry } from '../../hooks/useProjectRegistry';
+import { useProjectRegistry, HOST_WORKBENCH_PROJECT_ID } from '../../hooks/useProjectRegistry';
 import { ProjectMeta, ProjectWorkflowMode } from '../../types/mobile';
 import { getWorkflowShortTag } from '../../utils/projectStarter';
 import { copyToClipboard } from '../../utils/clipboard';
@@ -15,7 +15,8 @@ import {
   Trash2, 
   Edit3, 
   X,
-  Upload
+  Upload,
+  Archive
 } from 'lucide-react';
 
 interface ProjectSwitcherProps {
@@ -25,12 +26,14 @@ interface ProjectSwitcherProps {
 export const ProjectSwitcher: React.FC<ProjectSwitcherProps> = ({ className = '' }) => {
   const {
     projects,
+    archivedProjects,
     activeProject,
     activeProjectId,
     switchProject,
     addProject,
     updateProject,
-    deleteProject
+    deleteProject,
+    archiveProject
   } = useProjectRegistry();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -205,6 +208,17 @@ export const ProjectSwitcher: React.FC<ProjectSwitcherProps> = ({ className = ''
     setProjectToDelete({ id, name });
   };
 
+  const handleArchive = (id: string, name: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const ok = archiveProject(id);
+    if (ok) {
+      showToast(`Proyek "${name}" dipindahkan ke Archive di Dashboard.`, 'info');
+      if (id === activeProjectId) {
+        setIsOpen(false);
+      }
+    }
+  };
+
   return (
     <div className={`relative ${className}`} ref={dropdownRef}>
       {/* Tombol Pemicu di Header (Target Sentuh Ergonomis Tablet >= 44px) */}
@@ -324,14 +338,25 @@ export const ProjectSwitcher: React.FC<ProjectSwitcherProps> = ({ className = ''
                     >
                       <Edit3 className="w-3.5 h-3.5" />
                     </button>
-                    {projects.length > 1 && (
-                      <button
-                        onClick={(e) => handleDelete(project.id, project.name, e)}
-                        className="touch-target-44 min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-rose-400 hover:bg-slate-800"
-                        title="Hapus proyek dari registry"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
+                    {projects.length > 1 && project.id !== HOST_WORKBENCH_PROJECT_ID && (
+                      <>
+                        <button
+                          onClick={(e) => handleArchive(project.id, project.name, e)}
+                          className="touch-target-44 min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-amber-300 hover:bg-slate-800"
+                          title="Arsipkan proyek ke Dashboard Archive (data workspace tetap aman)"
+                          aria-label={`Arsipkan proyek ${project.name}`}
+                        >
+                          <Archive className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={(e) => handleDelete(project.id, project.name, e)}
+                          className="touch-target-44 min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-rose-400 hover:bg-slate-800"
+                          title="Hapus proyek dari registry"
+                          aria-label={`Hapus proyek ${project.name}`}
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </>
                     )}
                   </div>
                 </div>
@@ -340,9 +365,12 @@ export const ProjectSwitcher: React.FC<ProjectSwitcherProps> = ({ className = ''
           </div>
 
           {/* Footer Info */}
-          <div className="p-2.5 bg-slate-950/90 border-t border-slate-800 flex items-center justify-between text-xs text-slate-500">
-            <span>Penyimpanan: <strong className="text-slate-400">LocalStorage Terisolasi</strong></span>
-            <span>{projects.length} Proyek Terdaftar</span>
+          <div className="p-2.5 bg-slate-950/90 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+            <span>Penyimpanan: <strong className="text-slate-300">LocalStorage Terisolasi</strong></span>
+            <span>
+              {projects.length} Aktif
+              {archivedProjects.length > 0 ? ` · ${archivedProjects.length} Arsip` : ''}
+            </span>
           </div>
         </div>
       )}

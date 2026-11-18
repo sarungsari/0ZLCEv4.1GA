@@ -178,6 +178,7 @@ FILES_TO_BUNDLE = [
     "src/tests/dashboardPhaseFilter.test.ts",
     "src/tests/freshWorkspaceMultiProject.test.ts",
     "src/tests/layoutHeaderBannerStack.test.ts",
+    "src/tests/projectArchiveRegistry.test.ts",
 
     # 10. Komponen Mobile (Menutup Celah Temuan #1 & #14)
     "src/components/mobile/index.ts",

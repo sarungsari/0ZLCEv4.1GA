@@ -39,7 +39,11 @@ import {
   FolderPlus,
   Wrench,
   GitFork,
-  GraduationCap
+  GraduationCap,
+  Archive,
+  ArchiveRestore,
+  Trash2,
+  FolderKanban
 } from 'lucide-react';
 import { ParsedSessionState, ValidationResult, TaskStatus, ZLCETask, ParsedBacklogTask } from '../types/zlce';
 import { copyText } from '../utils/clipboard';
@@ -49,7 +53,11 @@ import { downloadMarkdownBlob, generateAndDownloadZipBundle } from '../utils/fil
 import { TEAM_MEMBERS, getMemberById } from '../data/teamMembers';
 import { TeamMember, ProjectWorkflowMode } from '../types/mobile';
 import { UseSessionPersistenceReturn } from '../hooks/useSessionPersistence';
-import { useProjectRegistry, HOST_WORKBENCH_PROJECT_ID } from '../hooks/useProjectRegistry';
+import {
+  useProjectRegistry,
+  HOST_WORKBENCH_PROJECT_ID,
+  ARCHIVE_REGISTRY_STORAGE_KEY
+} from '../hooks/useProjectRegistry';
 import {
   buildFreshSessionStateMarkdown,
   buildFreshTasksMarkdown,
@@ -98,7 +106,16 @@ const DashboardTabComponent: React.FC<DashboardTabProps> = ({
   onRunLinter,
   persistence
 }) => {
-  const { activeProject, activeProjectId } = useProjectRegistry();
+  const {
+    projects,
+    archivedProjects,
+    activeProject,
+    activeProjectId,
+    switchProject,
+    archiveProject,
+    restoreProject,
+    deleteArchivedProject
+  } = useProjectRegistry();
   const isHostProject = activeProjectId === HOST_WORKBENCH_PROJECT_ID;
 
   const [selectedPhase, setSelectedPhase] = useState<string>('all');
@@ -106,6 +123,8 @@ const DashboardTabComponent: React.FC<DashboardTabProps> = ({
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [expandedTaskId, setExpandedTaskId] = useState<string | null>(null);
+  const [isArchiveExpanded, setIsArchiveExpanded] = useState<boolean>(true);
+  const [archivePendingDelete, setArchivePendingDelete] = useState<{ id: string; name: string } | null>(null);
   const [activeMemberId, setActiveMemberId] = useState<string>(() => {
     return localStorage.getItem('zlce_active_member_id') || 'eko';
   });
@@ -210,6 +229,51 @@ const DashboardTabComponent: React.FC<DashboardTabProps> = ({
     parsedBacklogDoc.tasks.forEach(t => map.set(t.id, t));
     return map;
   }, [parsedBacklogDoc]);
+
+  const inactivePrimaryProjects = useMemo(
+    () => projects.filter(p => p.id !== HOST_WORKBENCH_PROJECT_ID && p.id !== activeProjectId),
+    [projects, activeProjectId]
+  );
+
+  const activeNonHostProject = useMemo(
+    () =>
+      activeProjectId !== HOST_WORKBENCH_PROJECT_ID
+        ? projects.find(p => p.id === activeProjectId) || null
+        : null,
+    [projects, activeProjectId]
+  );
+
+  const handleArchiveSingleProject = (id: string, name: string) => {
+    if (archiveProject(id)) {
+      showToast(`Proyek "${name}" dipindahkan ke indeks Archive. Workspace tetap tersimpan aman.`, 'info');
+    } else {
+      showToast('Proyek baseline host tidak dapat diarsipkan.', 'warning');
+    }
+  };
+
+  const handleArchiveAllInactive = () => {
+    if (inactivePrimaryProjects.length === 0) return;
+    let count = 0;
+    for (const proj of inactivePrimaryProjects) {
+      if (archiveProject(proj.id)) {
+        count++;
+      }
+    }
+    if (count > 0) {
+      showToast(`${count} proyek tidak aktif berhasil dipindahkan ke Archive.`, 'success');
+    }
+  };
+
+  const handleRestoreArchivedProject = (id: string, name: string, switchAfter = false) => {
+    if (restoreProject(id)) {
+      if (switchAfter) {
+        switchProject(id);
+        showToast(`Proyek "${name}" dipulihkan & langsung diaktifkan.`, 'success');
+      } else {
+        showToast(`Proyek "${name}" berhasil dipulihkan ke registry utama.`, 'success');
+      }
+    }
+  };
 
   const handleOpenWorkflowModal = (workflow: ProjectWorkflowMode) => {
     window.dispatchEvent(new CustomEvent('zlce-open-new-project-modal', { detail: { workflow } }));
@@ -1655,6 +1719,234 @@ const DashboardTabComponent: React.FC<DashboardTabProps> = ({
         </div>
       </div>
 
+      {/* 7. Archive Section — Dedicated LocalStorage Index for Inactive Projects */}
+      <section
+        id="dashboard-archive-section"
+        aria-label="Archive Proyek Tidak Aktif"
+        className="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-xl space-y-4"
+      >
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-800 pb-3.5">
+          <div className="space-y-1">
+            <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
+              <span className="px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30 font-bold">
+                ARCHIVE
+              </span>
+              <span className="text-slate-400">
+                Indeks Khusus: <code className="text-cyan-300">{ARCHIVE_REGISTRY_STORAGE_KEY}</code>
+              </span>
+            </div>
+            <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+              <Archive className="w-5 h-5 text-amber-400 shrink-0" />
+              <span>Archive — Arsip Proyek Tidak Aktif</span>
+            </h3>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Pindahkan proyek yang sedang tidak dikerjakan ke indeks LocalStorage terpisah agar dropdown registry utama tetap bersih. Data workspace (<code className="text-slate-300 font-mono">SESSION_STATE.md</code> &amp; riwayat) tetap tersimpan untuk dipulihkan kapan saja.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2 shrink-0">
+            <span className="px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs font-mono text-slate-300">
+              {inactivePrimaryProjects.length} Non-Aktif · {archivedProjects.length} Diarsipkan
+            </span>
+            {inactivePrimaryProjects.length > 1 && (
+              <button
+                type="button"
+                onClick={handleArchiveAllInactive}
+                className="touch-target-44 min-h-[44px] px-3 py-2 rounded-lg bg-amber-600/90 hover:bg-amber-500 text-white text-xs font-bold flex items-center gap-1.5 transition active:scale-95"
+              >
+                <Archive className="w-4 h-4" />
+                <span>Arsipkan Semua Non-Aktif ({inactivePrimaryProjects.length})</span>
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => setIsArchiveExpanded(prev => !prev)}
+              aria-expanded={isArchiveExpanded}
+              className="touch-target-44 min-h-[44px] px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1.5 transition"
+            >
+              <span>{isArchiveExpanded ? 'Ciutkan' : 'Tampilkan'}</span>
+              {isArchiveExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+            </button>
+          </div>
+        </div>
+
+        {isArchiveExpanded && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Panel Kiri: Proyek Non-Host di Registry Utama yang Siap Diarsipkan */}
+            <div className="bg-slate-950/70 border border-slate-800 rounded-xl p-3.5 sm:p-4 space-y-3">
+              <div className="flex items-center justify-between gap-2 border-b border-slate-800/80 pb-2">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-cyan-300 flex items-center gap-1.5">
+                  <FolderKanban className="w-4 h-4 text-cyan-400" />
+                  <span>Proyek di Registry Utama ({inactivePrimaryProjects.length + (activeNonHostProject ? 1 : 0)})</span>
+                </h4>
+                <span className="text-xs text-slate-400 font-mono">zlce_projects_registry</span>
+              </div>
+
+              {inactivePrimaryProjects.length === 0 && !activeNonHostProject ? (
+                <div className="p-4 rounded-lg bg-slate-900/60 border border-slate-800/70 text-xs text-slate-400 leading-relaxed">
+                  Registry utama sudah bersih — hanya memuat repositori baseline <strong className="text-slate-200">ZLCE Mobile Workbench v4.1.0 GA</strong>.
+                </div>
+              ) : (
+                <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
+                  {inactivePrimaryProjects.map(proj => (
+                    <div
+                      key={proj.id}
+                      className="p-3 rounded-lg bg-slate-900/80 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5"
+                    >
+                      <div className="min-w-0 space-y-1">
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          <span className="text-xs font-bold text-slate-100 truncate">{proj.name}</span>
+                          <span className="px-1.5 py-0.5 rounded text-xs font-mono bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                            {getWorkflowShortTag(proj.workflow)}
+                          </span>
+                          <span className="px-1.5 py-0.5 rounded text-xs font-mono bg-slate-800 text-slate-300 border border-slate-700">
+                            {proj.mode}
+                          </span>
+                          <span className="px-1.5 py-0.5 rounded text-xs font-mono bg-slate-800 text-slate-400">
+                            Tidak Aktif
+                          </span>
+                        </div>
+                        <div className="text-xs text-slate-400 font-mono truncate">
+                          {proj.termuxPath} · {proj.branch}
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+                        <button
+                          type="button"
+                          onClick={() => switchProject(proj.id)}
+                          className="touch-target-44 min-h-[44px] px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold transition"
+                        >
+                          Buka
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleArchiveSingleProject(proj.id, proj.name)}
+                          className="touch-target-44 min-h-[44px] px-3 py-1.5 rounded-lg bg-amber-950/70 hover:bg-amber-900 border border-amber-700/60 text-amber-200 text-xs font-bold flex items-center gap-1.5 transition"
+                        >
+                          <Archive className="w-3.5 h-3.5" />
+                          <span>Arsipkan</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+
+                  {activeNonHostProject && (
+                    <div className="p-3 rounded-lg bg-cyan-950/20 border border-cyan-800/50 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                      <div className="min-w-0 space-y-1">
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          <span className="text-xs font-bold text-cyan-200 truncate">{activeNonHostProject.name}</span>
+                          <span className="px-1.5 py-0.5 rounded text-xs font-mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
+                            Sedang Aktif
+                          </span>
+                        </div>
+                        <div className="text-xs text-slate-400 font-mono truncate">
+                          {activeNonHostProject.termuxPath} · {activeNonHostProject.branch}
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => handleArchiveSingleProject(activeNonHostProject.id, activeNonHostProject.name)}
+                        className="touch-target-44 min-h-[44px] px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-amber-950/80 border border-slate-700 hover:border-amber-700/60 text-slate-200 hover:text-amber-200 text-xs font-semibold flex items-center gap-1.5 transition shrink-0 self-end sm:self-center"
+                        title="Simpan state proyek ini ke Archive lalu kembali ke workspace Host"
+                      >
+                        <Archive className="w-3.5 h-3.5 text-amber-400" />
+                        <span>Arsipkan &amp; Kembali ke Host</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Panel Kanan: Daftar Proyek yang Tersimpan di Indeks Archive */}
+            <div className="bg-slate-950/70 border border-slate-800 rounded-xl p-3.5 sm:p-4 space-y-3">
+              <div className="flex items-center justify-between gap-2 border-b border-slate-800/80 pb-2">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+                  <Archive className="w-4 h-4 text-amber-400" />
+                  <span>Indeks Arsip Proyek ({archivedProjects.length})</span>
+                </h4>
+                <span className="text-xs text-slate-400 font-mono">Tersimpan Offline</span>
+              </div>
+
+              {archivedProjects.length === 0 ? (
+                <div className="p-4 rounded-lg bg-slate-900/60 border border-slate-800/70 text-xs text-slate-400 leading-relaxed">
+                  Belum ada proyek di indeks Archive. Gunakan tombol <strong className="text-amber-300">Arsipkan</strong> pada proyek yang selesai atau sedang jeda agar daftar Project Switcher tetap ringkas.
+                </div>
+              ) : (
+                <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
+                  {archivedProjects.map(arch => {
+                    const archivedDate = (() => {
+                      try {
+                        return new Date(arch.archivedAt).toLocaleString('id-ID', {
+                          day: '2-digit',
+                          month: 'short',
+                          year: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        });
+                      } catch {
+                        return arch.archivedAt;
+                      }
+                    })();
+
+                    return (
+                      <div
+                        key={arch.id}
+                        className="p-3 rounded-lg bg-slate-900/90 border border-slate-800 flex flex-col gap-2.5"
+                      >
+                        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
+                          <div className="min-w-0 space-y-1">
+                            <div className="flex flex-wrap items-center gap-1.5">
+                              <span className="text-xs font-bold text-white truncate">{arch.name}</span>
+                              <span className="px-1.5 py-0.5 rounded text-xs font-mono bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                                {getWorkflowShortTag(arch.workflow)}
+                              </span>
+                              <span className="px-1.5 py-0.5 rounded text-xs font-mono bg-slate-800 text-slate-300 border border-slate-700">
+                                {arch.mode}
+                              </span>
+                            </div>
+                            <div className="text-xs text-slate-400 font-mono truncate">
+                              {arch.termuxPath} · {arch.branch}
+                            </div>
+                            <div className="text-xs text-slate-400 font-mono">
+                              Diarsipkan: <span className="text-slate-300">{archivedDate}</span>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-wrap items-center gap-2 shrink-0">
+                            <button
+                              type="button"
+                              onClick={() => handleRestoreArchivedProject(arch.id, arch.name, false)}
+                              className="touch-target-44 min-h-[44px] px-3 py-1.5 rounded-lg bg-emerald-950/70 hover:bg-emerald-900 border border-emerald-700/60 text-emerald-200 text-xs font-bold flex items-center gap-1.5 transition"
+                              title="Kembalikan proyek ke registry utama"
+                            >
+                              <ArchiveRestore className="w-3.5 h-3.5" />
+                              <span>Pulihkan</span>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setArchivePendingDelete({ id: arch.id, name: arch.name })}
+                              className="touch-target-44 min-h-[44px] min-w-[44px] px-2.5 py-1.5 rounded-lg bg-rose-950/60 hover:bg-rose-900 border border-rose-800/60 text-rose-300 text-xs font-semibold flex items-center gap-1 transition"
+                              title="Hapus permanen proyek beserta data LocalStorage-nya"
+                              aria-label={`Hapus permanen ${arch.name}`}
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                              <span>Hapus</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </section>
+
       {/* Done Modal (Smart Task Check - Docs Impact Verification Gate) */}
       {doneModalTaskId && (() => {
         const doneDetail = taskDetailMap.get(doneModalTaskId);
@@ -1912,6 +2204,28 @@ git push origin ${targetBranch}`}
         variant="warning"
         onConfirm={executeReloadTemplate}
         onCancel={() => setShowReloadTemplateConfirm(false)}
+      />
+
+      {/* Dialog Konfirmasi Hapus Permanen Proyek dari Archive */}
+      <ConfirmDialog
+        isOpen={Boolean(archivePendingDelete)}
+        title="Hapus Permanen Proyek dari Archive"
+        message={
+          <span>
+            Apakah Anda yakin ingin menghapus permanen proyek <strong>"{archivePendingDelete?.name}"</strong> dari indeks Archive beserta seluruh data workspace LocalStorage-nya?
+          </span>
+        }
+        confirmLabel="Ya, Hapus Permanen"
+        cancelLabel="Batal"
+        isDestructive
+        onConfirm={() => {
+          if (archivePendingDelete) {
+            deleteArchivedProject(archivePendingDelete.id);
+            showToast(`Proyek "${archivePendingDelete.name}" dihapus permanen dari Archive.`, 'info');
+            setArchivePendingDelete(null);
+          }
+        }}
+        onCancel={() => setArchivePendingDelete(null)}
       />
     </div>
   );
